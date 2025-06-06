@@ -9,6 +9,7 @@ local function isPlayerHumanoid(humanoid)
 	return false
 end
 
+-- bulleet shoots linearly because its not actually bullets, its just simulated.
 shootEvent.OnServerEvent:Connect(function(player, targetPosition)
 	local ball = game.ServerStorage.Bullet:Clone()
 	ball.Position = player.Character.HumanoidRootPart.Position

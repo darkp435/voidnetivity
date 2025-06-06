@@ -1,3 +1,8 @@
+--[[
+module for managing the host system and abstracting it
+host system is a graph due to how the connections system work
+]]
+
 local module = {}
 
 Host = {}
@@ -24,7 +29,22 @@ function Host:getMap()
 	return self.map
 end
 
+-- hostnames will be represented via an adjacency list, then converted to objects for convenience, pseudocode:
+--[[
+
+module {
+	hostname: {"edge1", "edge2", ...}
+	...
+}
+
+]]
+
 module["foo"] = Host.new("Map2", 13123, 4, 1)
 module["bar"] = Host.new("Map2", 2324, 123, 4354)
+
+-- function to get the host object from the hostname
+function module.getHostFromName(name)
+	return module[name]
+end
 
 return module
