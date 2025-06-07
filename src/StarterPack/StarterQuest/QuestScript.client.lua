@@ -1,6 +1,8 @@
 local tool = script.Parent
 
 local DIALOGUE_1 = {
+	"CONNECTED TO USER JERSEY05 WITH STATUS CODE 200 (OK)",
+	"STARTING AUTOMATED QUEST DIALOGUE",
 	"Hello! Weird sort of place isn't it?",
 	"Yes, I know, this place is weird.",
 	"It was when I got here and I felt just like you.",
@@ -99,7 +101,8 @@ local DIALOGUE_1 = {
 	"Yeah, I've talked enough.",
 	"Try the things I told you,",
 	"...and come back for more quests!",
-	"Best of luck to your endeavors."
+	"Best of luck to your endeavors.",
+	"END OF AUTOMATED QUEST DIALOGUE"
 }
 
 local ptr = 1
