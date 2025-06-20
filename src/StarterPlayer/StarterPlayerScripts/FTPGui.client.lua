@@ -11,6 +11,12 @@ defaultTextLabel.TextSize = 20
 defaultTextLabel.BackgroundTransparency = 1
 defaultTextLabel.TextXAlignment = Enum.TextXAlignment.Left
 
+local function verifyPerms(enterPressed, hostInput: TextBox)
+    if enterPressed then
+        local host = hostInput.Text
+    end
+end
+
 FTPEvent.OnClientEvent:Connect(function()
     -- frame is background
     -- initialise FTP with hello messages, auth and confirmations
@@ -36,4 +42,9 @@ FTPEvent.OnClientEvent:Connect(function()
     local hostInput = Instance.new("TextBox")
     hostInput.Position = UDim2.new(0.2, 0, 0.25, 0)
     hostInput.Parent = frame
+    hostInput.Text = ""
+    hostInput:CaptureFocus()
+    hostInput.FocusLost:Connect(function(enterPressed)
+        local result = verifyPerms(enterPressed, hostInput)
+    end)
 end)
