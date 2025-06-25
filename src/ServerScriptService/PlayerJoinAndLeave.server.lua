@@ -5,11 +5,12 @@ local replicatedStorage = game:WaitForChild("ReplicatedStorage")
 local dataStoreService = game:GetService("DataStoreService")
 local players = game:GetService("Players")
 local dataStore = dataStoreService:GetDataStore("Data")
+local welcomeEvent: RemoteEvent = replicatedStorage.WelcomeEvent
 
 -- welcome function to tell the player whats going on
 -- TODO: implement this later
-local function welcome()
-	print("Welcome!")
+local function welcome(player: Player)
+	welcomeEvent:FireClient(player)
 end
 
 -- when the player joins, sets the attributes and gets the data stored
@@ -23,7 +24,7 @@ players.PlayerAdded:Connect(function(player)
 		player:SetAttribute("btc", btc)		
 	else
 		btc = 0
-		welcome()
+		welcome(player)
 	end
 	
 	replicatedStorage.ChangeBTC:FireClient(player, btc)
