@@ -1,3 +1,6 @@
 # build output
 *.rbxlx
 *.rbxlx.lock
+
+# vscode files
+.vscode

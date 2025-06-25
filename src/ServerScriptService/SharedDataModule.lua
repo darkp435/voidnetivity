@@ -27,29 +27,29 @@ function module.hasAccessTo(userid: string, hostname: string): boolean
 end
 
 -- Gets a list of files from the host
-function module.getFilesFrom(userid, hostname)
+function module.getFilesFrom(userid: string, hostname: string)
 	return module.Data[userid]["hostinfo"][hostname]["files"]
 end
 
 -- Get the max permissions a player has
-function module.getPerms(userid, hostname)
+function module.getPerms(userid: string, hostname: string)
 	return module.Data[userid]["hostinfo"][hostname]["permission"]
 end
 
 -- Add a file to a host. Mainly used in conjunction with FTP.
-function module.addFile(userid, hostname, filename)
+function module.addFile(userid: string, hostname: string, filename: string)
 	table.insert(module.Data[userid]["hostinfo"][hostname]["files"], filename)
 end
 
-function module.getSysadm(userid)
+function module.getSysadm(userid: string)
 	return module.Data[userid]["hasSysadm"]
 end
 
-function module.isFirstTimeJoining(userid)
+function module.isFirstTimeJoining(userid: string)
 	return module.Data[userid]["firstTimeJoining"]
 end
 
-function module.getDaemons(userid)
+function module.getDaemons(userid: string)
 	return module.Data[userid]["daemons"]
 end
 
