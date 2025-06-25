@@ -3,6 +3,7 @@ local replicatedStorage: ReplicatedStorage = game:WaitForChild("ReplicatedStorag
 local dataStoreService: DataStoreService = game:GetService("DataStoreService")
 local players: Players = game:GetService("Players")
 local dataStore: DataStore = dataStoreService:GetDataStore("Data")
+local welcomeEvent: RemoteEvent = replicatedStorage:WaitForChild("WelcomeEvent")
 
 -- welcome function to tell the player whats going on
 -- TODO: implement this later
