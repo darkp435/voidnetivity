@@ -1,12 +1,12 @@
 -- boilerplate
-local teleportEvent = game:GetService("ReplicatedStorage"):WaitForChild("TeleportEvent")
-local serverStorage = game:GetService("ServerStorage")
-local serverScriptService = game:GetService("ServerScriptService")
-local hostSystem = require(serverScriptService.HostSystem)
+local teleportEvent: RemoteEvent = game:GetService("ReplicatedStorage"):WaitForChild("TeleportEvent")
+local serverStorage: ServerStorage = game:GetService("ServerStorage")
+local serverScriptService: ServerScriptService = game:GetService("ServerScriptService")
+local hostSystem: table = require(serverScriptService.HostSystem)
 
 local box = workspace.Union:Clone()
 
-local function bruteForceMinigame()
+local function bruteForceMinigame(): nil
 	-- placeholder function to get it working, will add minigame later
 	-- true means that the user has successfully completed it and vice versa
 	task.wait(5)
@@ -22,17 +22,17 @@ local function activateMinigame(fileName: string)
 	end
 end
 
-local function teleportPlayerToHost(player, hostname)
+local function teleportPlayerToHost(player: Player, hostname: string)
 	player.Character.HumanoidRootPart.CFrame = hostSystem[hostname]:getCFrame()
 end
 
-local function createHost(player, hostname)
+local function createHost(player: Player, hostname: string)
 	local hostMap = serverStorage:FindFirstChild(hostSystem[hostname]:getMap())
 	hostMap.Position = hostSystem[hostname]:getVector3()
 	teleportPlayerToHost(player, hostname)
 end
 
-teleportEvent.OnServerEvent:Connect(function(player, fileName, targetHostname)
+teleportEvent.OnServerEvent:Connect(function(player: Player, fileName: string, targetHostname: string)
 	local coords = CFrame.new(math.random(1, 10000), 1000, math.random(1, 10000))
 	local file = player.Backpack:FindFirstChild(fileName)
 	

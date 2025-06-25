@@ -1,11 +1,8 @@
 -- script to manage player data when they join and disconnects
-
--- boilerplate
-local replicatedStorage = game:WaitForChild("ReplicatedStorage")
-local dataStoreService = game:GetService("DataStoreService")
-local players = game:GetService("Players")
-local dataStore = dataStoreService:GetDataStore("Data")
-local welcomeEvent = replicatedStorage.WelcomeEvent
+local replicatedStorage: ReplicatedStorage = game:WaitForChild("ReplicatedStorage")
+local dataStoreService: DataStoreService = game:GetService("DataStoreService")
+local players: Players = game:GetService("Players")
+local dataStore: DataStore = dataStoreService:GetDataStore("Data")
 
 -- welcome function to tell the player whats going on
 -- TODO: implement this later
