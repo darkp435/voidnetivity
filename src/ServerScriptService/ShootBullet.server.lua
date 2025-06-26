@@ -9,8 +9,9 @@ local function isPlayerHumanoid(humanoid: Humanoid): boolean
 	return false
 end
 
--- bullet shoots linearly because its not actually bullets, its just simulated.
+-- bullet shoots linearly because it aligns more with the game idea
 shootEvent.OnServerEvent:Connect(function(player: Player, targetPosition)
+	-- clone the bullet model from serverstorage
 	local ball = game.ServerStorage.Bullet:Clone()
 	ball.Position = player.Character.HumanoidRootPart.Position
 	ball.Parent = workspace
@@ -27,4 +28,10 @@ shootEvent.OnServerEvent:Connect(function(player: Player, targetPosition)
 			ball:Destroy()
 		end
 	end)
+
+	-- destroy the bullet after 10 seconds if it has not hit anything
+	task.wait(10)
+	if ball then
+		ball:Destroy()
+	end
 end)

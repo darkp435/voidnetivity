@@ -1,9 +1,9 @@
 -- script to manage player data when they join and disconnects
 local replicatedStorage: ReplicatedStorage = game:WaitForChild("ReplicatedStorage")
-local dataStoreService: DataStoreService = game:GetService("DataStoreService")
 local players: Players = game:GetService("Players")
-local dataStore: DataStore = dataStoreService:GetDataStore("Data")
 local welcomeEvent: RemoteEvent = replicatedStorage:WaitForChild("WelcomeEvent")
+local ServerScriptService: ServerScriptService = game:GetService("ServerScriptService")
+local datamodule = require(ServerScriptService.SharedDataModule)
 
 -- welcome function to tell the player whats going on
 -- TODO: implement this later
@@ -12,13 +12,10 @@ local function welcome(player: Player)
 end
 
 -- when the player joins, sets the attributes and gets the data stored
-players.PlayerAdded:Connect(function(player)
-	local data, _ = dataStore:GetAsync(player.UserId)
-	local btc
-	print(data)
+players.PlayerAdded:Connect(function(player: Player)
+	local btc = datamodule.getBtc(tostring(player.UserId))
 	
-	if data.bitcoin then
-		btc = data.bitcoin
+	if btc then
 		player:SetAttribute("btc", btc)		
 	else
 		btc = 0
@@ -30,7 +27,5 @@ end)
 
 -- when a player leaves the game, save their data
 players.PlayerRemoving:Connect(function(player)
-	dataStore:SetAsync(tostring(player.UserId), {
-		bitcoin = player:GetAttribute("btc")
-	})
+	datamodule.savePlayerData(tostring(player.UserId))
 end)

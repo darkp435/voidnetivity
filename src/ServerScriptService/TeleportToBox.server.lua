@@ -53,7 +53,9 @@ teleportEvent.OnServerEvent:Connect(function(player: Player, fileName: string, t
 				end
 			end
 		else
-			print("error")
+			error("Error: humanoid or HumanoidRootPart does not exist.")
 		end
+	else
+		error("Error: file or player does not exist.")
 	end
 end)
