@@ -61,9 +61,15 @@ function module.getBtc(userid: string): number | nil
 	return module.Data[userid]["btc"]
 end
 
---- Saves the player data.
+--- Saves the player data to the datastore.
 function module.savePlayerData(userid: string): nil
+	playerData:SetAsync(userid, module.Data[userid])
+end
 
+--- Loads the user data into the module from the datastore.
+function module.loadData(userid: string): nil
+	local data = playerData:GetAsync(userid)
+	module.Data[userid] = data
 end
 
 return module
