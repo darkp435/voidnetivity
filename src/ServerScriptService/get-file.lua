@@ -1,7 +1,7 @@
 local module = {}
 
 --- Function to give the player the file. Does NOT validate if they do have access to it.
-function module.EquipFile(player: Player, file: string)
+function module.equipFile(player: Player, file: string)
 	local clonedFile: Tool
 
 	if file == "brute.exe" then

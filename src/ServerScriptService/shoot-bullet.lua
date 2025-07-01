@@ -1,5 +1,5 @@
+local module = {}
 local ReplicatedStorage: ReplicatedStorage = game:GetService("ReplicatedStorage")
-local shootEvent: RemoteEvent = ReplicatedStorage:WaitForChild("ShootEvent")
 
 local function isPlayerHumanoid(humanoid: Humanoid): boolean
 	local character = humanoid.Parent
@@ -9,8 +9,8 @@ local function isPlayerHumanoid(humanoid: Humanoid): boolean
 	return false
 end
 
--- bullet shoots linearly because it aligns more with the game idea
-shootEvent.OnServerEvent:Connect(function(player: Player, targetPosition)
+-- Shoots a linear bullet from player to the target mouse position
+function module.shootEvent(player: Player, targetPosition)
 	-- clone the bullet model from serverstorage
 	local ball = game.ServerStorage.Bullet:Clone()
 	ball.Position = player.Character.HumanoidRootPart.Position
@@ -34,4 +34,6 @@ shootEvent.OnServerEvent:Connect(function(player: Player, targetPosition)
 	if ball then
 		ball:Destroy()
 	end
-end)
+end
+
+return module

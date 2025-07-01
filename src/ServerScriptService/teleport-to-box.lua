@@ -1,8 +1,10 @@
+-- Module for the box system and file minigames
+
+local module = {}
 -- boilerplate
-local teleportEvent: RemoteEvent = game:GetService("ReplicatedStorage"):WaitForChild("TeleportEvent")
 local serverStorage: ServerStorage = game:GetService("ServerStorage")
 local serverScriptService: ServerScriptService = game:GetService("ServerScriptService")
-local hostSystem: table = require(serverScriptService.HostSystem)
+local hostSystem: table = require(serverScriptService["host-system"])
 
 local box = workspace.Union:Clone()
 
@@ -32,7 +34,8 @@ local function createHost(player: Player, hostname: string)
 	teleportPlayerToHost(player, hostname)
 end
 
-teleportEvent.OnServerEvent:Connect(function(player: Player, fileName: string, targetHostname: string)
+-- Function for when the teleport RemoteEvent is fired
+function module.teleportEvent(player: Player, fileName: string, targetHostname: string)
 	local coords = CFrame.new(math.random(1, 10000), 1000, math.random(1, 10000))
 	local file = player.Backpack:FindFirstChild(fileName)
 	
@@ -58,4 +61,6 @@ teleportEvent.OnServerEvent:Connect(function(player: Player, fileName: string, t
 	else
 		error("Error: file or player does not exist.")
 	end
-end)
+end
+
+return module
