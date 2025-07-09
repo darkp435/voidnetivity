@@ -55,7 +55,7 @@ function module.bruteForceMinigame(start: boolean, data: string)
         end)
 
         -- Revert back to original style.
-        yes.MouseLeave:Connect(function(_, _)
+        no.MouseLeave:Connect(function(_, _)
             no.BackgroundColor3 = Color3.fromRGB(177, 177, 177)
         end)
 
@@ -63,7 +63,7 @@ function module.bruteForceMinigame(start: boolean, data: string)
         no.Parent = frame
 
         yes.MouseButton1Click:Connect(function()
-            BruteForce:FireServer(true)
+            BruteForce:FireServer()
         end)
 
         no.MouseButton1Click:Connect(function()

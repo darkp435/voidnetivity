@@ -3,13 +3,18 @@ local DataStoreService = game:GetService("DataStoreService")
 SharedDataModule
 ================
 
-Centralises player data interactions. It managing player data on the server and efficiently interacting with datastores, centralised on the server and provides a
-bunch of APIs. This is so that there is a consistent way to manage and change player data. This is the **ONLY** script that should interact with datastores and
-DataStoreService. Also aims to prevent rate limits and handles errors around it.
+Centralises player data interactions. It managing player data on the server and efficiently interacting with datastores, centralised
+on the server and provides a bunch of APIs. This is so that there is a consistent way to manage and change player data. This is the
+**ONLY** script that should interact with datastores and DataStoreService. Also aims to prevent rate limits and handles errors around it.
 
 Note: player metadata "loaded" to ensure incomplete data isn't saved to prevent data loss. Basically a fail-safe.
-All functions must have a userid passed as the first argument as a STRING to prevent errors in datastores.
+All functions must have a userid passed as the first argument as a STRING to prevent errors in datastores. It can and will blow up
+if you pass numbers or anything else to it.
 ]]
+
+-- When I wrote this, I used a pseudocode file for the data structure.
+-- I then proceeded to lose said pseudocode, which means that only god knows what it looks like.
+-- :sob:
 
 local module = {}
 module.Data = {} -- This is where the actual data is

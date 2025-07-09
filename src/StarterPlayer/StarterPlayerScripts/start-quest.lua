@@ -1,9 +1,11 @@
+local module = {}
+
 local Players: Players = game:GetService("Players")
 local LocalPlayer: Player = Players.LocalPlayer
-local Backpack: Backpack = LocalPlayer:WaitForChild("Backpack")
 local PlayerGui: PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 
-local function connectTool(tool: Tool)
+-- fsdssadsdafsda
+function module.connectTool(tool: Tool)
     local DIALOGUE_1 = {
         "Hello! Weird sort of place isn't it?",
         "Yes, I know, this place is weird.",
@@ -136,9 +138,4 @@ local function connectTool(tool: Tool)
     end)
 end
 
-Backpack.ChildAdded:Connect(function(child: any)
-    -- verify that it is the correct tool
-    if child:IsA("Tool") and child.Name == "StarterQuest" then
-        connectTool(child)
-    end
-end)
+return module
