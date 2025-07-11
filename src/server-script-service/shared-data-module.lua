@@ -38,7 +38,7 @@ end
 
 --- Get the max permissions a player has
 function module.getPerms(userid: string, hostname: string)
-	return module.Data[userid]["hostinfo"][hostname]["permission"]
+	return module.Data[userid]["hostinfo"][hostname]["permission"] or "none"
 end
 
 --- Add a file to a host. Mainly used in conjunction with FTP.

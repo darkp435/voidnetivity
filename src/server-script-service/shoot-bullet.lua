@@ -1,5 +1,6 @@
 local module = {}
 local ReplicatedStorage: ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Workspace = game:GetService("Workspace")
 
 local function isPlayerHumanoid(humanoid: Humanoid): boolean
 	local character = humanoid.Parent

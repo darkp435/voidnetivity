@@ -3,6 +3,7 @@ local module = {}
 
 local replicatedStorage: ReplicatedStorage = game:WaitForChild("ReplicatedStorage")
 local welcomeEvent: RemoteEvent = replicatedStorage:WaitForChild("WelcomeEvent")
+local Players = game:GetService("Players")
 local ServerScriptService: ServerScriptService = game:GetService("ServerScriptService")
 local datamodule = require(ServerScriptService["shared-data-module"])
 
@@ -14,6 +15,10 @@ end
 
 -- when the player joins, sets the attributes and gets the data stored
 function module.playerAdded(player: Player)
+	-- Set default attributes
+	player:SetAttribute("InFTP", false)
+	player.Character.Humanoid.WalkSpeed = 20
+
 	local btc = datamodule.getBtc(tostring(player.UserId))
 	
 	if btc then

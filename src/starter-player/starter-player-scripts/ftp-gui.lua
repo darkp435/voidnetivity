@@ -1,7 +1,10 @@
+-- Boilerplate
 local ReplicatedStorage: ReplicatedStorage = game:GetService("ReplicatedStorage")
+local UserInputService = game:GetService("UserInputService")
 local FTPEvent: RemoteEvent = ReplicatedStorage:WaitForChild("FTPEvent")
-local CheckPerms: RemoteEvent = ReplicatedStorage:WaitForChild("CheckPerms")
-local PlayerGui: PlayerGui = game.Players.LocalPlayer.PlayerGui
+local CheckPerms: RemoteFunction = ReplicatedStorage:WaitForChild("CheckPerms")
+local PlayerGui: PlayerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
 
 -- default text label to be cloned, do NOT use it like a normal label, just clone it
 local defaultTextLabel: TextLabel = Instance.new("TextLabel")
@@ -11,9 +14,45 @@ defaultTextLabel.TextSize = 20
 defaultTextLabel.BackgroundTransparency = 1
 defaultTextLabel.TextXAlignment = Enum.TextXAlignment.Left
 
+local REJECTED_LABEL_TEXT = [[
+Error 401: permission denied
+You do not have access to the remote host
+RETURN to exit, SPACE or ALT to try different host
+]]
+
+-- Note: frame must be passed to avoid global variable usage
+local function inputBegan(input: InputObject, gameProcessedEvent: boolean, frame: Frame)
+    if gameProcessedEvent then return end
+
+    if (
+        input.KeyCode == Enum.KeyCode.Space or
+        input.KeyCode == Enum.KeyCode.LeftAlt or
+        input.KeyCode == Enum.KeyCode.RightAlt
+    ) then
+        frame:Destroy()
+        FTPEvent:FireServer()
+    elseif (
+        input.KeyCode == Enum.KeyCode.Return or
+        input.KeyCode == Enum.KeyCode.KeypadEnter -- Fail safe in case somebody tries it
+    ) then
+        -- Placeholder, I've been coding for like an hour now I need a break
+    end
+end
+
 local function verifyPerms(enterPressed, hostInput: TextBox)
     if enterPressed then
         local host = hostInput.Text
+    end
+
+    local hasAccess = CheckPerms:InvokeServer(hostInput)
+    -- Note that the server **MUST** still check if the player actually has
+    -- permissions to transfer files, since this is on the client side
+    -- for the UI.
+
+    if not hasAccess then
+        local rejectedLabel = Instance.new("TextLabel")
+        rejectedLabel.Text = "error: permission denied - you do not have access to the remote host."
+        UserInputService.InputBegan:Connect(inputBegan)
     end
 end
 
