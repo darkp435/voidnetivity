@@ -37,9 +37,12 @@
       "$path": "src/Workspace"
     },
     "ReplicatedStorage": {
-      "$className": "Workspace",
-      "$ignoreUnknownInstances": true,
-      "$path": "src/replicated-storage"
+      "$className": "ReplicatedStorage",
+      "WelcomeEvent": {
+        "$className": "RemoteEvent",
+        "$ignoreUnknownInstances": true
+      },
+      "$ignoreUnknownInstances": true
     }
   }
 }
