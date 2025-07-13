@@ -45,13 +45,13 @@ local function verifyPerms(enterPressed, hostInput: TextBox)
     end
 
     local hasAccess = CheckPerms:InvokeServer(hostInput)
-    -- Note that the server **MUST** still check if the player actually has
+    -- NOTE: the server **MUST** still check if the player actually has
     -- permissions to transfer files, since this is on the client side
     -- for the UI.
 
     if not hasAccess then
         local rejectedLabel = Instance.new("TextLabel")
-        rejectedLabel.Text = "error: permission denied - you do not have access to the remote host."
+        rejectedLabel.Text = REJECTED_LABEL_TEXT
         UserInputService.InputBegan:Connect(inputBegan)
     end
 end

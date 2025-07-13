@@ -5,6 +5,11 @@ local StarterQuest = require(LocalPlayer.PlayerScripts["start-quest"])
 local WelcomeEvent: RemoteEvent = ReplicatedStorage.WelcomeEvent
 local WelcomeGui = require(LocalPlayer.PlayerScripts["welcome-gui"])
 
+local ScreenGui = Instance.new("ScreenGui")
+-- Make sure that there is a ScreenGui always available
+ScreenGui.ResetOnSpawn = false
+ScreenGui.Parent = LocalPlayer:WaitForChild("PlayerGui")
+
 Backpack.ChildAdded:Connect(function(child: any)
     -- Connect the tools to the respective RemoteEvents
     if child:IsA("Tool") and child.Name == "StarterQuest" then
