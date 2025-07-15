@@ -36,9 +36,9 @@ end)
 
 -- The client isn't allowed to check if they have correct perms due to security reasons, so this is why
 -- we have a remote function that does so
-CheckPerms.OnServerInvoke(function(player: Player, hostname: string)
+CheckPerms.OnServerInvoke = function(player: Player, hostname: string)
     return VerifyPerms.verifyPerms(tostring(player.UserId), hostname)
-end)
+end
 
 -- TODO: modularise this later
 FTPEvent.OnServerEvent:Connect(function(player: Player)

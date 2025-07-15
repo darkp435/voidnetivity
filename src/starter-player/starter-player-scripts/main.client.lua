@@ -16,5 +16,5 @@ Backpack.ChildAdded:Connect(function(child: any)
         StarterQuest.connectTool(child)
     end
 end)
--- test
+
 WelcomeEvent.OnClientEvent:Connect(WelcomeGui.welcomeEvent)

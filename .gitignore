@@ -4,3 +4,9 @@
 
 # vscode files
 .vscode
+
+# wally packages
+Packages/
+
+# node_modules just in case (idiotproofing)
+node_modules/

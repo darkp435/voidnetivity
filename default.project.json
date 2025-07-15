@@ -38,9 +38,14 @@
     },
     "ReplicatedStorage": {
       "$className": "ReplicatedStorage",
+      "$path": "src/replicated-storage",
       "WelcomeEvent": {
         "$className": "RemoteEvent",
         "$ignoreUnknownInstances": true
+      },
+      "Packages": {
+        "$className": "Folder",
+        "$path": "Packages"
       },
       "$ignoreUnknownInstances": true
     }

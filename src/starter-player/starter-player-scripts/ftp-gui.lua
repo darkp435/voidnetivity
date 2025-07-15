@@ -4,42 +4,47 @@ local UserInputService = game:GetService("UserInputService")
 local FTPEvent: RemoteEvent = ReplicatedStorage:WaitForChild("FTPEvent")
 local CheckPerms: RemoteFunction = ReplicatedStorage:WaitForChild("CheckPerms")
 local PlayerGui: PlayerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+local module = {}
 
-
--- default text label to be cloned, do NOT use it like a normal label, just clone it
+-- Default text label to be cloned, do NOT use it like a normal label, just clone it
 local defaultTextLabel: TextLabel = Instance.new("TextLabel")
 defaultTextLabel.FontFace = Font.new("rbxasset://fonts/families/Inconsolata.json")
+defaultTextLabel.RichText = true
 defaultTextLabel.TextColor3 = Color3.fromRGB(66, 179, 62)
 defaultTextLabel.TextSize = 20
 defaultTextLabel.BackgroundTransparency = 1
 defaultTextLabel.TextXAlignment = Enum.TextXAlignment.Left
+defaultTextLabel.Archivable = true
 
 local REJECTED_LABEL_TEXT = [[
 Error 401: permission denied
 You do not have access to the remote host
-RETURN to exit, SPACE or ALT to try different host
+<b>RETURN</b>, <b>SPACE</b> or <b>ALT</b> to exit
 ]]
 
--- Note: frame must be passed to avoid global variable usage
-local function inputBegan(input: InputObject, gameProcessedEvent: boolean, frame: Frame)
+local ACCEPTED_LABEL_TEXT = [[
+Success - user is authenticated
+]]
+
+-- TODO: add "retry" feature
+local function inputBegan(input: InputObject, gameProcessedEvent: boolean)
     if gameProcessedEvent then return end
 
-    if (
+    if
         input.KeyCode == Enum.KeyCode.Space or
         input.KeyCode == Enum.KeyCode.LeftAlt or
-        input.KeyCode == Enum.KeyCode.RightAlt
-    ) then
-        frame:Destroy()
-        FTPEvent:FireServer()
-    elseif (
+        input.KeyCode == Enum.KeyCode.RightAlt or
         input.KeyCode == Enum.KeyCode.Return or
         input.KeyCode == Enum.KeyCode.KeypadEnter -- Fail safe in case somebody tries it
-    ) then
-        -- Placeholder, I've been coding for like an hour now I need a break
+    then
+        return true
+    else
+        return false
     end
 end
 
-local function verifyPerms(enterPressed, hostInput: TextBox)
+-- Returns true for if they have USER access, otherwise false
+local function verifyPerms(enterPressed, hostInput: string)
     if enterPressed then
         local host = hostInput.Text
     end
@@ -49,14 +54,14 @@ local function verifyPerms(enterPressed, hostInput: TextBox)
     -- permissions to transfer files, since this is on the client side
     -- for the UI.
 
-    if not hasAccess then
-        local rejectedLabel = Instance.new("TextLabel")
-        rejectedLabel.Text = REJECTED_LABEL_TEXT
-        UserInputService.InputBegan:Connect(inputBegan)
+    if hasAccess then
+        return true
+    else
+        return false
     end
 end
 
-FTPEvent.OnClientEvent:Connect(function()
+function module.FTPEVentCallback()
     -- frame is background
     -- initialise FTP with hello messages, auth and confirmations
     local frame = Instance.new("Frame")
@@ -83,7 +88,28 @@ FTPEvent.OnClientEvent:Connect(function()
     hostInput.Parent = frame
     hostInput.Text = ""
     hostInput:CaptureFocus()
+    local hasPerms -- Init so it's accessible
+
     hostInput.FocusLost:Connect(function(enterPressed)
-        local result = verifyPerms(enterPressed, hostInput)
+        hasPerms = verifyPerms(enterPressed, hostInput.Text)
     end)
-end)
+
+    if not hasPerms then
+        local rejectedLabel = defaultTextLabel:Clone()
+        rejectedLabel.Text = REJECTED_LABEL_TEXT
+        local inputCallback
+        
+        inputCallback = UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
+            local keypressed = inputBegan(input, gameProcessedEvent)
+            
+            if keypressed then
+                frame:Destroy()
+                inputCallback:Disconnect()
+            end
+        end)
+    else
+        
+    end
+end
+
+return module
