@@ -28,8 +28,20 @@ local function welcome(player: Player)
 	welcomeEvent:FireClient(player)
 end
 
+local function humanoidDied()
+	-- Give them back the tools in their backpack, and also
+	-- teleport them to the appropriate host.
+	-- TODO: implement this later.
+end
+
+function module.characterAdded(character: Model)
+	local humanoid: Humanoid = character.Humanoid
+	humanoid.Died:Connect(humanoidDied)
+end
+
 -- when the player joins, sets the attributes and gets the data stored
 function module.playerAdded(player: Player)
+	player.Character.Humanoid.Died:Connect()
 	-- Set default attributes
 	player:SetAttribute("InFTP", false)
 	player.Character.Humanoid.WalkSpeed = 20

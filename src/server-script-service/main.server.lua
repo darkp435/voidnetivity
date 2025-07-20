@@ -42,6 +42,7 @@ ShootEvent.OnServerEvent:Connect(function(player: Player, targetPosition)
 end)
 
 Players.PlayerAdded:Connect(function(player)
+    player.CharacterAdded:Connect(JoinAndLeave.characterAdded)
     JoinAndLeave.playerAdded(player)
 end)
 

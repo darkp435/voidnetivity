@@ -40,14 +40,14 @@ You do not have access to the remote host
 
 local ACCEPTED_LABEL_TEXT = [[
 Success - user is authenticated
+Connected to remote host on port 21
 ]]
 
 -- TODO: add "retry" feature
 local function inputBegan(input: InputObject, gameProcessedEvent: boolean)
     if gameProcessedEvent then return end
 
-    if
-        input.KeyCode == Enum.KeyCode.Space or
+    if input.KeyCode == Enum.KeyCode.Space or
         input.KeyCode == Enum.KeyCode.LeftAlt or
         input.KeyCode == Enum.KeyCode.RightAlt or
         input.KeyCode == Enum.KeyCode.Return or
@@ -77,6 +77,8 @@ local function verifyPerms(enterPressed, hostInput: string)
     end
 end
 
+-- The positions of the UI elements may be changed in the future
+-- FIXME: UI positions
 function module.FTPEVentCallback()
     -- frame is background
     -- initialise FTP with hello messages, auth and confirmations
@@ -106,26 +108,31 @@ function module.FTPEVentCallback()
     hostInput:CaptureFocus()
     local hasPerms -- Init so it's accessible
 
+    -- TODO: refactor this spaghetti code
+    -- NOTE: the above TODO will probably never happen due to the
+    -- developer's habit of procrastination.
     hostInput.FocusLost:Connect(function(enterPressed)
         hasPerms = verifyPerms(enterPressed, hostInput.Text)
-    end)
+        local statusLabel = defaultTextLabel:Clone()
+        statusLabel.Parent = frame
+        statusLabel.Position = UDim2.new(0.2, 0, 0.3, 0)
 
-    if not hasPerms then
-        local rejectedLabel = defaultTextLabel:Clone()
-        rejectedLabel.Text = REJECTED_LABEL_TEXT
-        local inputCallback
-        
-        inputCallback = UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
-            local keypressed = inputBegan(input, gameProcessedEvent)
+        if not hasPerms then
+            statusLabel.Text = REJECTED_LABEL_TEXT
+            local inputCallback
             
-            if keypressed then
-                frame:Destroy()
-                inputCallback:Disconnect()
-            end
-        end)
-    else
-        
-    end
+            inputCallback = UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
+                local keypressed = inputBegan(input, gameProcessedEvent)
+                
+                if keypressed then
+                    frame:Destroy()
+                    inputCallback:Disconnect()
+                end
+            end)
+        else
+            statusLabel.Text = ACCEPTED_LABEL_TEXT
+        end
+    end)
 end
 
 return module

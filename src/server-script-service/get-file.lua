@@ -13,6 +13,7 @@ You may obtain a copy of the License at
  See the License for the specific language governing permissions and
  limitations under the License.
  ]]
+
 local module = {}
 
 --- Function to give the player the file. Does NOT validate if they do have access to it.
