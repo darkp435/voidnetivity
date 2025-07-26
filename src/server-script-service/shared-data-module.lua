@@ -13,6 +13,7 @@ You may obtain a copy of the License at
  See the License for the specific language governing permissions and
  limitations under the License.
  ]]
+
 local DataStoreService = game:GetService("DataStoreService")
 --[[
 SharedDataModule
@@ -59,6 +60,25 @@ end
 --- Add a file to a host. Mainly used in conjunction with FTP.
 function module.addFile(userid: string, hostname: string, filename: string)
 	table.insert(module.Data[userid]["hostinfo"][hostname]["files"], filename)
+end
+
+-- Linear search function for unordered list
+local function search(array: table, value: any): number
+	for index, item in array do
+		if item == value then
+			return index
+		end
+	end
+
+	-- Not found
+	return -1
+end
+
+--- Deletes file from a host
+function module.deleteFile(userid: string, hostname: string, filename: string)
+	local fileList = module.Data[userid]["hostinfo"][hostname]["files"]
+	
+	local indexToDelete = search(fileList, filename)
 end
 
 --- Returns true if the user has SYSADM and vice versa.

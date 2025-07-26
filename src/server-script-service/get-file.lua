@@ -27,4 +27,3 @@ function module.equipFile(player: Player, file: string)
 end
 
 return module
-

@@ -13,6 +13,8 @@ You may obtain a copy of the License at
  See the License for the specific language governing permissions and
  limitations under the License.
  ]]
+
+-- Handles the displaying of a welcome prompt when the player first joins
 local module = {}
 local ReplicatedStorage: ReplicatedStorage = game:GetService("ReplicatedStorage")
 local PlayerGui: PlayerGui = game:GetService("Players").LocalPlayer.PlayerGui

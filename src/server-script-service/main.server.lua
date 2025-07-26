@@ -46,7 +46,7 @@ Players.PlayerAdded:Connect(function(player)
     JoinAndLeave.playerAdded(player)
 end)
 
-Players.PlayerRejoining:Connect(function(player)
+Players.PlayerRemoving:Connect(function(player)
     JoinAndLeave.playerRemoved(player)
 end)
 

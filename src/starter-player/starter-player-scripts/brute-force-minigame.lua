@@ -51,18 +51,19 @@ function module.bruteForceMinigame(start: boolean, data: string)
         yes.BorderSizePixel = 3
         yes.BorderColor3 = Color3.fromRGB(0, 0, 0)
         yes.BackgroundColor3 = Color3.fromRGB(177, 177, 177)
+        -- Just trust the process with me on this next line
+        local no = yes:Clone()
+
         -- This function is purely for style reasons
         yes.MouseEnter:Connect(function(_, _)
             yes.BackgroundColor3 = Color3.fromRGB(111, 111, 111)
         end)
 
-        -- Revert back to original style.
+        -- Revert back to original style
         yes.MouseLeave:Connect(function(_, _)
             yes.BackgroundColor3 = Color3.fromRGB(177, 177, 177)
         end)
 
-        -- Just trust the process with me on this next line
-        local no = yes:Clone()
         no.Text = "No"
         no.Position = UDim2.new(0.624, 0, 0.746, 0)
         -- Again, for the style.

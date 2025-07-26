@@ -42,7 +42,7 @@ end
 -- when the player joins, sets the attributes and gets the data stored
 function module.playerAdded(player: Player)
 	player.Character.Humanoid.Died:Connect()
-	-- Set default attributes
+	-- Set default attributes, to be changed later.
 	player:SetAttribute("InFTP", false)
 	player.Character.Humanoid.WalkSpeed = 20
 

@@ -20,6 +20,7 @@ local UserInputService = game:GetService("UserInputService")
 local FTPEvent: RemoteEvent = ReplicatedStorage:WaitForChild("FTPEvent")
 local CheckPerms: RemoteFunction = ReplicatedStorage:WaitForChild("CheckPerms")
 local PlayerGui: PlayerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+local Promise = require(ReplicatedStorage.Packages.promise)
 local module = {}
 
 -- Default text label to be cloned, do NOT use it like a normal label, just clone it
@@ -77,6 +78,17 @@ local function verifyPerms(enterPressed, hostInput: string)
     end
 end
 
+-- Function to wait for user textbox inputs to keep code linear
+local function waitForInput(input: TextBox)
+    return Promise.new(function(resolve, _)
+        input:CaptureFocus()
+
+        input.FocusLost:Connect(function(enterPressed)
+            if enterPressed then resolve(input.Text) end
+        end)
+    end)
+end
+
 -- The positions of the UI elements may be changed in the future
 -- FIXME: UI positions
 function module.FTPEVentCallback()
@@ -105,7 +117,7 @@ function module.FTPEVentCallback()
     hostInput.Position = UDim2.new(0.2, 0, 0.25, 0)
     hostInput.Parent = frame
     hostInput.Text = ""
-    hostInput:CaptureFocus()
+    local enteredHost = waitForInput(hostInput):await()
     local hasPerms -- Init so it's accessible
 
     -- TODO: refactor this spaghetti code
