@@ -13,6 +13,7 @@ You may obtain a copy of the License at
  See the License for the specific language governing permissions and
  limitations under the License.
  ]]
+
 --[[
 Module for managing the host system and abstracting it as well as fetching data about the host
 Host system is represented via a graph because it aligns better with what the network looks like
@@ -20,6 +21,7 @@ Host system is represented via a graph because it aligns better with what the ne
 
 local module = {}
 
+-- Host class
 Host = {}
 Host.__index = Host
 

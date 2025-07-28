@@ -13,6 +13,9 @@ You may obtain a copy of the License at
  See the License for the specific language governing permissions and
  limitations under the License.
  ]]
+
+-- ASHES! ASHES! THEY ALL FALL DOWN.
+
 local module = {}
 local ReplicatedStorage: ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Workspace = game:GetService("Workspace")

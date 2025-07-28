@@ -51,7 +51,7 @@ Players.PlayerRemoving:Connect(function(player)
 end)
 
 -- The client isn't allowed to check if they have correct perms due to security reasons, so this is why
--- we have a remote function that does so
+-- we have a remote function that does so.
 CheckPerms.OnServerInvoke = function(player: Player, hostname: string)
     return VerifyPerms.verifyPerms(tostring(player.UserId), hostname)
 end
@@ -68,4 +68,8 @@ FTPEvent.OnServerEvent:Connect(function(player: Player)
 
         player.Character.Humanoid.WalkSpeed = 0 -- Disable moving while in FTP UI
     end
+end)
+
+ChangeBTC.OnServerEvent:Connect(function(player)
+    -- TODO: implement this later
 end)

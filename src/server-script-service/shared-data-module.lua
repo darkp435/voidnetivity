@@ -74,11 +74,13 @@ local function search(array: table, value: any): number
 	return -1
 end
 
---- Deletes file from a host
+--- Deletes a file from a host.
+--- If it fails, blame John
 function module.deleteFile(userid: string, hostname: string, filename: string)
 	local fileList = module.Data[userid]["hostinfo"][hostname]["files"]
 	
 	local indexToDelete = search(fileList, filename)
+	table.remove(fileList, indexToDelete)
 end
 
 --- Returns true if the user has SYSADM and vice versa.

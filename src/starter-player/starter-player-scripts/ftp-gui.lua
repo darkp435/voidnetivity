@@ -61,11 +61,7 @@ local function inputBegan(input: InputObject, gameProcessedEvent: boolean)
 end
 
 -- Returns true for if they have USER access, otherwise false
-local function verifyPerms(enterPressed, hostInput: string)
-    if enterPressed then
-        local host = hostInput.Text
-    end
-
+local function verifyPerms(hostInput: string)
     local hasAccess = CheckPerms:InvokeServer(hostInput)
     -- NOTE: the server **MUST** still check if the player actually has
     -- permissions to transfer files, since this is on the client side
@@ -123,28 +119,26 @@ function module.FTPEVentCallback()
     -- TODO: refactor this spaghetti code
     -- NOTE: the above TODO will probably never happen due to the
     -- developer's habit of procrastination.
-    hostInput.FocusLost:Connect(function(enterPressed)
-        hasPerms = verifyPerms(enterPressed, hostInput.Text)
-        local statusLabel = defaultTextLabel:Clone()
-        statusLabel.Parent = frame
-        statusLabel.Position = UDim2.new(0.2, 0, 0.3, 0)
+    hasPerms = verifyPerms(hostInput.Text)
+    local statusLabel = defaultTextLabel:Clone()
+    statusLabel.Parent = frame
+    statusLabel.Position = UDim2.new(0.2, 0, 0.3, 0)
 
-        if not hasPerms then
-            statusLabel.Text = REJECTED_LABEL_TEXT
-            local inputCallback
+    if not hasPerms then
+        statusLabel.Text = REJECTED_LABEL_TEXT
+        local inputCallback -- Make sure it's accessible in the scope
+        
+        inputCallback = UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
+            local keypressed = inputBegan(input, gameProcessedEvent)
             
-            inputCallback = UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
-                local keypressed = inputBegan(input, gameProcessedEvent)
-                
-                if keypressed then
-                    frame:Destroy()
-                    inputCallback:Disconnect()
-                end
-            end)
-        else
-            statusLabel.Text = ACCEPTED_LABEL_TEXT
-        end
-    end)
+            if keypressed then
+                frame:Destroy()
+                inputCallback:Disconnect()
+            end
+        end)
+    else
+        statusLabel.Text = ACCEPTED_LABEL_TEXT
+    end
 end
 
 return module
