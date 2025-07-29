@@ -6,6 +6,3 @@ realm = "shared"
 
 [dependencies]
 promise = "evaera/promise@4.0.0"
-
-[place]
-dir = "src/server-script-service"
