@@ -20,6 +20,7 @@ Host system is represented via a graph because it aligns better with what the ne
 ]]
 
 local module = {}
+module.Hosts = {}
 
 -- Host class
 Host = {}
@@ -57,146 +58,152 @@ module {
 ]]
 
 --[[
-list of hostnames:
-
-water
-ndtf
-ndtf-wg1
-ndtf-wg2
-ndtf-w3c
-ndtf-ise
-ndtf-iseg
-lemon
-lemon-ade
-grass
-silicon-net
-pixel435
-pixel435
-sub-ndtf
-ndtf-satcom
-gubby
-voidnetivate (home)
-jerseysoft
-jerseysoft-satcom
-jerseylabs
-jerseysoft-mn
-jerseysoft-gw
-jerseysoft-hq
-ndtflabs
-boxy
-restmain
-intl
-asynco
-ndtf-rfc
-prop
-mocha
-seren-co
-little
-franksoft
-res-1
-res-2
-res-3
-res-4
-res-5
-unires
-love
-trust
-toxicate-ent
-toxicate-mn
-toxicate-sub1
-toxicate-sub2
-toxicate-satcom
-toxicate-gw
-ndtf-gw
-darkn
-crypto-gw
-crypto-ent
-crypto-stcm
-crypto-trd
-crypto-mn
-dent
-glisten-gw
-glisten-mn
-tx-sat
-ajax
-xjax
-document
-quokka
-quokka-gw
-quokka-hq
-quokka-pub
-quokka-stcm
-quokka-sub1
-quokka-sub2
-quokka-sub3
-quokka-ent
-ndtf-misc
-ndtf-dmp
-ndtf-mail
-ndtf-wgun
-ndtf-aiwg
-ndtf-nwg
-res-ai
-telnet
-ndtf-sec
-quokka-sec
-telnet-mkt
-linux
-linux-disc
-linux-dmp
-linux-pub
-htmco
-ndtf-w3c-htm
-rfc-pub
-ephmco
-ephmco-pub
-ephmco-disc
-ndtf-discstcm
-guidance
-gluttony
-gluttony-mn
-key
-msc
-betrayal
-min-host
-hostserv
-uninet
-unitools
-void
-voidtech
-voidtech-web
-voidtech-mn
-voidtech-queries
-voidtech-marketing
-voidtech-satcom
-voidtech-gw1
-voidtech-gw2
-voidtech-disc1
-voidtech-disc2
-voidtech-disc3
-voidtech-lnk
-voidtech-dmp
-voidtec-docs
-fibreglass
-netmon
-sys05
-x24x
-1337co
-org31173
-doc37n
-castle
-mininet
-q1
-
 graph is directed and unweighted
 adjacency list (should be able to copy into file seamlessly):
 
 {
-    voidnetivate: {"voidtech-gw1", "sys05", "doc37n", "res-1", "water"}
+    voidhome: {"voidtech-gw1", "sys05", "doc37n", "res-1", "water"}
 }
 ]]
-module["foo"] = Host.new("Map2", 13123, 4, 1)
-module["bar"] = Host.new("Map2", 2324, 123, 4354)
+
+-- List of constructed hosts. Each host has 2000 studs allocated, must be between 100k and -100k.
+-- voidhome is default host.
+-- Maps will be temporary placeholders.
+module["Hosts"]["voidhome"] = Host.new("HOME", 0, 0, 0)
+-- These next two hosts used to be placeholders but I'd figure to keep it in.
+module["Hosts"]["foo"] = Host.new("PLACEHOLDER", 0, 0, 2000)
+module["Hosts"]["bar"] = Host.new("PLACEHOLDER", 0, 0, 4000)
+module["Hosts"]["water"] = Host.new("PLACEHOLDER", 0, 0, 6000)
+module["Hosts"]["ndtf"] = Host.new("PLACEHOLDER", 0, 0, 8000)
+module["Hosts"]["ndtf-wg1"] = Host.new("PLACEHOLDER", 0, 0, 10000)
+module["Hosts"]["ndtf-wg2"] = Host.new("PLACEHOLDER", 0, 0, 12000)
+module["Hosts"]["ndtf-w3c"] = Host.new("PLACEHOLDER", 0, 0, 14000)
+module["Hosts"]["ndtf-ise"] = Host.new("PLACEHOLDER", 0, 0, 16000)
+module["Hosts"]["ndtf-iseg"] = Host.new("PLACEHOLDER", 0, 0, 18000)
+module["Hosts"]["lemon"] = Host.new("PLACEHOLDER", 0, 0, 20000)
+module["Hosts"]["lemon-ade"] = Host.new("PLACEHOLDER", 0, 0, 22000)
+module["Hosts"]["grass"] = Host.new("PLACEHOLDER", 0, 0, 24000)
+module["Hosts"]["silicon-net"] = Host.new("PLACEHOLDER", 0, 0, 26000)
+module["Hosts"]["pixel435"] = Host.new("PLACEHOLDER", 0, 0, 28000)
+module["Hosts"]["sub-ndtf"] = Host.new("PLACEHOLDER", 0, 0, 30000)
+module["Hosts"]["ndtf-satcom"] = Host.new("PLACEHOLDER", 0, 0, 32000)
+module["Hosts"]["gubby"] = Host.new("PLACEHOLDER", 0, 0, 34000)
+module["Hosts"]["jerseysoft"] = Host.new("PLACEHOLDER", 0, 0, 36000)
+module["Hosts"]["jerseysoft-satcom"] = Host.new("PLACEHOLDER", 0, 0, 38000)
+module["Hosts"]["jerseylabs"] = Host.new("PLACEHOLDER", 0, 0, 40000)
+module["Hosts"]["jerseysoft-gw"] = Host.new("PLACEHOLDER", 0, 0, 42000)
+module["Hosts"]["jerseysoft-mn"] = Host.new("PLACEHOLDER", 0, 0, 44000)
+module["Hosts"]["jerseysoft-hq"] = Host.new("PLACEHOLDER", 0, 0, 46000)
+module["Hosts"]["ndtflabs"] = Host.new("PLACEHOLDER", 0, 0, 48000)
+module["Hosts"]["boxy"] = Host.new("PLACEHOLDER", 0, 0, 50000)
+module["Hosts"]["restmain"] = Host.new("PLACEHOLDER", 0, 0, 52000)
+module["Hosts"]["intls"] = Host.new("PLACEHOLDER", 0, 0, 54000)
+module["Hosts"]["asynco"] = Host.new("PLACEHOLDER", 0, 0, 56000)
+module["Hosts"]["ndtf-rfc"] = Host.new("PLACEHOLDER", 0, 0, 58000)
+module["Hosts"]["prop"] = Host.new("PLACEHOLDER", 0, 0, 60000)
+module["Hosts"]["mocha"] = Host.new("PLACEHOLDER", 0, 0, 62000)
+module["Hosts"]["seren-co"] = Host.new("PLACEHOLDER", 0, 0, 64000)
+module["Hosts"]["little"] = Host.new("PLACEHOLDER", 0, 0, 66000)
+module["Hosts"]["franksoft"] = Host.new("PLACEHOLDER", 0, 0, 68000)
+module["Hosts"]["res-1"] = Host.new("PLACEHOLDER", 0, 0, 70000)
+module["Hosts"]["res-2"] = Host.new("PLACEHOLDER", 0, 0, 72000)
+module["Hosts"]["res-3"] = Host.new("PLACEHOLDER", 0, 0, 74000)
+module["Hosts"]["res-4"] = Host.new("PLACEHOLDER", 0, 0, 76000)
+module["Hosts"]["res-5"] = Host.new("PLACEHOLDER", 0, 0, 78000)
+module["Hosts"]["unires"] = Host.new("PLACEHOLDER", 0, 0, 80000)
+module["Hosts"]["love"] = Host.new("PLACEHOLDER", 0, 0, 82000)
+module["Hosts"]["trust"] = Host.new("PLACEHOLDER", 0, 0, 84000)
+module["Hosts"]["toxicate-ent"] = Host.new("PLACEHOLDER", 0, 0, 86000)
+module["Hosts"]["toxicate-mn"] = Host.new("PLACEHOLDER", 0, 0, 88000)
+module["Hosts"]["toxicate-sub1"] = Host.new("PLACEHOLDER", 0, 0, 90000)
+module["Hosts"]["toxicate-sub2"] = Host.new("PLACEHOLDER", 0, 0, 92000)
+module["Hosts"]["toxicate-satcom"] = Host.new("PLACEHOLDER", 0, 0, 94000)
+module["Hosts"]["toxicate-gw"] = Host.new("PLACEHOLDER", 0, 0, 96000)
+module["Hosts"]["ndtf-gw"] = Host.new("PLACEHOLDER", 0, 0, 98000)
+module["Hosts"]["darkn"] = Host.new("PLACEHOLDER", 0, 0, 100000)
+module["Hosts"]["crypto-gw"] = Host.new("PLACEHOLDER", 0, 0, -2000)
+module["Hosts"]["crypto-ent"] = Host.new("PLACEHOLDER", 0, 0, -4000)
+module["Hosts"]["crypto-stcm"] = Host.new("PLACEHOLDER", 0, 0, -8000)
+module["Hosts"]["crypto-trd"] = Host.new("PLACEHOLDER", 0, 0, -10000)
+module["Hosts"]["crypto-mn"] = Host.new("PLACEHOLDER", 0, 0, -12000)
+module["Hosts"]["dent"] = Host.new("PLACEHOLDER", 0, 0, -14000)
+module["Hosts"]["glisten-gw"] = Host.new("PLACEHOLDER", 0, 0, -16000)
+module["Hosts"]["glisten-mn"] = Host.new("PLACEHOLDER", 0, 0, -18000)
+module["Hosts"]["tx-sat"] = Host.new("PLACEHOLDER", 0, 0, -20000)
+module["Hosts"]["ajax"] = Host.new("PLACEHOLDER", 0, 0, -22000)
+module["Hosts"]["xjax"] = Host.new("PLACEHOLDER", 0, 0, -24000)
+module["Hosts"]["document"] = Host.new("PLACEHOLDER", 0, 0, -26000)
+module["Hosts"]["quokka"] = Host.new("PLACEHOLDER", 0, 0, -28000)
+module["Hosts"]["quokka-gw"] = Host.new("PLACEHOLDER", 0, 0, -30000)
+module["Hosts"]["quokka-hq"] = Host.new("PLACEHOLDER", 0, 0, -32000)
+module["Hosts"]["quokka-pub"] = Host.new("PLACEHOLDER", 0, 0, -34000)
+module["Hosts"]["quokka-stcm"] = Host.new("PLACEHOLDER", 0, 0, -36000)
+module["Hosts"]["quokka-sub1"] = Host.new("PLACEHOLDER", 0, 0, -38000)
+module["Hosts"]["quokka-sub2"] = Host.new("PLACEHOLDER", 0, 0, -40000)
+module["Hosts"]["quokka-sub3"] = Host.new("PLACEHOLDER", 0, 0, -42000)
+module["Hosts"]["quokka-ent"] = Host.new("PLACEHOLDER", 0, 0, -44000)
+module["Hosts"]["ndtf-misc"] = Host.new("PLACEHOLDER", 0, 0, -46000)
+module["Hosts"]["ndtf-dmp"] = Host.new("PLACEHOLDER", 0, 0, -48000)
+module["Hosts"]["ndtf-mail"] = Host.new("PLACEHOLDER", 0, 0, -50000)
+module["Hosts"]["ndtf-wgun"] = Host.new("PLACEHOLDER", 0, 0, -52000)
+module["Hosts"]["ndtf-aiwg"] = Host.new("PLACEHOLDER", 0, 0, -54000)
+module["Hosts"]["ndtf-nwg"] = Host.new("PLACEHOLDER", 0, 0, -56000)
+module["Hosts"]["res-ai"] = Host.new("PLACEHOLDER", 0, 0, -58000)
+module["Hosts"]["telnet"] = Host.new("PLACEHOLDER", 0, 0, -60000)
+module["Hosts"]["ndtf-sec"] = Host.new("PLACEHOLDER", 0, 0, -62000)
+module["Hosts"]["quokka-sec"] = Host.new("PLACEHOLDER", 0, 0, -64000)
+module["Hosts"]["telnet-mkt"] = Host.new("PLACEHOLDER", 0, 0, -68000)
+module["Hosts"]["linux"] = Host.new("PLACEHOLDER", 0, 0, -70000)
+module["Hosts"]["linux-disc"] = Host.new("PLACEHOLDER", 0, 0, -72000)
+module["Hosts"]["linux-dmp"] = Host.new("PLACEHOLDER", 0, 0, -74000)
+module["Hosts"]["linux-pub"] = Host.new("PLACEHOLDER", 0, 0, -76000)
+module["Hosts"]["htmco"] = Host.new("PLACEHOLDER", 0, 0, -78000)
+module["Hosts"]["ndtf-w3c-htm"] = Host.new("PLACEHOLDER", 0, 0, -80000)
+module["Hosts"]["rfc-pub"] = Host.new("PLACEHOLDER", 0, 0, -82000)
+module["Hosts"]["ephmco"] = Host.new("PLACEHOLDER", 0, 0, -84000)
+module["Hosts"]["ephmco-pub"] = Host.new("PLACEHOLDER", 0, 0, -86000)
+module["Hosts"]["ephmco-disc"] = Host.new("PLACEHOLDER", 0, 0, -88000)
+module["Hosts"]["ndtf-discstcm"] = Host.new("PLACEHOLDER", 0, 0, -90000)
+module["Hosts"]["guidance"] = Host.new("PLACEHOLDER", 0, 0, -92000)
+module["Hosts"]["gluttony"] = Host.new("PLACEHOLDER", 0, 0, -94000)
+module["Hosts"]["gluttony-mn"] = Host.new("PLACEHOLDER", 0, 0, -96000)
+module["Hosts"]["key"] = Host.new("PLACEHOLDER", 0, 0, -98000)
+module["Hosts"]["msc"] = Host.new("PLACEHOLDER", 0, 0, -10000)
+module["Hosts"]["betrayal"] = Host.new("PLACEHOLDER", 0, 2000, 0)
+module["Hosts"]["min-host"] = Host.new("PLACEHOLDER", 0, 2000, 2000)
+module["Hosts"]["hostserv"] = Host.new("PLACEHOLDER", 0, 2000, 4000)
+module["Hosts"]["uninet"] = Host.new("PLACEHOLDER", 0, 2000, 6000)
+module["Hosts"]["unitools"] = Host.new("PLACEHOLDER", 0, 2000, 8000)
+module["Hosts"]["void"] = Host.new("PLACEHOLDER", 0, 2000, 10000)
+module["Hosts"]["voidtech"] = Host.new("PLACEHOLDER", 0, 2000, 12000)
+module["Hosts"]["voidtech-web"] = Host.new("PLACEHOLDER", 0, 2000, 14000)
+module["Hosts"]["voidtech-mn"] = Host.new("PLACEHOLDER", 0, 2000, 16000)
+module["Hosts"]["voidtech-queries"] = Host.new("PLACEHOLDER", 0, 2000, 18000)
+module["Hosts"]["voidtech-marketing"] = Host.new("PLACEHOLDER", 0, 2000, 20000)
+module["Hosts"]["voidtech-satcom"] = Host.new("PLACEHOLDER", 0, 2000, 22000)
+module["Hosts"]["voidtech-gw1"] = Host.new("PLACEHOLDER", 0, 2000, 24000)
+module["Hosts"]["voidtech-gw2"] = Host.new("PLACEHOLDER", 0, 2000, 26000)
+module["Hosts"]["voidtech-disc1"] = Host.new("PLACEHOLDER", 0, 2000, 28000)
+module["Hosts"]["voidtech-disc2"] = Host.new("PLACEHOLDER", 0, 2000, 30000)
+module["Hosts"]["voidtech-disc3"] = Host.new("PLACEHOLDER", 0, 2000, 32000)
+module["Hosts"]["voidtech-lnk"] = Host.new("PLACEHOLDER", 0, 2000, 34000)
+module["Hosts"]["voidtech-dmp"] = Host.new("PLACEHOLDER", 0, 2000, 36000)
+module["Hosts"]["voidtech-docs"] = Host.new("PLACEHOLDER", 0, 2000, 38000)
+module["Hosts"]["fibreglass"] = Host.new("PLACEHOLDER", 0, 2000, 40000)
+module["Hosts"]["netmon"] = Host.new("PLACEHOLDER", 0, 2000, 42000)
+module["Hosts"]["sys05"] = Host.new("PLACEHOLDER", 0, 2000, 44000)
+module["Hosts"]["x24x"] = Host.new("PLACEHOLDER", 0, 2000, 46000)
+module["Hosts"]["1337co"] = Host.new("PLACEHOLDER", 0, 2000, 48000)
+module["Hosts"]["org31173"] = Host.new("PLACEHOLDER", 0, 2000, 50000)
+module["Hosts"]["doc37n"] = Host.new("PLACEHOLDER", 0, 2000, 52000)
+module["Hosts"]["castle"] = Host.new("PLACEHOLDER", 0, 2000, 54000)
+module["Hosts"]["mininet"] = Host.new("PLACEHOLDER", 0, 2000, 56000)
+module["Hosts"]["q1"] = Host.new("PLACEHOLDER", 0, 2000, 58000)
+
+-- Graph representing the hosts and their connections
+module["Graph"] = {
+    voidhome = {"voidtech-gw1", "sys05", "doc37n", "res-1", "water"}
+}
 
 --- General function to get the host object from the hostname.
 function module.getHostFromName(name: string): table
@@ -209,4 +216,3 @@ function module.getMap(host: string): string
 end
 
 return module
-
