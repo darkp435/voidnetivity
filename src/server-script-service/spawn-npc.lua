@@ -1,3 +1,4 @@
+local ServerScriptService = game:GetService("ServerScriptService")
 local ServerStorage = game:GetService("ServerStorage")
 --[[
  Copyright 2025 Tiger Duan
@@ -17,8 +18,9 @@ You may obtain a copy of the License at
 
 -- NOTE: do not use this directly, clone it
 local storedNPC: Instance = ServerStorage:WaitForChild("NPC")
+local npcAIEvent: BindableEvent = ServerScriptService.npcAIEvent
 
--- Module responsible for spawning and managing NPCs
+-- Module responsible for spawning NPCs, it does **NOT** manage the AI for it
 local module = {}
 
 function module.spawnNPC(NPCType: string, weapon: string, pos: Vector3)
@@ -52,6 +54,8 @@ function module.spawnNPC(NPCType: string, weapon: string, pos: Vector3)
         humanoid.MaxHealth = 75
         humanoid.Health = 75
     end
+
+    npcAIEvent:Fire(npc)
 
     hrp.Parent = workspace
     hrp.Position = pos

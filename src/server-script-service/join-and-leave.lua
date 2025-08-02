@@ -47,14 +47,14 @@ function module.playerAdded(player: Player)
 	player.Character.Humanoid.WalkSpeed = 20
 
 	local btc = datamodule.getBtc(tostring(player.UserId))
-	
+
 	if btc then
 		player:SetAttribute("btc", btc)		
 	else
 		btc = 0
 		welcome(player)
 	end
-	
+
 	replicatedStorage.ChangeBTC:FireClient(player, btc)
 end
 

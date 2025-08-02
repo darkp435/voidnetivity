@@ -1,4 +1,3 @@
-local ServerStorage = game:GetService("ServerStorage")
 --[[
  Copyright 2025 Tiger Duan
 
@@ -15,14 +14,20 @@ You may obtain a copy of the License at
  limitations under the License.
  ]]
 
+-- Algorithmic utilies that multiple scripts need. If only one script needs it,
+-- don't put it in here.
 local module = {}
 
---- Function to give the player the file. Does NOT validate if they do have access to it.
-function module.equipFile(player: Player, file: string)
-	local clonedFile: Tool
-	clonedFile = ServerStorage:FindFirstChild("file"):Clone()
-	clonedFile.Parent = player.Backpack
-    clonedFile.Name = file
+-- Linear search function. Does **not** work on recursive tables and returns -1 if not found
+function module.linearSearch(array: table, value: any): number
+	for index, item in array do
+		if item == value then
+			return index
+		end
+	end
+
+	-- Not found
+	return -1
 end
 
 return module

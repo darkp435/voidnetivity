@@ -3,6 +3,10 @@
   "tree": {
     "$className": "DataModel",
     "ServerScriptService": {
+      "npcAIEvent": {
+        "$className": "BindableEvent",
+        "$ignoreUnknownInstances": true
+      },
       "$className": "ServerScriptService",
       "$ignoreUnknownInstances": true,
       "$path": "src/server-script-service"

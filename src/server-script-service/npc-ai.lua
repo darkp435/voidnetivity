@@ -1,4 +1,3 @@
-local ServerStorage = game:GetService("ServerStorage")
 --[[
  Copyright 2025 Tiger Duan
 
@@ -15,14 +14,12 @@ You may obtain a copy of the License at
  limitations under the License.
  ]]
 
+local PathfindingService = game:GetService("PathfindingService")
+-- Module for binding NPC AI, **currently unfinished**.
 local module = {}
 
---- Function to give the player the file. Does NOT validate if they do have access to it.
-function module.equipFile(player: Player, file: string)
-	local clonedFile: Tool
-	clonedFile = ServerStorage:FindFirstChild("file"):Clone()
-	clonedFile.Parent = player.Backpack
-    clonedFile.Name = file
+function module.bindNpcAI(npc: Model)
+    local humanoid: Humanoid = npc:FindFirstChild("Humanoid")
 end
 
 return module

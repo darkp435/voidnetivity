@@ -31,7 +31,8 @@ local FTPEvent: RemoteEvent = ReplicatedStorage:WaitForChild("FTPEvent")
 local ShootEvent: RemoteEvent = ReplicatedStorage:WaitForChild("ShootEvent")
 local CheckPerms: RemoteFunction = ReplicatedStorage:WaitForChild("CheckPerms")
 local VerifyPerms = require(ServerScriptService["verify-perms"])
-
+local npcAIEvent: BindableEvent = ServerScriptService.npcAIEvent
+local npcAI = require(ServerScriptService["npc-ai"])
 
 TeleportEvent.OnServerEvent:Connect(function(player: Player, fileName: string, targetHostname: string)
     TeleportToBox.teleportEvent(player, fileName, targetHostname)
@@ -72,4 +73,8 @@ end)
 
 ChangeBTC.OnServerEvent:Connect(function(player)
     -- TODO: implement this later
+end)
+
+npcAIEvent.Event:Connect(function(npc: Model)
+    npcAI.bindNpcAI(npc)
 end)

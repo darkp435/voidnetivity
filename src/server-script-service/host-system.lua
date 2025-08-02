@@ -14,11 +14,12 @@ You may obtain a copy of the License at
  limitations under the License.
  ]]
 
+local ServerScriptService = game:GetService("ServerScriptService")
+local utils = require(ServerScriptService["utils"])
 --[[
 Module for managing the host system and abstracting it as well as fetching data about the host
 Host system is represented via a graph because it aligns better with what the network looks like
 ]]
-
 local module = {}
 module.Hosts = {}
 
@@ -213,6 +214,16 @@ end
 --- Function to get the map name of the host.
 function module.getMap(host: string): string
 	return module[host]:getMap()
+end
+
+function module.hostIsNextTo(origin: string, target: string)
+	local adjacentHosts = module["Graph"][origin]
+
+	if utils.linearSearch(adjacentHosts, target) == -1 then
+		return false
+	else
+		return true
+	end
 end
 
 return module

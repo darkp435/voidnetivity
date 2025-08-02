@@ -15,8 +15,11 @@ You may obtain a copy of the License at
  ]]
 
 local DataStoreService = game:GetService("DataStoreService")
+local ServerScriptService = game:GetService("ServerScriptService")
+local utils = require(ServerScriptService["utils"])
+
 --[[
-SharedDataModule
+Shared Data Module
 ================
 
 Centralises player data interactions. It managing player data on the server and efficiently interacting with datastores, centralised
@@ -27,11 +30,9 @@ Note: player metadata "loaded" to ensure incomplete data isn't saved to prevent 
 All functions must have a userid passed as the first argument as a STRING to prevent errors in datastores. It can and will blow up
 if you pass numbers or anything else to it.
 ]]
-
 -- When I wrote this, I used a pseudocode file for the data structure.
 -- I then proceeded to lose said pseudocode, which means that only god knows what it looks like.
 -- :sob:
-
 local module = {}
 module.Data = {} -- This is where the actual data is
 local playerData = DataStoreService:GetDataStore("playerData") -- DataStore for player data
@@ -62,24 +63,12 @@ function module.addFile(userid: string, hostname: string, filename: string)
 	table.insert(module.Data[userid]["hostinfo"][hostname]["files"], filename)
 end
 
--- Linear search function for unordered list
-local function search(array: table, value: any): number
-	for index, item in array do
-		if item == value then
-			return index
-		end
-	end
-
-	-- Not found
-	return -1
-end
-
 --- Deletes a file from a host.
 --- If it fails, blame John
 function module.deleteFile(userid: string, hostname: string, filename: string)
-	local fileList = module.Data[userid]["hostinfo"][hostname]["files"]
+	local fileList: table = module.Data[userid]["hostinfo"][hostname]["files"]
 	
-	local indexToDelete = search(fileList, filename)
+	local indexToDelete = utils.linearSearch(fileList, filename)
 	table.remove(fileList, indexToDelete)
 end
 
