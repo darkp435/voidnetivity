@@ -216,6 +216,10 @@ function module.getMap(host: string): string
 	return module[host]:getMap()
 end
 
+function module.getUsersOnHost(host: string)
+	
+end
+
 function module.hostIsNextTo(origin: string, target: string)
 	local adjacentHosts = module["Graph"][origin]
 

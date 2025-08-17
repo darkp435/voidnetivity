@@ -15,11 +15,29 @@ You may obtain a copy of the License at
  ]]
 
 local PathfindingService = game:GetService("PathfindingService")
+local ServerScriptService = game:GetService("ServerScriptService")
+local HostSystem = require(ServerScriptService["host-system"])
 -- Module for binding NPC AI, **currently unfinished**.
 local module = {}
 
+-- Based on distance, not path
+local function findNearestPlayerCoords(origin: Vector3): Vector3
+    -- TODO: deal with this later
+    local targetList = HostSystem.getUsersOnHost()
+end
+
 function module.bindNpcAI(npc: Model)
     local humanoid: Humanoid = npc:FindFirstChild("Humanoid")
+    local hrp: BasePart = npc:FindFirstChild("HumanoidRootPart")
+
+    local path: Path = PathfindingService:CreatePath({
+        AgentRadius = 3,
+        AgentHeight = 5,
+        AgentCanJump = true,
+        WayPointSpacing = 5
+    })
+
+    local target = findNearestPlayerCoords(hrp.Position)
 end
 
 return module
