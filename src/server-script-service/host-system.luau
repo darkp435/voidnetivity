@@ -17,36 +17,25 @@ local Players = game:GetService("Players")
 
 local ServerScriptService = game:GetService("ServerScriptService")
 local utils = require(ServerScriptService["utils"])
+
 --[[
 Module for managing the host system and abstracting it as well as fetching data about the host
 Host system is represented via a graph because it aligns better with what the network looks like
 ]]
+
 local module = {}
 module.Hosts = {}
 
--- Host class
+-- Host struct
 Host = {}
-Host.__index = Host
 
 function Host.new(map, x, y, z)
-	local self = setmetatable({}, Host)
-	self.map = map
-	self.x = x
-	self.y = y
-	self.z = z
-	return self
-end
-
-function Host:getVector3()
-	return Vector3.new(self.x, self.y, self.z)
-end
-
-function Host:getCFrame()
-	return CFrame.new(self.x, self.y, self.z)
-end
-
-function Host:getMap()
-	return self.map
+	return {
+		map = map,
+		x = x,
+		y = y,
+		z = z
+	}
 end
 
 -- hostnames will be represented via an adjacency list, then converted to objects for convenience, pseudocode:
@@ -228,6 +217,10 @@ function module.getUsersOnHost(host: string): table
 	end
 
 	return users
+end
+
+function module.setUserOnHost(user: Player, host: string)
+	user:SetAttribute("CurrentHost", host)
 end
 
 function module.hostIsNextTo(origin: string, target: string)

@@ -21,6 +21,7 @@ local HostSystem = require(ServerScriptService["host-system"])
 -- Module for binding NPC AI, **currently unfinished**.
 local module = {}
 
+-- Distance is flat because the y-axis is overrated
 local function calcDistance(origin: Vector3, target: Vector3)
     return math.sqrt(math.pow(origin.X - target.X, 2) + math.pow(origin.Z - target.Z, 2))
 end
