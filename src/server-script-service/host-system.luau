@@ -1,5 +1,5 @@
 --[[
- Copyright 2025 Tiger Duan
+ Copyright 2025 darkp435
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,6 +13,7 @@ You may obtain a copy of the License at
  See the License for the specific language governing permissions and
  limitations under the License.
  ]]
+local Players = game:GetService("Players")
 
 local ServerScriptService = game:GetService("ServerScriptService")
 local utils = require(ServerScriptService["utils"])
@@ -216,8 +217,17 @@ function module.getMap(host: string): string
 	return module[host]:getMap()
 end
 
-function module.getUsersOnHost(host: string)
-	
+-- TODO: the CurrentHost attribute currently has no setattribute
+function module.getUsersOnHost(host: string): table
+	local users = {}
+
+	for player: Player in Players:GetPlayers() do
+		if player:GetAttribute("CurrentHost") == host then
+            table.insert(users, player)
+		end
+	end
+
+	return users
 end
 
 function module.hostIsNextTo(origin: string, target: string)

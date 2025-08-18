@@ -1,5 +1,5 @@
 --[[
- Copyright 2025 Tiger Duan
+ Copyright 2025 darkp435
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,15 +15,31 @@ You may obtain a copy of the License at
  ]]
 
 local PathfindingService = game:GetService("PathfindingService")
+local Players = game:GetService("Players")
 local ServerScriptService = game:GetService("ServerScriptService")
 local HostSystem = require(ServerScriptService["host-system"])
 -- Module for binding NPC AI, **currently unfinished**.
 local module = {}
 
+local function calcDistance(origin: Vector3, target: Vector3)
+    return math.sqrt(math.pow(origin.X - target.X, 2) + math.pow(origin.Z - target.Z, 2))
+end
+
 -- Based on distance, not path
 local function findNearestPlayerCoords(origin: Vector3): Vector3
-    -- TODO: deal with this later
     local targetList = HostSystem.getUsersOnHost()
+    local playerTarget: Player = nil
+    local minDistance = math.huge -- I don't do math but I'm pretty sure this can't be negative
+
+    for potentialTarget: Player in targetList do
+        local distance = calcDistance(origin, potentialTarget.Character.HumanoidRootPart.Position)
+
+        if distance < minDistance then
+            playerTarget = potentialTarget
+        end
+    end
+
+    return playerTarget.Character.HumanoidRootPart.Position
 end
 
 function module.bindNpcAI(npc: Model)
