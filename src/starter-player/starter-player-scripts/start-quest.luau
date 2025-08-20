@@ -1,5 +1,5 @@
 --[[
- Copyright 2025 Tiger Duan
+ Copyright 2025 darkp435
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -124,6 +124,7 @@ function module.connectTool(tool: Tool)
         "Best of luck to your endeavors."
     }
 
+    -- TODO: cleanup this god-awful callback
     tool.Equipped:Connect(function()
         local ptr = 1
         local button

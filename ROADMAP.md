@@ -1,6 +1,6 @@
 Plans for development:
-1. Implement host system
-2. Implement filesystem (DONE!)
+1. Implement host system (almost done, just need graph)
+2. Implement files and filesystem
 3. Implement FTP
 4. Implement NPC system
 5. Implement privilege system

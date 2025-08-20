@@ -1,5 +1,5 @@
 --[[
- Copyright 2025 Tiger Duan
+ Copyright 2025 darkp435
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -41,8 +41,17 @@ You do not have access to the remote host
 
 local ACCEPTED_LABEL_TEXT = [[
 Success - user is authenticated
-Connected to remote host on port 21
+Connected to remote host on port 32
 ]]
+
+local ANCHOR_POINT_CENTER = Vector2.new(0.5, 0.5)
+
+local FTP_FRAME = Instance.new("Frame")
+FTP_FRAME.AnchorPoint = ANCHOR_POINT_CENTER
+FTP_FRAME.Position = UDim2.new(1, 0, 1, 0)
+FTP_FRAME.Size = UDim2.new(1, 0, 1, 0)
+FTP_FRAME.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+FTP_FRAME.Archivable = true
 
 -- TODO: add "retry" feature
 local function inputBegan(input: InputObject, gameProcessedEvent: boolean)
@@ -67,11 +76,7 @@ local function verifyPerms(hostInput: string)
     -- permissions to transfer files, since this is on the client side
     -- for the UI.
 
-    if hasAccess then
-        return true
-    else
-        return false
-    end
+    return hasAccess
 end
 
 -- Function to wait for user textbox inputs to keep code linear
@@ -90,10 +95,7 @@ end
 function module.FTPEVentCallback()
     -- frame is background
     -- initialise FTP with hello messages, auth and confirmations
-    local frame = Instance.new("Frame")
-    frame.Position = UDim2.new(1, 0, 1, 0)
-    frame.Size = UDim2.new(1, 0, 1, 0)
-    frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    local frame = FTP_FRAME:Clone()
     frame.Parent = PlayerGui
     local title = defaultTextLabel:Clone()
     title.Text = "FTP"

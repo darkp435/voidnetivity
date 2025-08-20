@@ -25,6 +25,11 @@
       "$className": "StarterPlayer",
       "StarterPlayerScripts": {
         "$className": "StarterPlayerScripts",
+        "files": {
+          "$className": "Folder",
+          "$ignoreUnknownInstances": true,
+          "$path": "src/starter-player/starter-player-scripts/files"
+        },
         "$ignoreUnknownInstances": true,
         "$path": "src/starter-player/starter-player-scripts"
       },
