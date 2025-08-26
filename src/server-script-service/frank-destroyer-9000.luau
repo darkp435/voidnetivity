@@ -17,12 +17,13 @@ You may obtain a copy of the License at
 -- ASHES! ASHES! THEY ALL FALL DOWN.
 
 local module = {}
+local Players = game:GetService("Players")
 local ReplicatedStorage: ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Workspace = game:GetService("Workspace")
 
 local function isPlayerHumanoid(humanoid: Humanoid): boolean
 	local character = humanoid.Parent
-	if character and game.Players:GetPlayerFromCharacter(character) then
+	if character and Players:GetPlayerFromCharacter(character) then
 		return true
 	end
 	return false

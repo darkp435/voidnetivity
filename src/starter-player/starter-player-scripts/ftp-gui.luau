@@ -45,6 +45,7 @@ Connected to remote host on port 32
 ]]
 
 local ANCHOR_POINT_CENTER = Vector2.new(0.5, 0.5)
+local ANCHOR_POINT_DEFAULT = Vector2.new(0, 0)
 
 local FTP_FRAME = Instance.new("Frame")
 FTP_FRAME.AnchorPoint = ANCHOR_POINT_CENTER
@@ -54,7 +55,7 @@ FTP_FRAME.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 FTP_FRAME.Archivable = true
 
 -- TODO: add "retry" feature
-local function inputBegan(input: InputObject, gameProcessedEvent: boolean)
+local function isActivationKey(input: InputObject, gameProcessedEvent: boolean)
     if gameProcessedEvent then return end
 
     if input.KeyCode == Enum.KeyCode.Space or
@@ -116,12 +117,10 @@ function module.FTPEVentCallback()
     hostInput.Parent = frame
     hostInput.Text = ""
     local enteredHost = waitForInput(hostInput):await()
-    local hasPerms -- Init so it's accessible
-
     -- TODO: refactor this spaghetti code
     -- NOTE: the above TODO will probably never happen due to the
     -- developer's habit of procrastination.
-    hasPerms = verifyPerms(hostInput.Text)
+    local hasPerms = verifyPerms(hostInput.Text)
     local statusLabel = defaultTextLabel:Clone()
     statusLabel.Parent = frame
     statusLabel.Position = UDim2.new(0.2, 0, 0.3, 0)
@@ -131,9 +130,9 @@ function module.FTPEVentCallback()
         local inputCallback -- Make sure it's accessible in the scope
         
         inputCallback = UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
-            local keypressed = inputBegan(input, gameProcessedEvent)
+            local correctKeypressed = isActivationKey(input, gameProcessedEvent)
             
-            if keypressed then
+            if correctKeypressed then
                 frame:Destroy()
                 inputCallback:Disconnect()
             end

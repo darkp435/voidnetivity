@@ -14,8 +14,7 @@ You may obtain a copy of the License at
  limitations under the License.
  ]]
 
--- Algorithmic utilies that multiple scripts need. If only one script needs it,
--- don't put it in here.
+-- Generalised algorithmic utilities. They don't use the Roblox API
 local module = {}
 
 -- Linear search function. Does **not** work on recursive tables and returns -1 if not found
@@ -28,6 +27,19 @@ function module.linearSearch(array: table, value: any): number
 
 	-- Not found
 	return -1
+end
+
+--- Breadth-first search helper function for shortestUnweightedPath
+local function bfs(graph: table)
+	-- TODO: write this dumb thing later
+end
+
+--- Finds the shortest path on an unweighted graph between two nodes.
+---@param graph table Adjacency list representation of the graph
+---@param source any Source node (aka origin)
+---@param target any Target node (aka destination)
+function module.shortestUnweightedPath(graph: table, source: any, target: any)
+
 end
 
 return module
