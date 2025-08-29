@@ -230,4 +230,8 @@ function module.hostIsNextTo(origin: string, target: string)
 	end
 end
 
+function module.pathToHost(origin: string, target: string)
+	return utils.shortestUnweightedPath(module.Hosts, origin, target)
+end
+
 return module

@@ -29,17 +29,42 @@ function module.linearSearch(array: table, value: any): number
 	return -1
 end
 
---- Breadth-first search helper function for shortestUnweightedPath
-local function bfs(graph: table)
-	-- TODO: write this dumb thing later
-end
-
 --- Finds the shortest path on an unweighted graph between two nodes.
 ---@param graph table Adjacency list representation of the graph
 ---@param source any Source node (aka origin)
 ---@param target any Target node (aka destination)
-function module.shortestUnweightedPath(graph: table, source: any, target: any)
+function module.shortestUnweightedPath(graph, source, target)
+    local queue = {source}
+    local par = {}
+    local visited = {}
+    visited[source] = true
 
+    while #queue > 0 do
+        local node = table.remove(queue, 1)
+        if node == target then
+            break
+        end
+        for _, neighbor in ipairs(graph[node]) do
+            if not visited[neighbor] then
+                visited[neighbor] = true
+                par[neighbor] = node
+                table.insert(queue, neighbor)
+            end
+        end
+    end
+
+    local path = {}
+    local node = target
+    while node do
+        table.insert(path, 1, node)
+        node = par[node]
+    end
+
+    if path[1] ~= source then
+        return nil
+    end
+
+    return path
 end
 
 return module
