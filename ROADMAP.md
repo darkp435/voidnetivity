@@ -2,7 +2,7 @@ Plans for development:
 1. Implement host system (almost done, just need graph)
 2. Implement files and filesystem
 3. Implement FTP
-4. Implement NPC system
+4. Implemen NPC system
 5. Implement privilege system
 6. Implement map (how it will actually work in 3d space)
 7. Implement weapons and damage system

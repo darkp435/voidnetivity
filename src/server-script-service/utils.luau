@@ -14,7 +14,7 @@ You may obtain a copy of the License at
  limitations under the License.
  ]]
 
--- Generalised algorithmic utilities. They don't use the Roblox API
+-- Generalised algorithmic utilities. They don't use the Roblox API.
 local module = {}
 
 -- Linear search function. Does **not** work on recursive tables and returns -1 if not found

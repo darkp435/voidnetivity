@@ -3,9 +3,15 @@
 registry = "test"
 
 [[package]]
+name = "4812571/graph"
+version = "0.1.1"
+dependencies = []
+
+[[package]]
 name = "darkp435/voidnetivity"
 version = "0.1.0"
 dependencies = [
+	["graph", "4812571/graph@0.1.1"],
 	["promise", "evaera/promise@4.0.0"],
 ]
 
