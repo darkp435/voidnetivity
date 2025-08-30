@@ -6,3 +6,4 @@ realm = "shared"
 
 [dependencies]
 promise = "evaera/promise@4.0.0"
+roact = "jessekroeske/roact@1.4.2"

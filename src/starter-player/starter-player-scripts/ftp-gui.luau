@@ -49,8 +49,8 @@ local ANCHOR_POINT_DEFAULT = Vector2.new(0, 0)
 
 local FTP_FRAME = Instance.new("Frame")
 FTP_FRAME.AnchorPoint = ANCHOR_POINT_CENTER
-FTP_FRAME.Position = UDim2.new(1, 0, 1, 0)
-FTP_FRAME.Size = UDim2.new(1, 0, 1, 0)
+FTP_FRAME.Position = UDim2.fromScale(1, 1)
+FTP_FRAME.Size = UDim2.fromScale(1, 1)
 FTP_FRAME.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 FTP_FRAME.Archivable = true
 
@@ -86,7 +86,9 @@ local function waitForInput(input: TextBox)
         input:CaptureFocus()
 
         input.FocusLost:Connect(function(enterPressed)
-            if enterPressed then resolve(input.Text) end
+            if enterPressed then 
+                resolve(input.Text)
+            end
         end)
     end)
 end
@@ -101,19 +103,19 @@ function module.FTPEVentCallback()
     local title = defaultTextLabel:Clone()
     title.Text = "FTP"
     title.TextSize = 35
-    title.Position = UDim2.new(0.1, 0, 0.1, 0)
+    title.Position = UDim2.fromScale(0.1, 0.1)
     title.TextColor3 = Color3.fromRGB(235, 235, 235)
     title.Parent = frame
     local subtitle = defaultTextLabel:Clone()
-    subtitle.Position = UDim2.new(0.15, 0, 0.1, 0)
+    subtitle.Position = UDim2.fromScale(0.15, 0.1)
     subtitle.Text = "Transfer files to remote hosts"
     subtitle.Parent = frame
     local hostPrompt = defaultTextLabel:Clone()
     hostPrompt.Text = "Remote host: "
-    hostPrompt.Position = UDim2.new(0.2, 0, 0.1, 0)
+    hostPrompt.Position = UDim2.fromScale(0.2, 0.1)
     hostPrompt.Parent = frame
     local hostInput = Instance.new("TextBox")
-    hostInput.Position = UDim2.new(0.2, 0, 0.25, 0)
+    hostInput.Position = UDim2.fromScale(0.2, 0.25)
     hostInput.Parent = frame
     hostInput.Text = ""
     local enteredHost = waitForInput(hostInput):await()
@@ -123,7 +125,7 @@ function module.FTPEVentCallback()
     local hasPerms = verifyPerms(hostInput.Text)
     local statusLabel = defaultTextLabel:Clone()
     statusLabel.Parent = frame
-    statusLabel.Position = UDim2.new(0.2, 0, 0.3, 0)
+    statusLabel.Position = UDim2.fromScale(0.2, 0.3)
 
     if not hasPerms then
         statusLabel.Text = REJECTED_LABEL_TEXT
