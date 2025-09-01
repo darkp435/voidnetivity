@@ -21,6 +21,14 @@
       "$ignoreUnknownInstances": true,
       "$path": "src/StarterPack"
     },
+    "StarterGui": {
+      "$className": "StarterGui",
+      "ScreenGui": {
+        "$className": "ScreenGui",
+        "$ignoreUnknownInstances": true
+      },
+      "$ignoreUnknownInstances": true
+    },
     "StarterPlayer": {
       "$className": "StarterPlayer",
       "StarterPlayerScripts": {
@@ -47,7 +55,6 @@
     },
     "ReplicatedStorage": {
       "$className": "ReplicatedStorage",
-      "$path": "src/replicated-storage",
       "WelcomeEvent": {
         "$className": "RemoteEvent",
         "$ignoreUnknownInstances": true
