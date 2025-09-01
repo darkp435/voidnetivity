@@ -21,6 +21,8 @@ local HostSystem = require(ServerScriptService["host-system"])
 -- Module for binding NPC AI, **currently unfinished**.
 local module = {}
 
+local MAXIMUM_SEEN_DISTANCE = 5
+
 -- Distance is flat because the y-axis is overrated
 local function calcDistance(origin: Vector3, target: Vector3)
     return math.sqrt(math.pow(origin.X - target.X, 2) + math.pow(origin.Z - target.Z, 2))
@@ -43,7 +45,12 @@ local function findNearestPlayerCoords(origin: Vector3): Vector3
     return playerTarget.Character.HumanoidRootPart.Position
 end
 
-function module.bindNpcAI(npc: Model)
+-- NOTE: the humanoid:MoveTo method is asynchronous!
+local function chasePlayer(player: Player)
+    -- PLACEHOLDER
+end
+
+function module.bindNpcAI(npc: Model): nil
     local humanoid: Humanoid = npc:FindFirstChild("Humanoid")
     local hrp: BasePart = npc:FindFirstChild("HumanoidRootPart")
 
@@ -54,7 +61,14 @@ function module.bindNpcAI(npc: Model)
         WayPointSpacing = 5
     })
 
-    local target = findNearestPlayerCoords(hrp.Position)
+    -- The original plan was to see if the NPC is facing forwards, but after
+    -- doing a bit of research, I discovered that it required linear algebra,
+    -- which is miles beyond my scope and understanding of math.
+    -- (Nah but seriously what the actual hell is a "euler angle")
+    local targetCoords = findNearestPlayerCoords(hrp.Position)
+    if calcDistance(targetCoords, hrp.Position) <= MAXIMUM_SEEN_DISTANCE then
+        chasePlayer()
+    end
 end
 
 return module

@@ -17,7 +17,7 @@ You may obtain a copy of the License at
 -- Generalised algorithmic utilities. They don't use the Roblox API.
 local module = {}
 
--- Linear search function. Does **not** work on recursive tables and returns -1 if not found
+-- Linear search function. Does **not** work on recursive tables and returns -1 if not found.
 function module.linearSearch(array: table, value: any): number
 	for index, item in array do
 		if item == value then
@@ -30,6 +30,9 @@ function module.linearSearch(array: table, value: any): number
 end
 
 --- Finds the shortest path on an unweighted graph between two nodes.
+--- Btw I have no clue how this works since this is quite literally
+--- Google level algorithms and data structures, but I wouldn't touch
+--- it if I were you. It works (I think (I hope (I seriously hope))).
 ---@param graph table Adjacency list representation of the graph
 ---@param source any Source node (aka origin)
 ---@param target any Target node (aka destination)

@@ -17,6 +17,8 @@ local module = {}
 local ServerScriptService = game:GetService("ServerScriptService")
 local datamodule = require(ServerScriptService["shared-data-module"])
 
+-- NOTE: if possible, delete this script and implement in another one as this is
+-- redundant.
 function module.verifyPerms(userid, hostname): boolean
     if datamodule.getPerms(userid, hostname) ~= "none" then
         return true

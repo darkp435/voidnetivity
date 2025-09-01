@@ -106,10 +106,11 @@ function module.loadData(userid: string): nil
 	module.Data[userid] = data
 end
 
+--- Returns an array of what the hosts the user has at least USER access to are.
 function module.getHostsUserHasAccessTo(userid: string)
-    local totalHosts = {}
+    local totalHosts: table = {}
 
-	for hostname, _ in module.Data[userid]["hostinfo"] do
+	for hostname: string, _ in module.Data[userid]["hostinfo"] do
         if module.hasAccessTo(userid, hostname) then
             table.insert(totalHosts, hostname)
         end
