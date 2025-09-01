@@ -139,8 +139,8 @@ function module.connectTool(tool: Tool)
 
         -- Create button for when the user clicks through the dialogue
         button = Instance.new("TextButton")
-        button.Size = UDim2.new(0, 400, 0, 100)
-        button.Position = UDim2.new(0.5, 0, 0.5, 0)
+        button.Size = UDim2.fromOffset(400, 100)
+        button.Position = UDim2.fromScale(0.5, 0.5)
         button.Parent = game.Players.LocalPlayer.PlayerGui.ScreenGui
         button.Text = DIALOGUE_1[ptr]
         
