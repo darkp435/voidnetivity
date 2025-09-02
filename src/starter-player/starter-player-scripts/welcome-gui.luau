@@ -23,7 +23,7 @@ local PlayerGui: PlayerGui = game:GetService("Players").LocalPlayer.PlayerGui
 function module.welcomeEvent()
     local frame = Instance.new("Frame")
     frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-    frame.Size = UDim2.new(1, 0, 1, 0)
+    frame.Size = UDim2.fromScale(1, 1)
     frame.Position = UDim2.new()
 end
 

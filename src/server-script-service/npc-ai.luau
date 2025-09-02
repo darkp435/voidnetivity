@@ -50,8 +50,27 @@ local function chasePlayer(player: Player)
     -- PLACEHOLDER
 end
 
-function module.bindNpcAI(npc: Model): nil
-    local humanoid: Humanoid = npc:FindFirstChild("Humanoid")
+--- Returns true if the coordinate is valid for the NPC to walk to.
+---@param targetCoords Vector3 Vector3 of the proposed coordinate.
+local function isValid(targetCoords: Vector3, dimensions: table): boolean
+    if targetCoords == nil then
+        return false
+    end
+end
+
+-- This function does exactly what the name implies
+local function walkRandomly(npc: Model, host: string)
+    local dimensions: table = HostSystem.getHostDimensions(host)
+    -- We can't always generate a coordinate that is reachable from the NPC,
+    -- so if the coordinate can't be reached, we simply reject it.
+    local targetCoords
+    while not isValid(targetCoords) do
+        
+    end
+end
+
+function module.bindNpcAI(npc: Model, host: string): nil
+    local humanoid: Humanoid = npc:FindFirstChildWhichIsA("Humanoid")
     local hrp: BasePart = npc:FindFirstChild("HumanoidRootPart")
 
     local path: Path = PathfindingService:CreatePath({
@@ -65,9 +84,14 @@ function module.bindNpcAI(npc: Model): nil
     -- doing a bit of research, I discovered that it required linear algebra,
     -- which is miles beyond my scope and understanding of math.
     -- (Nah but seriously what the actual hell is a "euler angle")
-    local targetCoords = findNearestPlayerCoords(hrp.Position)
-    if calcDistance(targetCoords, hrp.Position) <= MAXIMUM_SEEN_DISTANCE then
-        chasePlayer()
+
+    while npc ~= nil do
+        local targetCoords = findNearestPlayerCoords(hrp.Position)
+        if calcDistance(targetCoords, hrp.Position) <= MAXIMUM_SEEN_DISTANCE then
+            chasePlayer()
+        else
+            walkRandomly(npc, host)
+        end
     end
 end
 

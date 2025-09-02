@@ -59,6 +59,14 @@
         "$className": "RemoteEvent",
         "$ignoreUnknownInstances": true
       },
+      "FTPEvent": {
+        "$className": "RemoteEvent",
+        "$ignoreUnknownInstances": true
+      },
+      "ShootEvent": {
+        "$className": "RemoteEvent",
+        "$ignoreUnknownInstances": true
+      },
       "Packages": {
         "$className": "Folder",
         "$path": "Packages"

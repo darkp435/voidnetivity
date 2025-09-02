@@ -234,4 +234,15 @@ function module.pathToHost(origin: string, target: string)
 	return utils.shortestUnweightedPath(module.Hosts, origin, target)
 end
 
+--- Returns the X, Y and Z dimensions of a host in their respective order
+function module.getHostDimensions(hostname: string)
+	local hostData = module["Hosts"][hostname]
+
+	return {
+		hostData.x,
+		hostData.y,
+		hostData.z
+	}
+end
+
 return module

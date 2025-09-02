@@ -16,6 +16,7 @@ You may obtain a copy of the License at
 
 -- ASHES! ASHES! THEY ALL FALL DOWN.
 
+-- Module to handle the shooting of bullets, please ignore the module name. Frank is my friend (I think) (I hope).
 local module = {}
 local Players = game:GetService("Players")
 local ReplicatedStorage: ReplicatedStorage = game:GetService("ReplicatedStorage")
