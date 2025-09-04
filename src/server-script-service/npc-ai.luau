@@ -18,10 +18,14 @@ local PathfindingService = game:GetService("PathfindingService")
 local Players = game:GetService("Players")
 local ServerScriptService = game:GetService("ServerScriptService")
 local HostSystem = require(ServerScriptService["host-system"])
+
 -- Module for binding NPC AI, **currently unfinished**.
 local module = {}
 
 local MAXIMUM_SEEN_DISTANCE = 5
+local RANDOM_WALK_MAX_DISTANCE = 10
+local RANDOM_FORWARD_WALK_MAX_DISTANCE = 20
+local NPC_CLOSE_TO_WALL_SIZE = Vector3.new(3, 1, 3)
 
 -- Distance is flat because the y-axis is overrated
 local function calcDistance(origin: Vector3, target: Vector3)
@@ -56,6 +60,22 @@ local function isValid(targetCoords: Vector3, dimensions: table): boolean
     if targetCoords == nil then
         return false
     end
+
+    -- We don't need exact precision since it's just a random position
+    -- the NPC walks to so that it isn't stationary, so we use
+    -- workspace:GetPartBoundsInBox instead of workspace:GetPartsInPart
+    -- since it is more efficient.
+    local parts = workspace:GetPartBoundsInBox(targetCoords, NPC_CLOSE_TO_WALL_SIZE)
+
+    return #parts == nil
+end
+
+local function generateRandomCoords(npcPos: Vector3)
+    local x = math.random(npcPos.X - RANDOM_WALK_MAX_DISTANCE, npcPos.X + RANDOM_FORWARD_WALK_MAX_DISTANCE)
+    local y = math.random(npcPos.Y - RANDOM_WALK_MAX_DISTANCE, npcPos.Y + RANDOM_WALK_MAX_DISTANCE)
+
+    -- TODO: use raycast to make walkto not flat
+    return Vector3.new(x, y, npcPos.Z)
 end
 
 -- This function does exactly what the name implies
@@ -65,8 +85,17 @@ local function walkRandomly(npc: Model, host: string)
     -- so if the coordinate can't be reached, we simply reject it.
     local targetCoords
     while not isValid(targetCoords) do
-        
+        targetCoords = generateRandomCoords()
     end
+
+    local path = PathfindingService:CreatePath({
+        AgentRadius = 3,
+        AgentHeight = 5,
+        AgentCanJump = true,
+        WayPointSpacing = 4
+    })
+
+    path:ComputeAsync(npc.HumanoidRootPart.Position, targetCoords)
 end
 
 function module.bindNpcAI(npc: Model, host: string): nil

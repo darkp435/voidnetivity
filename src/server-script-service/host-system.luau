@@ -26,7 +26,9 @@ Host system is represented via a graph because it aligns better with what the ne
 local module = {}
 module.Hosts = {}
 
-local function newHost(map: string, x: number, y: number, z: number)
+type HostStruct = {map: string, x: number, y: number, z: number}
+
+local function newHost(map: string, x: number, y: number, z: number): HostStruct
 	return {
 		map = map,
 		x = x,
@@ -57,6 +59,7 @@ adjacency list (should be able to copy into file seamlessly):
 -- List of constructed hosts. Each host has 2000 studs allocated, must be between 100k and -100k.
 -- voidhome is default host.
 -- Maps will be temporary placeholders.
+
 module["Hosts"]["voidhome"] = newHost("HOME", 0, 0, 0)
 -- These next two hosts used to be placeholders but I'd figure to keep it in for historical reasons
 module["Hosts"]["foo"] = newHost("PLACEHOLDER", 0, 0, 2000)
@@ -98,7 +101,7 @@ module["Hosts"]["res-2"] = newHost("PLACEHOLDER", 0, 0, 72000)
 module["Hosts"]["res-3"] = newHost("PLACEHOLDER", 0, 0, 74000)
 module["Hosts"]["res-4"] = newHost("PLACEHOLDER", 0, 0, 76000)
 module["Hosts"]["res-5"] = newHost("PLACEHOLDER", 0, 0, 78000)
-module["Hosts"]["unires"] = newHost("PLACEHOLDER", 0, 0, 80000)
+module["Hosts"]["unires"] = newHost("PLACEHOLDER", 0, 0, 80000);
 module["Hosts"]["love"] = newHost("PLACEHOLDER", 0, 0, 82000)
 module["Hosts"]["trust"] = newHost("PLACEHOLDER", 0, 0, 84000)
 module["Hosts"]["toxicate-ent"] = newHost("PLACEHOLDER", 0, 0, 86000)

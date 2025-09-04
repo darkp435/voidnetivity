@@ -25,6 +25,10 @@ function module.welcomeEvent()
     frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
     frame.Size = UDim2.fromScale(1, 1)
     frame.Position = UDim2.new()
+    local title = Instance.new("TextLabel")
+    title.Parent = frame
+    title.RichText = true
+    title.Text = "<i>Welcome</i>"
 end
 
 return module

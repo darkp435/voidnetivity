@@ -6,6 +6,7 @@ registry = "test"
 name = "darkp435/voidnetivity"
 version = "0.1.0"
 dependencies = [
+	["graphs", "ukendio/graphs@0.1.0"],
 	["promise", "evaera/promise@4.0.0"],
 	["roact", "jessekroeske/roact@1.4.2"],
 ]
@@ -18,5 +19,41 @@ dependencies = []
 [[package]]
 name = "jessekroeske/roact"
 version = "1.4.2"
+dependencies = []
+
+[[package]]
+name = "ukendio/graphs"
+version = "0.1.0"
+dependencies = [
+	["Matrices", "ukendio/matrices@0.1.2"],
+	["Sets", "ukendio/sets@0.1.0"],
+	["Tools", "ukendio/tools@0.1.0"],
+]
+
+[[package]]
+name = "ukendio/matrices"
+version = "0.1.2"
+dependencies = [
+	["Scalars", "ukendio/scalars@0.1.0"],
+	["Tools", "ukendio/tools@0.1.0"],
+]
+
+[[package]]
+name = "ukendio/scalars"
+version = "0.1.0"
+dependencies = [
+	["Tools", "ukendio/tools@0.1.0"],
+]
+
+[[package]]
+name = "ukendio/sets"
+version = "0.1.0"
+dependencies = [
+	["Tools", "ukendio/tools@0.1.0"],
+]
+
+[[package]]
+name = "ukendio/tools"
+version = "0.1.0"
 dependencies = []
 
