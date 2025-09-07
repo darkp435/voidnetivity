@@ -56,18 +56,20 @@ end
 
 --- Returns true if the coordinate is valid for the NPC to walk to.
 ---@param targetCoords Vector3 Vector3 of the proposed coordinate.
-local function isValid(targetCoords: Vector3, dimensions: table): boolean
+local function isValid(targetCoords: Vector3, dimensions: table, pathConfig: Path): boolean
     if targetCoords == nil then
         return false
     end
-
     -- We don't need exact precision since it's just a random position
     -- the NPC walks to so that it isn't stationary, so we use
     -- workspace:GetPartBoundsInBox instead of workspace:GetPartsInPart
     -- since it is more efficient.
     local parts = workspace:GetPartBoundsInBox(targetCoords, NPC_CLOSE_TO_WALL_SIZE)
-
-    return #parts == nil
+    if parts ~= nil then
+        return false
+    end
+    -- Outside the host
+    
 end
 
 local function generateRandomCoords(npcPos: Vector3)
@@ -84,16 +86,16 @@ local function walkRandomly(npc: Model, host: string)
     -- We can't always generate a coordinate that is reachable from the NPC,
     -- so if the coordinate can't be reached, we simply reject it.
     local targetCoords
-    while not isValid(targetCoords) do
-        targetCoords = generateRandomCoords()
-    end
-
     local path = PathfindingService:CreatePath({
         AgentRadius = 3,
         AgentHeight = 5,
         AgentCanJump = true,
         WayPointSpacing = 4
     })
+
+    while not isValid(targetCoords, dimensions, pathConfig) do
+        targetCoords = generateRandomCoords()
+    end
 
     path:ComputeAsync(npc.HumanoidRootPart.Position, targetCoords)
 end

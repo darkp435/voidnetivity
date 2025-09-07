@@ -29,13 +29,17 @@ local function bruteForceMinigame(): nil
 	task.wait(5)
 end
 
+local function scriptMinigame(): nil
+	
+end
+
 -- TODO: add more minigames later
 
 local function activateMinigame(fileName: string)
 	if fileName == "brute.exe" then
 		bruteForceMinigame()
 	elseif fileName == "script.exe" then
-		-- TODO: implement this in future
+		scriptMinigame()
 	end
 end
 

@@ -23,6 +23,13 @@ Module for managing the host system and abstracting it as well as fetching data 
 Host system is represented via a graph because it aligns better with what the network looks like
 ]]
 
+-- Size of each dimension (except Y in the future) of the host
+local HOST_SIZE = 2000
+-- Half of the size of the host in terms of X and Z, useful since CFrame is based on the center
+local HALF_HOST_SIZE = HOST_SIZE / 2
+
+-- ### Host System
+-- Manages hosts and provides an API to access it.
 local module = {}
 module.Hosts = {}
 
@@ -237,15 +244,35 @@ function module.pathToHost(origin: string, target: string)
 	return utils.shortestUnweightedPath(module.Hosts, origin, target)
 end
 
---- Returns the X, Y and Z dimensions of a host in their respective order
-function module.getHostDimensions(hostname: string)
+type DimensionTable = {bottomleft: Vector3, bottomright: Vector3, topleft: Vector3, topright: Vector3}
+
+--- Returns the X, Y and Z dimensions of the 4 corners of the host in their respective order
+function module.getHostDimensions(hostname: string): DimensionTable
 	local hostData = module["Hosts"][hostname]
+    local y = HALF_HOST_SIZE
 
 	return {
-		hostData.x,
-		hostData.y,
-		hostData.z
-	}
+        bottomleft = Vector3.new(
+            hostData.x - HALF_HOST_SIZE,
+            y,
+            hostData.z - HALF_HOST_SIZE
+        ),
+        bottomright = Vector3.new(
+            hostData.x + HALF_HOST_SIZE,
+            y,
+            hostData.z - HALF_HOST_SIZE
+        ),
+        topleft = Vector3.new(
+            hostData.x - HALF_HOST_SIZE,
+            y,
+            hostData.z + HALF_HOST_SIZE
+        ),
+        topright = Vector3.new(
+            hostData.x + HALF_HOST_SIZE,
+            y,
+            hostData.z + HALF_HOST_SIZE
+        )
+    }
 end
 
 return module
