@@ -14,7 +14,6 @@ You may obtain a copy of the License at
  limitations under the License.
  ]]
 local Players = game:GetService("Players")
-
 local ServerScriptService = game:GetService("ServerScriptService")
 local utils = require(ServerScriptService["utils"])
 
@@ -66,6 +65,12 @@ adjacency list (should be able to copy into file seamlessly):
 -- List of constructed hosts. Each host has 2000 studs allocated, must be between 100k and -100k.
 -- voidhome is default host.
 -- Maps will be temporary placeholders.
+
+--* The host system will be reworked due to the fact that having hosts 100,000 studs from the origin is VERY unstable
+--* That will happen in the future as I've already wrote the code for this very inefficient system.
+--* The new system will work by maintaing a list of size equivalent to the server size of slots that will
+--* have true for unoccupied, and false for occupied. The reason the size is equivalent to the maximum
+--* server side is because the maximum amount of active hosts is 1 player on each host in the server.
 
 module["Hosts"]["voidhome"] = newHost("HOME", 0, 0, 0)
 -- These next two hosts used to be placeholders but I'd figure to keep it in for historical reasons

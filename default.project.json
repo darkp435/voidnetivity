@@ -71,7 +71,8 @@
         "$className": "Folder",
         "$path": "Packages"
       },
-      "$ignoreUnknownInstances": true
+      "$ignoreUnknownInstances": true,
+      "$path": "repli-storage"
     }
   }
 }

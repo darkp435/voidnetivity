@@ -56,7 +56,7 @@ end
 
 --- Returns true if the coordinate is valid for the NPC to walk to.
 ---@param targetCoords Vector3 Vector3 of the proposed coordinate.
-local function isValid(targetCoords: Vector3, dimensions: table, pathConfig: Path): boolean
+local function isValid(targetCoords: Vector3, dimensions: table): boolean
     if targetCoords == nil then
         return false
     end
@@ -93,7 +93,7 @@ local function walkRandomly(npc: Model, host: string)
         WayPointSpacing = 4
     })
 
-    while not isValid(targetCoords, dimensions, pathConfig) do
+    while not isValid(targetCoords, dimensions) do
         targetCoords = generateRandomCoords()
     end
 

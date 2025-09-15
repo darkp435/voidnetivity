@@ -15,6 +15,7 @@ You may obtain a copy of the License at
  ]]
 
 local DataStoreService = game:GetService("DataStoreService")
+local Players = game:GetService("Players")
 local ServerScriptService = game:GetService("ServerScriptService")
 local utils = require(ServerScriptService["utils"])
 
@@ -38,6 +39,21 @@ local playerData = DataStoreService:GetDataStore("playerData") -- DataStore for 
 
 --- Checks if the user has USER access to a host. If the host doesn't exist, the user does not have access.
 --- NONE privilege is for special hosts that contain core files
+
+local Permissions = {
+	Blacklisted = "blisted",
+	None = "none",
+	User = "user",
+	Maintainer = "maint",
+	Developer = "dev",
+	Admin = "admin",
+	Root = "root"
+}
+
+table.freeze(Permissions)
+
+type Permission = "blisted" | "none" | "user" | "maint" | "dev" | "admin" | "root"
+
 function module.hasAccessTo(userid: string, hostname: string): boolean
     -- Host isn't indexed by player data, AKA no permission
 	if module.Data[userid]["hostinfo"][hostname] == nil then
@@ -49,6 +65,10 @@ function module.hasAccessTo(userid: string, hostname: string): boolean
 	else
 		return true
 	end
+end
+
+function module.setUserAccess(userid: string, hostname: string, perm: Permission): nil
+	module.Data[userid]["hostinfo"][hostname]["permission"] = perm
 end
 
 --- Gets a list of files from the host
@@ -93,6 +113,16 @@ end
 --- Gets the players number of bitcoins.
 function module.getBtc(userid: string): number | nil
 	return module.Data[userid]["btc"]
+end
+
+--- Setter for player bitcoin. It is also set as a player
+--- attribute for easy referral. However, if you want to
+--- change it, **DO NOT** set the player attribute directly
+--- in any other piece of code other than this function.
+function module.setBtc(userid: string, amount: number): nil
+	module.Data[userid]["btc"] = amount
+	local player = Players:GetPlayerByUserId(tonumber(userid))
+	player:SetAttribute("btc", amount)
 end
 
 --- Saves the player data to the datastore.
