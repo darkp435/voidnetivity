@@ -15,6 +15,8 @@ You may obtain a copy of the License at
  limitations under the License.
  ]]
 
+--! NEEDS A SEPARATE REMOTE EVENT!
+
 local module = {}
 
 --- Function to give the player the file. Does NOT validate if they do have access to it.

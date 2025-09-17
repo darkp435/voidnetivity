@@ -34,6 +34,7 @@ local CheckPerms: RemoteFunction = ReplicatedStorage:WaitForChild("CheckPerms")
 local VerifyPerms = require(ServerScriptService["verify-perms"])
 local npcAIEvent: BindableEvent = ServerScriptService.npcAIEvent
 local npcAI = require(ServerScriptService["npc-ai"])
+local GetFilesEvent: RemoteFunction = ReplicatedStorage:WaitForChild("GetFilesEvent")
 
 TeleportEvent.OnServerEvent:Connect(function(player: Player, fileName: string, targetHostname: string)
     TeleportToBox.teleportEvent(player, fileName, targetHostname)
@@ -79,3 +80,9 @@ end)
 npcAIEvent.Event:Connect(function(npc: Model)
     npcAI.bindNpcAI(npc)
 end)
+
+GetFilesEvent.OnServerInvoke = function(player: Player, host: string): table
+    -- Must be a string to be able to be passed to the function
+    local userid = tostring(player.UserId)
+    return SharedDataModule.getFilesFrom(userid, host)
+end

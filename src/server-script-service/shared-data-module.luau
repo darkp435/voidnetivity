@@ -40,7 +40,9 @@ local playerData = DataStoreService:GetDataStore("playerData") -- DataStore for 
 --- Checks if the user has USER access to a host. If the host doesn't exist, the user does not have access.
 --- NONE privilege is for special hosts that contain core files
 
-local Permissions = {
+type Permission = "blisted" | "none" | "user" | "maint" | "dev" | "admin" | "root"
+
+local Permissions: {[string]: Permission} = {
 	Blacklisted = "blisted",
 	None = "none",
 	User = "user",
@@ -51,8 +53,6 @@ local Permissions = {
 }
 
 table.freeze(Permissions)
-
-type Permission = "blisted" | "none" | "user" | "maint" | "dev" | "admin" | "root"
 
 function module.hasAccessTo(userid: string, hostname: string): boolean
     -- Host isn't indexed by player data, AKA no permission

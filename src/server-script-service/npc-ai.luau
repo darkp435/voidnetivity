@@ -115,6 +115,7 @@ function module.bindNpcAI(npc: Model, host: string): nil
     -- doing a bit of research, I discovered that it required linear algebra,
     -- which is miles beyond my scope and understanding of math.
     -- (Nah but seriously what the actual hell is a "euler angle")
+    -- TODO: confront my fears of high level mathematics and implement it
 
     while npc ~= nil do
         local targetCoords = findNearestPlayerCoords(hrp.Position)

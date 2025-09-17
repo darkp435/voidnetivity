@@ -71,6 +71,10 @@
         "$className": "Folder",
         "$path": "Packages"
       },
+      "GetFilesEvent" : {
+        "$className": "RemoteFunction",
+        "$ignoreUnknownInstances": true
+      },
       "$ignoreUnknownInstances": true,
       "$path": "repli-storage"
     }
