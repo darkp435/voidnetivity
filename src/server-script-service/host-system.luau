@@ -5,7 +5,7 @@ Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-     http://www.apache.org/licenses/LICENSE-2.0
+	 http://www.apache.org/licenses/LICENSE-2.0
 
  Unless required by applicable law or agreed to in writing, software
  distributed under the License is distributed on an "AS IS" BASIS,
@@ -58,7 +58,7 @@ graph is directed and unweighted
 adjacency list (should be able to copy into file seamlessly):
 
 {
-    voidhome: {"voidtech-gw1", "sys05", "doc37n", "res-1", "water"}
+	voidhome: {"voidtech-gw1", "sys05", "doc37n", "res-1", "water"}
 }
 ]]
 
@@ -205,7 +205,7 @@ module["Hosts"]["q1"] = newHost("PLACEHOLDER", 0, 2000, 58000)
 
 -- Graph representing the hosts and their connections
 module["Graph"] = {
-    voidhome = {"voidtech-gw1", "sys05", "doc37n", "res-1", "water"}
+	voidhome = {"voidtech-gw1", "sys05", "doc37n", "res-1", "water"}
 }
 
 --- General function to get the host object from the hostname.
@@ -224,7 +224,7 @@ function module.getUsersOnHost(host: string): table
 
 	for player: Player in Players:GetPlayers() do
 		if player:GetAttribute("CurrentHost") == host then
-            table.insert(users, player)
+			table.insert(users, player)
 		end
 	end
 
@@ -254,30 +254,30 @@ type DimensionTable = {bottomleft: Vector3, bottomright: Vector3, topleft: Vecto
 --- Returns the X, Y and Z dimensions of the 4 corners of the host in their respective order
 function module.getHostDimensions(hostname: string): DimensionTable
 	local hostData = module["Hosts"][hostname]
-    local y = HALF_HOST_SIZE
+	local y = HALF_HOST_SIZE
 
 	return {
-        bottomleft = Vector3.new(
-            hostData.x - HALF_HOST_SIZE,
-            y,
-            hostData.z - HALF_HOST_SIZE
-        ),
-        bottomright = Vector3.new(
-            hostData.x + HALF_HOST_SIZE,
-            y,
-            hostData.z - HALF_HOST_SIZE
-        ),
-        topleft = Vector3.new(
-            hostData.x - HALF_HOST_SIZE,
-            y,
-            hostData.z + HALF_HOST_SIZE
-        ),
-        topright = Vector3.new(
-            hostData.x + HALF_HOST_SIZE,
-            y,
-            hostData.z + HALF_HOST_SIZE
-        )
-    }
+		bottomleft = Vector3.new(
+			hostData.x - HALF_HOST_SIZE,
+			y,
+			hostData.z - HALF_HOST_SIZE
+		),
+		bottomright = Vector3.new(
+			hostData.x + HALF_HOST_SIZE,
+			y,
+			hostData.z - HALF_HOST_SIZE
+		),
+		topleft = Vector3.new(
+			hostData.x - HALF_HOST_SIZE,
+			y,
+			hostData.z + HALF_HOST_SIZE
+		),
+		topright = Vector3.new(
+			hostData.x + HALF_HOST_SIZE,
+			y,
+			hostData.z + HALF_HOST_SIZE
+		)
+	}
 end
 
 return module

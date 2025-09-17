@@ -5,7 +5,7 @@ Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-     http://www.apache.org/licenses/LICENSE-2.0
+	 http://www.apache.org/licenses/LICENSE-2.0
 
  Unless required by applicable law or agreed to in writing, software
  distributed under the License is distributed on an "AS IS" BASIS,
@@ -37,37 +37,37 @@ end
 ---@param source any Source node (aka origin)
 ---@param target any Target node (aka destination)
 function module.shortestUnweightedPath(graph, source, target)
-    local queue = {source}
-    local par = {}
-    local visited = {}
-    visited[source] = true
+	local queue = {source}
+	local par = {}
+	local visited = {}
+	visited[source] = true
 
-    while #queue > 0 do
-        local node = table.remove(queue, 1)
-        if node == target then
-            break
-        end
-        for _, neighbor in ipairs(graph[node]) do
-            if not visited[neighbor] then
-                visited[neighbor] = true
-                par[neighbor] = node
-                table.insert(queue, neighbor)
-            end
-        end
-    end
+	while #queue > 0 do
+		local node = table.remove(queue, 1)
+		if node == target then
+			break
+		end
+		for _, neighbor in ipairs(graph[node]) do
+			if not visited[neighbor] then
+				visited[neighbor] = true
+				par[neighbor] = node
+				table.insert(queue, neighbor)
+			end
+		end
+	end
 
-    local path = {}
-    local node = target
-    while node do
-        table.insert(path, 1, node)
-        node = par[node]
-    end
+	local path = {}
+	local node = target
+	while node do
+		table.insert(path, 1, node)
+		node = par[node]
+	end
 
-    if path[1] ~= source then
-        return nil
-    end
+	if path[1] ~= source then
+		return nil
+	end
 
-    return path
+	return path
 end
 
 return module

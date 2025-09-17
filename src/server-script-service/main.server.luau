@@ -5,7 +5,7 @@ Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-     http://www.apache.org/licenses/LICENSE-2.0
+	 http://www.apache.org/licenses/LICENSE-2.0
 
  Unless required by applicable law or agreed to in writing, software
  distributed under the License is distributed on an "AS IS" BASIS,
@@ -38,52 +38,52 @@ local GetFilesEvent: RemoteFunction = ReplicatedStorage:WaitForChild("GetFilesEv
 local fileData = require(ServerScriptService["file-data"])
 
 TeleportEvent.OnServerEvent:Connect(function(player: Player, fileName: string, targetHostname: string)
-    TeleportToBox.teleportEvent(player, fileName, targetHostname)
+	TeleportToBox.teleportEvent(player, fileName, targetHostname)
 end)
 
 ShootEvent.OnServerEvent:Connect(function(player: Player, targetPosition) 
-    ShootBullet.shootEvent(player, targetPosition)
+	ShootBullet.shootEvent(player, targetPosition)
 end)
 
 Players.PlayerAdded:Connect(function(player)
-    player.CharacterAdded:Connect(JoinAndLeave.characterAdded)
-    JoinAndLeave.playerAdded(player)
+	player.CharacterAdded:Connect(JoinAndLeave.characterAdded)
+	JoinAndLeave.playerAdded(player)
 end)
 
 Players.PlayerRemoving:Connect(function(player)
-    JoinAndLeave.playerRemoved(player)
+	JoinAndLeave.playerRemoved(player)
 end)
 
 -- The client isn't allowed to check if they have correct perms due to security reasons, so this is why
 -- we have a remote function that does so.
 CheckPerms.OnServerInvoke = function(player: Player, hostname: string)
-    return VerifyPerms.verifyPerms(tostring(player.UserId), hostname)
+	return VerifyPerms.verifyPerms(tostring(player.UserId), hostname)
 end
 
 -- TODO: modularise this later
 FTPEvent.OnServerEvent:Connect(function(player: Player)
-    -- It's a toggle, so we do the opposite
-    if player:GetAttribute("InFTP") then
-        player:SetAttribute("InFTP", false)
-        
-        player.Character.Humanoid.WalkSpeed = 20 -- Revert back to normal
-    else
-        player:SetAttribute("InFTP", true)
+	-- It's a toggle, so we do the opposite
+	if player:GetAttribute("InFTP") then
+		player:SetAttribute("InFTP", false)
+		
+		player.Character.Humanoid.WalkSpeed = 20 -- Revert back to normal
+	else
+		player:SetAttribute("InFTP", true)
 
-        player.Character.Humanoid.WalkSpeed = 0 -- Disable moving while in FTP UI
-    end
+		player.Character.Humanoid.WalkSpeed = 0 -- Disable moving while in FTP UI
+	end
 end)
 
 ChangeBTC.OnServerEvent:Connect(function(player)
-    -- TODO: implement this later
+	-- TODO: implement this later
 end)
 
 npcAIEvent.Event:Connect(function(npc: Model)
-    npcAI.bindNpcAI(npc)
+	npcAI.bindNpcAI(npc)
 end)
 
 GetFilesEvent.OnServerInvoke = function(player: Player, host: string): table
-    -- Must be a string to be able to be passed to the function
-    local userid = tostring(player.UserId)
-    return SharedDataModule.getFilesFrom(userid, host)
+	-- Must be a string to be able to be passed to the function
+	local userid = tostring(player.UserId)
+	return SharedDataModule.getFilesFrom(userid, host)
 end

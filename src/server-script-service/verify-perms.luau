@@ -5,7 +5,7 @@ Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-     http://www.apache.org/licenses/LICENSE-2.0
+	 http://www.apache.org/licenses/LICENSE-2.0
 
  Unless required by applicable law or agreed to in writing, software
  distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,11 +20,11 @@ local datamodule = require(ServerScriptService["shared-data-module"])
 -- NOTE: if possible, delete this script and implement in another one as this is
 -- redundant.
 function module.verifyPerms(userid, hostname): boolean
-    if datamodule.getPerms(userid, hostname) ~= "none" then
-        return true
-    else
-        return false
-    end
+	if datamodule.getPerms(userid, hostname) ~= "none" then
+		return true
+	else
+		return false
+	end
 end
 
 return module

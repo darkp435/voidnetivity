@@ -5,7 +5,7 @@ Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-     http://www.apache.org/licenses/LICENSE-2.0
+	 http://www.apache.org/licenses/LICENSE-2.0
 
  Unless required by applicable law or agreed to in writing, software
  distributed under the License is distributed on an "AS IS" BASIS,
@@ -57,7 +57,7 @@ table.freeze(Permissions)
 module.PermTypes = Permissions
 
 function module.hasAccessTo(userid: string, hostname: string): boolean
-    -- Host isn't indexed by player data, AKA no permission
+	-- Host isn't indexed by player data, AKA no permission
 	if module.Data[userid]["hostinfo"][hostname] == nil then
 		return false
 	elseif module.Data[userid]["hostinfo"][hostname]["permission"] == "NONE" then
@@ -143,15 +143,15 @@ end
 
 --- Returns an array of what the hosts the user has at least USER access to are.
 function module.getHostsUserHasAccessTo(userid: string)
-    local totalHosts: table = {}
+	local totalHosts: table = {}
 
 	for hostname: string, _ in module.Data[userid]["hostinfo"] do
-        if module.hasAccessTo(userid, hostname) then
-            table.insert(totalHosts, hostname)
-        end
-    end
-    
-    return totalHosts
+		if module.hasAccessTo(userid, hostname) then
+			table.insert(totalHosts, hostname)
+		end
+	end
+	
+	return totalHosts
 end
 
 return module

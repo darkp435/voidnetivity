@@ -5,7 +5,7 @@ Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-     http://www.apache.org/licenses/LICENSE-2.0
+	 http://www.apache.org/licenses/LICENSE-2.0
 
  Unless required by applicable law or agreed to in writing, software
  distributed under the License is distributed on an "AS IS" BASIS,
@@ -21,14 +21,14 @@ local PlayerGui: PlayerGui = game:GetService("Players").LocalPlayer.PlayerGui
 
 -- display the welcome gui for first time players so that they know how the game works
 function module.welcomeEvent()
-    local frame = Instance.new("Frame")
-    frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-    frame.Size = UDim2.fromScale(1, 1)
-    frame.Position = UDim2.new()
-    local title = Instance.new("TextLabel")
-    title.Parent = frame
-    title.RichText = true
-    title.Text = "<i>Welcome</i>"
+	local frame = Instance.new("Frame")
+	frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	frame.Size = UDim2.fromScale(1, 1)
+	frame.Position = UDim2.new()
+	local title = Instance.new("TextLabel")
+	title.Parent = frame
+	title.RichText = true
+	title.Text = "<i>Welcome</i>"
 end
 
 return module
