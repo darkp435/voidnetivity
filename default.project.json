@@ -76,7 +76,7 @@
         "$ignoreUnknownInstances": true
       },
       "$ignoreUnknownInstances": true,
-      "$path": "repli-storage"
+      "$path": "src/repli-storage"
     }
   }
 }

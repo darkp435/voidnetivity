@@ -35,6 +35,7 @@ local VerifyPerms = require(ServerScriptService["verify-perms"])
 local npcAIEvent: BindableEvent = ServerScriptService.npcAIEvent
 local npcAI = require(ServerScriptService["npc-ai"])
 local GetFilesEvent: RemoteFunction = ReplicatedStorage:WaitForChild("GetFilesEvent")
+local fileData = require(ServerScriptService["file-data"])
 
 TeleportEvent.OnServerEvent:Connect(function(player: Player, fileName: string, targetHostname: string)
     TeleportToBox.teleportEvent(player, fileName, targetHostname)

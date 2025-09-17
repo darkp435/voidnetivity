@@ -40,7 +40,7 @@ local playerData = DataStoreService:GetDataStore("playerData") -- DataStore for 
 --- Checks if the user has USER access to a host. If the host doesn't exist, the user does not have access.
 --- NONE privilege is for special hosts that contain core files
 
-type Permission = "blisted" | "none" | "user" | "maint" | "dev" | "admin" | "root"
+export type Permission = "blisted" | "none" | "user" | "maint" | "dev" | "admin" | "root"
 
 local Permissions: {[string]: Permission} = {
 	Blacklisted = "blisted",
@@ -53,6 +53,8 @@ local Permissions: {[string]: Permission} = {
 }
 
 table.freeze(Permissions)
+
+module.PermTypes = Permissions
 
 function module.hasAccessTo(userid: string, hostname: string): boolean
     -- Host isn't indexed by player data, AKA no permission
@@ -115,10 +117,13 @@ function module.getBtc(userid: string): number | nil
 	return module.Data[userid]["btc"]
 end
 
---- Setter for player bitcoin. It is also set as a player
---- attribute for easy referral. However, if you want to
---- change it, **DO NOT** set the player attribute directly
---- in any other piece of code other than this function.
+---  Setter for player bitcoin. It is also set as a player
+---  attribute for easy referral. However, if you want to
+---  change it, **DO NOT** set the player attribute directly
+---  in any other piece of code other than this function.
+---* Do not get the player attribute on the server side
+---* to get amount of bitcoin, it is used on the client
+---* only.
 function module.setBtc(userid: string, amount: number): nil
 	module.Data[userid]["btc"] = amount
 	local player = Players:GetPlayerByUserId(tonumber(userid))
