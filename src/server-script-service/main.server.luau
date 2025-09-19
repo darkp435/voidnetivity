@@ -36,6 +36,8 @@ local npcAIEvent: BindableEvent = ServerScriptService.npcAIEvent
 local npcAI = require(ServerScriptService["npc-ai"])
 local GetFilesEvent: RemoteFunction = ReplicatedStorage:WaitForChild("GetFilesEvent")
 local fileData = require(ServerScriptService["file-data"])
+local Ftp = require(ServerScriptService.ftp)
+local TransferFileEvent = ReplicatedStorage:WaitForChild("TransferFile")
 
 TeleportEvent.OnServerEvent:Connect(function(player: Player, fileName: string, targetHostname: string)
 	TeleportToBox.teleportEvent(player, fileName, targetHostname)
@@ -86,4 +88,8 @@ GetFilesEvent.OnServerInvoke = function(player: Player, host: string): table
 	-- Must be a string to be able to be passed to the function
 	local userid = tostring(player.UserId)
 	return SharedDataModule.getFilesFrom(userid, host)
+end
+
+TransferFileEvent.OnServerInvoke = function(player: Player)
+	
 end

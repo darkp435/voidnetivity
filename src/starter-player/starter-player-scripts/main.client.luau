@@ -36,10 +36,8 @@ Backpack.ChildAdded:Connect(function(child: any)
 	backpackAndFiles.childAdded(child)
 end)
 
-LocalPlayer.AttributeChanged:Connect(function(attribute)
-	if attribute == Attributes.btc then
-		BTCCounter.Text = tostring(LocalPlayer:GetAttribute(Attributes.btc))
-	end
+LocalPlayer:GetAttributeChangedSignal(Attributes.btc):Connect(function()
+	BTCCounter.Text = tostring(LocalPlayer:GetAttribute(Attributes.btc))
 end)
 
 WelcomeEvent.OnClientEvent:Connect(WelcomeGui.welcomeEvent)

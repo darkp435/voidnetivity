@@ -130,15 +130,25 @@ function module.setBtc(userid: string, amount: number): nil
 	player:SetAttribute("btc", amount)
 end
 
---- Saves the player data to the datastore.
+--- Saves the player data to the datastore and does clean-up
 function module.savePlayerData(userid: string): nil
 	playerData:SetAsync(userid, module.Data[userid])
+	-- Remove the userid index to free the allocated space
+	module.Data[userid] = nil
+end
+
+local function firstTimeInit(userid: string)
+	module.Data[userid]["hasSysadm"] = false
 end
 
 --- Loads the user data into the module from the datastore.
 function module.loadData(userid: string): nil
 	local data = playerData:GetAsync(userid)
 	module.Data[userid] = data
+
+	if data == nil then
+		firstTimeInit(userid)
+	end
 end
 
 --- Returns an array of what the hosts the user has at least USER access to are.
@@ -152,6 +162,16 @@ function module.getHostsUserHasAccessTo(userid: string)
 	end
 	
 	return totalHosts
+end
+
+--- Returns the current host a player is in
+function module.getCurrentHost(userid: string): string
+	return module.Data[userid]["currenthost"]
+end
+
+--- Sets the current host a player is in
+function module.setCurrentHost(userid: string): nil
+	module.Data[userid]["currenthost"] = userid
 end
 
 return module

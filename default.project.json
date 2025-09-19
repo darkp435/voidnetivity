@@ -75,6 +75,10 @@
         "$className": "RemoteFunction",
         "$ignoreUnknownInstances": true
       },
+      "TransferFile": {
+        "$className": "RemoteFunction",
+        "$ignoreUnknownInstances": true
+      },
       "$ignoreUnknownInstances": true,
       "$path": "src/repli-storage"
     }

@@ -19,19 +19,35 @@ local M = {}
 
 local Data = require(ServerScriptService["shared-data-module"])
 
-local function newFile(size: number, permlevel: Data.Permission)
-	return {
-		size = size,
-		permlevel = permlevel
-	}
-end
-
-local BRUTE_FILE_SIZE = 1_424_192_628
-local AURORA_FILE_SIZE = 1_915_832_392
-
 M.fileTable = {
-	["brute.exe"] = newFile(BRUTE_FILE_SIZE, Data.PermTypes.User),
-	["aurora.exe"] = newFile(AURORA_FILE_SIZE, Data.PermTypes.User)
+	["brute.exe"] = {
+		filesize = 1_424_192_628,
+		permlevel = Data.PermTypes.User
+	},
+	["aurora.exe"] = {
+		filesize = 1_915_832_392,
+		permlevel = Data.PermTypes.User
+	},
+	["unban.exe"] = {
+		filesize = 2_641_932_185,
+		permlevel = Data.PermTypes.User
+	},
+	["inject.exe"] = {
+		filesize = 2_027_185_193,
+		permlevel = Data.PermTypes.Maintainer
+	},
+	["compromise.exe"] = {
+		filesize = 3_141_592_653,
+		permlevel = Data.PermTypes.Maintainer
+	},
+	["cloak.exe"] = {
+		filesize = 2_618_382_192,
+		permlevel = Data.PermTypes.User
+	},
+	["hijack.exe"] = {
+		filesize = 4_017_351_829,
+		permlevel = Data.PermTypes.Root
+	}
 }
 
 return M
