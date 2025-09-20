@@ -20,7 +20,6 @@ You may obtain a copy of the License at
 local module = {}
 local Players = game:GetService("Players")
 local ReplicatedStorage: ReplicatedStorage = game:GetService("ReplicatedStorage")
-local Workspace = game:GetService("Workspace")
 
 local function isPlayerHumanoid(humanoid: Humanoid): boolean
 	local character = humanoid.Parent

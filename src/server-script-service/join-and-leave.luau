@@ -21,7 +21,7 @@ local replicatedStorage: ReplicatedStorage = game:WaitForChild("ReplicatedStorag
 local welcomeEvent: RemoteEvent = replicatedStorage:WaitForChild("WelcomeEvent")
 local Players = game:GetService("Players")
 local ServerScriptService: ServerScriptService = game:GetService("ServerScriptService")
-local datamodule = require(ServerScriptService["shared-data-module"])
+local datamodule = require(ServerScriptService["data"]["shared-data-module"])
 
 -- welcome function to tell the player whats going on
 -- TODO: implement this later
@@ -29,14 +29,15 @@ local function welcome(player: Player)
 	welcomeEvent:FireClient(player)
 end
 
-local function humanoidDied()
+local function humanoidDied(sadasd: number)
 	-- Give them back the tools in their backpack, and also
 	-- teleport them to the appropriate host.
 	-- TODO: implement this later.
 end
 
 function module.characterAdded(character: Model)
-	local humanoid: Humanoid = character.Humanoid
+	local humanoid: Humanoid? = character:FindFirstChildWhichIsA("Humanoid")
+	if not humanoid then return end
 	humanoid.Died:Connect(humanoidDied)
 end
 
@@ -50,7 +51,7 @@ function module.playerAdded(player: Player)
 	local btc = datamodule.getBtc(tostring(player.UserId))
 
 	if btc then
-		player:SetAttribute("btc", btc)		
+		player:SetAttribute("btc", btc)
 	else
 		btc = 0
 		welcome(player)

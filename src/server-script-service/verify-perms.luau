@@ -15,7 +15,7 @@ You may obtain a copy of the License at
  ]]
 local module = {}
 local ServerScriptService = game:GetService("ServerScriptService")
-local datamodule = require(ServerScriptService["shared-data-module"])
+local datamodule = require(ServerScriptService["data"]["shared-data-module"])
 
 -- NOTE: if possible, delete this script and implement in another one as this is
 -- redundant.

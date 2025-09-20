@@ -21,8 +21,8 @@ local ServerScriptService = game:GetService("ServerScriptService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Players = game:GetService("Players")
 local GetFile = require(ServerScriptService["get-file"])
-local HostSystem = require(ServerScriptService["host-system"])
-local SharedDataModule = require(ServerScriptService["shared-data-module"])
+local HostSystem = require(ServerScriptService["data"]["hosts"])
+local SharedDataModule = require(ServerScriptService["data"]["shared-data-module"])
 local ShootBullet = require(ServerScriptService["frank-destroyer-9000"])
 local TeleportEvent: RemoteEvent = ReplicatedStorage:WaitForChild("TeleportEvent")
 local TeleportToBox = require(ServerScriptService["teleport-to-box"])
@@ -35,7 +35,7 @@ local VerifyPerms = require(ServerScriptService["verify-perms"])
 local npcAIEvent: BindableEvent = ServerScriptService.npcAIEvent
 local npcAI = require(ServerScriptService["npc-ai"])
 local GetFilesEvent: RemoteFunction = ReplicatedStorage:WaitForChild("GetFilesEvent")
-local fileData = require(ServerScriptService["file-data"])
+local fileData = require(ServerScriptService["data"]["file-data"])
 local Ftp = require(ServerScriptService.ftp)
 local TransferFileEvent = ReplicatedStorage:WaitForChild("TransferFile")
 
@@ -43,7 +43,7 @@ TeleportEvent.OnServerEvent:Connect(function(player: Player, fileName: string, t
 	TeleportToBox.teleportEvent(player, fileName, targetHostname)
 end)
 
-ShootEvent.OnServerEvent:Connect(function(player: Player, targetPosition) 
+ShootEvent.OnServerEvent:Connect(function(player: Player, targetPosition)
 	ShootBullet.shootEvent(player, targetPosition)
 end)
 
@@ -65,14 +65,21 @@ end
 -- TODO: modularise this later
 FTPEvent.OnServerEvent:Connect(function(player: Player)
 	-- It's a toggle, so we do the opposite
-	if player:GetAttribute("InFTP") then
+    local character = player.Character
+    if character == nil then return end
+    local humanoid: Humanoid = character:FindFirstChildWhichIsA("Humanoid")
+
+	if 
+        player:GetAttribute("InFTP") and 
+        character:FindFirstChild("Humanoid") ~= nil
+    then
 		player:SetAttribute("InFTP", false)
 		
-		player.Character.Humanoid.WalkSpeed = 20 -- Revert back to normal
+		character:FindFirstChild("Humanoid").WalkSpeed = 20 -- Revert back to normal
 	else
 		player:SetAttribute("InFTP", true)
 
-		player.Character.Humanoid.WalkSpeed = 0 -- Disable moving while in FTP UI
+		humanoid.WalkSpeed = 0 -- Disable moving while in FTP UI
 	end
 end)
 
@@ -80,11 +87,11 @@ ChangeBTC.OnServerEvent:Connect(function(player)
 	-- TODO: implement this later
 end)
 
-npcAIEvent.Event:Connect(function(npc: Model)
-	npcAI.bindNpcAI(npc)
+npcAIEvent.Event:Connect(function(npc: Model, host: string)
+	npcAI.bindNpcAI(npc, host)
 end)
 
-GetFilesEvent.OnServerInvoke = function(player: Player, host: string): table
+GetFilesEvent.OnServerInvoke = function(player: Player, host: string)
 	-- Must be a string to be able to be passed to the function
 	local userid = tostring(player.UserId)
 	return SharedDataModule.getFilesFrom(userid, host)

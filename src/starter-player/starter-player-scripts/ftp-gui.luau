@@ -18,7 +18,7 @@ You may obtain a copy of the License at
 local ReplicatedStorage: ReplicatedStorage = game:GetService("ReplicatedStorage")
 local UserInputService = game:GetService("UserInputService")
 local FTPEvent: RemoteEvent = ReplicatedStorage:WaitForChild("FTPEvent")
-local GetFilesEvent: RemoteEvent = ReplicatedStorage:WaitForChild("GetFilesEvent")
+local GetFilesEvent: RemoteFunction = ReplicatedStorage:WaitForChild("GetFilesEvent")
 local CheckPerms: RemoteFunction = ReplicatedStorage:WaitForChild("CheckPerms")
 local PlayerGui: PlayerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 local Promise = require(ReplicatedStorage.Packages.promise)

@@ -18,7 +18,7 @@ You may obtain a copy of the License at
 local module = {}
 
 -- Linear search function. Does **not** work on recursive tables and returns -1 if not found.
-function module.linearSearch(array: table, value: any): number
+function module.linearSearch(array, value: any): number
 	for index, item in array do
 		if item == value then
 			return index

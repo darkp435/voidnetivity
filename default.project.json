@@ -3,6 +3,11 @@
   "tree": {
     "$className": "DataModel",
     "ServerScriptService": {
+      "data": {
+        "$className": "Folder",
+        "$ignoreUnknownInstances": true,
+        "$path": "src/server-script-service/data"
+      },
       "npcAIEvent": {
         "$className": "BindableEvent",
         "$ignoreUnknownInstances": true
@@ -76,6 +81,10 @@
         "$ignoreUnknownInstances": true
       },
       "TransferFile": {
+        "$className": "RemoteFunction",
+        "$ignoreUnknownInstances": true
+      },
+      "CheckPerms": {
         "$className": "RemoteFunction",
         "$ignoreUnknownInstances": true
       },

@@ -19,17 +19,17 @@ local module = {}
 -- boilerplate
 local serverStorage: ServerStorage = game:GetService("ServerStorage")
 local serverScriptService: ServerScriptService = game:GetService("ServerScriptService")
-local hostSystem: table = require(serverScriptService["host-system"])
+local hostSystem = require(serverScriptService["data"]["hosts"])
 
 local box = workspace.Union:Clone()
 
-local function bruteForceMinigame(): nil
+local function bruteForceMinigame()
 	-- placeholder function to get it working, will add minigame later
 	-- true means that the user has successfully completed it and vice versa
 	task.wait(5)
 end
 
-local function scriptMinigame(): nil
+local function scriptMinigame()
 	
 end
 

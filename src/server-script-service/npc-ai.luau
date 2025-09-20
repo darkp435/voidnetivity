@@ -17,7 +17,8 @@ You may obtain a copy of the License at
 local PathfindingService = game:GetService("PathfindingService")
 local Players = game:GetService("Players")
 local ServerScriptService = game:GetService("ServerScriptService")
-local HostSystem = require(ServerScriptService["host-system"])
+local HostSystem = require(ServerScriptService["data"]["hosts"])
+local Data = require(ServerScriptService["data"]["shared-data-module"])
 
 -- Module for binding NPC AI, **currently unfinished**.
 local module = {}
@@ -34,7 +35,7 @@ end
 
 -- Based on distance, not path
 local function findNearestPlayerCoords(origin: Vector3): Vector3
-	local targetList = HostSystem.getUsersOnHost()
+	local targetList = Data.getUsersOnHost("PLACEHOLDER") -- TODO: implement this!
 	local playerTarget: Player = nil
 	local minDistance = math.huge -- I don't do math but I'm pretty sure this can't be negative
 
@@ -56,7 +57,7 @@ end
 
 --- Returns true if the coordinate is valid for the NPC to walk to.
 ---@param targetCoords Vector3 Vector3 of the proposed coordinate.
-local function isValid(targetCoords: Vector3, dimensions: table): boolean
+local function isValid(targetCoords: Vector3, dimensions): boolean
 	if targetCoords == nil then
 		return false
 	end
@@ -70,6 +71,7 @@ local function isValid(targetCoords: Vector3, dimensions: table): boolean
 	end
 	-- Outside the host
 	
+	return true
 end
 
 local function generateRandomCoords(npcPos: Vector3)
@@ -82,7 +84,7 @@ end
 
 -- This function does exactly what the name implies
 local function walkRandomly(npc: Model, host: string)
-	local dimensions: table = HostSystem.getHostDimensions(host)
+	local dimensions = HostSystem.getHostDimensions(host)
 	-- We can't always generate a coordinate that is reachable from the NPC,
 	-- so if the coordinate can't be reached, we simply reject it.
 	local targetCoords
@@ -94,15 +96,19 @@ local function walkRandomly(npc: Model, host: string)
 	})
 
 	while not isValid(targetCoords, dimensions) do
-		targetCoords = generateRandomCoords()
+		targetCoords = generateRandomCoords(npc.HumanoidRootPart.Position)
 	end
 
 	path:ComputeAsync(npc.HumanoidRootPart.Position, targetCoords)
 end
 
-function module.bindNpcAI(npc: Model, host: string): nil
-	local humanoid: Humanoid = npc:FindFirstChildWhichIsA("Humanoid")
-	local hrp: BasePart = npc:FindFirstChild("HumanoidRootPart")
+function module.bindNpcAI(npc: Model, host: string)
+	-- local humanoid: Humanoid? = npc:FindFirstChildWhichIsA("Humanoid")
+	local hrp: Instance? = npc:FindFirstChild("HumanoidRootPart")
+	if hrp == nil then return end
+	if not hrp:IsA("BasePart") then
+		return
+	end
 
 	local path: Path = PathfindingService:CreatePath({
 		AgentRadius = 3,

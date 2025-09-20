@@ -10,3 +10,5 @@ Packages/
 
 # node_modules just in case (idiotproofing)
 node_modules/
+
+sourcemap.json
