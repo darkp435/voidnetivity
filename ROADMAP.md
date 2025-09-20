@@ -21,3 +21,25 @@ Anything relating to how something will look should be ideally done last.
 
 ## Host System
 Pretty much the only thing left to do is to implement the graph and the methods for it.
+
+# Details
+The NPC AI will obviously be one of the most difficult things to implement due to the complexities surrounding it.
+
+The second most difficult things to implement would probably be the GUI due to the quirks of Roblox GUI programming
+as described in `ftp-gui.luau`, lines 116-172 where I wrote that rant during school at whatever the class I had before
+science was. Point is, trying to make it look good is gonna be an absolute pain and would likely take a lot of tinkering
+in Roblox Studio.
+
+The host system and the position system needs to be completely overhauled in the future, but for now, it'll do because
+of other priorities and that it SHOULD work.
+
+The data handling of the game is mostly done, but the data in `shared-data-module.luau` CAN be compressed, but that will
+also be a future problem.
+
+Priority right now is the FTP interface, maps, privilege-obtainment files and finishing `brute-force-minigame.luau` so that
+there is at least one hacking file as of right now. However, __the number one priority right now is handling the initialisation__
+__for when the player first joins the game, where one of each file will be initialised in random hosts that are reachable.__
+
+# Log
+- September 20: tweaked with VSCode extensions and realised that data related scripts can actually be placed in a separate
+folder for organisation. Did exactly that.

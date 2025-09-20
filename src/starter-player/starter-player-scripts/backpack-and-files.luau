@@ -18,6 +18,7 @@ local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 local StarterQuest = require(LocalPlayer.PlayerScripts["start-quest"])
 local bruteFile = require(LocalPlayer.PlayerScripts.files["brute-force-minigame"])
+local FireGun = require(LocalPlayer.PlayerScripts["fire-gun"])
 
 local module = {}
 
@@ -32,6 +33,8 @@ function module.childAdded(child: Instance)
 		StarterQuest.connectTool(tool)
 	elseif toolName == "brute.exe" then
 		bruteFile.connectFile()
+	elseif toolName == "GUN" then
+		FireGun.bindGunLogic(tool)
 	end
 end
 

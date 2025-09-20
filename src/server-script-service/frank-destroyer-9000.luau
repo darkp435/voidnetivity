@@ -29,17 +29,29 @@ local function isPlayerHumanoid(humanoid: Humanoid): boolean
 	return false
 end
 
+local BULLET_SPEED = 150
+
 -- Shoots a linear bullet from player to the target mouse position
 function module.shootEvent(player: Player, targetPosition)
-	-- clone the bullet model from serverstorage
-	local ball = game.ServerStorage.Bullet:Clone()
+	-- TODO: create it in serverstorage
+	local ball: BasePart = game.ServerStorage.Bullet:Clone()
 	ball.Position = player.Character.HumanoidRootPart.Position
 	ball.Parent = workspace
 
-	local bodyVelocity = Instance.new("BodyVelocity")
-	bodyVelocity.MaxForce = Vector3.new(5000, 5000, 5000)
-	bodyVelocity.Velocity = (targetPosition - ball.Position).Unit * 150
-	bodyVelocity.Parent = ball
+	local attachment = ball:FindFirstChildWhichIsA("Attachment")
+	-- Linear velocity cannot work without an attachment, so we must
+	-- create it if it does not exist.
+	if attachment == nil then
+		attachment = Instance.new("Attachment")
+		attachment.Parent = ball
+	end
+
+	local linearVelocity = Instance.new("LinearVelocity")
+
+	linearVelocity.Parent = attachment
+	linearVelocity.MaxForce = math.huge
+	linearVelocity.VectorVelocity = (targetPosition - ball.Position).Unit * BULLET_SPEED
+	linearVelocity.Attachment0 = attachment
 
 	ball.Touched:Connect(function(hit)
 		local humanoid = hit.Parent:FindFirstChild("Humanoid")
