@@ -56,8 +56,6 @@ function module.playerAdded(player: Player)
 		btc = 0
 		welcome(player)
 	end
-
-	replicatedStorage.ChangeBTC:FireClient(player, btc)
 end
 
 -- when a player leaves the game, save their data

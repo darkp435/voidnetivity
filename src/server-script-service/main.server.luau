@@ -69,7 +69,7 @@ FTPEvent.OnServerEvent:Connect(function(player: Player)
     if character == nil then return end
     local humanoid: Humanoid = character:FindFirstChildWhichIsA("Humanoid")
 
-	if 
+	if
         player:GetAttribute("InFTP") and 
         character:FindFirstChild("Humanoid") ~= nil
     then
@@ -97,6 +97,4 @@ GetFilesEvent.OnServerInvoke = function(player: Player, host: string)
 	return SharedDataModule.getFilesFrom(userid, host)
 end
 
-TransferFileEvent.OnServerInvoke = function(player: Player)
-	
-end
+TransferFileEvent.OnServerInvoke = Ftp.ftpEvent

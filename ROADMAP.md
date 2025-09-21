@@ -43,3 +43,5 @@ __for when the player first joins the game, where one of each file will be initi
 # Log
 - September 20: tweaked with VSCode extensions and realised that data related scripts can actually be placed in a separate
 folder for organisation. Did exactly that.
+- September 21: replaced the deprecated BodyVelocity with LinearVelocity instead and also added the client side script for
+shooting bullets because I forgot about it when porting this project to Rojo.
