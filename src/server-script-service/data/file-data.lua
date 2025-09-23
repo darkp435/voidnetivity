@@ -23,46 +23,46 @@ local Data = require(ServerScriptService["perm-enums"])
 M.fileTable = {
     -- Used to gain access to a remote host
 	["brute.exe"] = {
-		filesize = 1_424_192_628,
+		filesize = 153_424_192_628,
 		permlevel = Data.User
 	},
     -- Used to gain access to a remote host
 	["aurora.exe"] = {
-		filesize = 1_915_832_392,
+		filesize = 192_915_832_392,
 		permlevel = Data.User
 	},
     -- Used to get unbanned
 	["unban.exe"] = {
-		filesize = 2_641_932_185,
+		filesize = 358_641_932_185,
 		permlevel = Data.User
 	},
     -- Used to gain access to a remote host
     -- for security levels 3-4
 	["inject.exe"] = {
-		filesize = 2_027_185_193,
+		filesize = 302_027_185_193,
 		permlevel = Data.Maintainer
 	},
     -- Used to gain access to a remote host
     -- for security levels 3-4
 	["compromise.exe"] = {
-		filesize = 3_141_592_653,
+		filesize = 314_159_265_359,
 		permlevel = Data.Maintainer
 	},
     -- Used to add more time to hosts that have
     -- higher security levels before kicking you
 	["cloak.exe"] = {
-		filesize = 2_618_382_192,
+		filesize = 262_618_382_192,
 		permlevel = Data.User
 	},
     -- Used to get processing power from regular hosts
 	["hijack.exe"] = {
-		filesize = 4_017_351_829,
+		filesize = 421_017_351_829,
 		permlevel = Data.Root
 	},
     -- Used to gain access to a remote host
     -- for security levels 5+
     ["mouse.exe"] = {
-        filesize = 3_582_951_422,
+        filesize = 390_582_951_422,
         permlevel = Data.Developer
     }
 }

@@ -44,4 +44,7 @@ __for when the player first joins the game, where one of each file will be initi
 - September 20: tweaked with VSCode extensions and realised that data related scripts can actually be placed in a separate
 folder for organisation. Did exactly that.
 - September 21: replaced the deprecated BodyVelocity with LinearVelocity instead and also added the client side script for
-shooting bullets because I forgot about it when porting this project to Rojo.
+shooting bullets because I forgot about it when porting this project to Rojo. Also begun working on the server-side FTP logic.
+- September 22: continued working on server-side FTP logic but spent time testing to see how TextChatService works and I discovered
+that you can technically implement markdown support for the Roblox chat. However, that is not top priority so it won't be implemented
+and most likely never will be.

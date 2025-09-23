@@ -69,12 +69,13 @@ FTPEvent.OnServerEvent:Connect(function(player: Player)
     if character == nil then return end
     local humanoid: Humanoid = character:FindFirstChildWhichIsA("Humanoid")
 
+	-- Note: this only applies to the GUI and is not actual FTP logic!
 	if
-        player:GetAttribute("InFTP") and 
+        player:GetAttribute("InFTP") and
         character:FindFirstChild("Humanoid") ~= nil
     then
 		player:SetAttribute("InFTP", false)
-		
+
 		character:FindFirstChild("Humanoid").WalkSpeed = 20 -- Revert back to normal
 	else
 		player:SetAttribute("InFTP", true)

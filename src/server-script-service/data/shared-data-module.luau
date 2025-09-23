@@ -66,7 +66,7 @@ function module.setUserAccess(userid: string, hostname: string, perm: PermEnums.
 end
 
 --- Gets a list of files from the host
-function module.getFilesFrom(userid: string, hostname: string)
+function module.getFilesFrom(userid: string, hostname: string): {string}
 	return module.Data[userid]["hostinfo"][hostname]["files"]
 end
 

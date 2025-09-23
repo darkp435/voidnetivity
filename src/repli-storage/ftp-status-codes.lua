@@ -8,7 +8,10 @@ M.FtpStatus = {
 	BrokenPipe = "brokepipe",
 	Interrupted = "interrupt",
 	UnknownError = "unknown",
-	PermDenied = "pdenied"
+	PermDenied = "pdenied",
+	Pending = "pending",
+	TooManyRequests = "tmr",
+	NotFound = "notfnd"
 }
 
 table.freeze(M.FtpStatus)
@@ -18,6 +21,7 @@ M.Methods = {
 	Put = "put",
 	List = "list",
 	ListRemote = "listr",
+	Open = "open",
 	Exit = "exit",
 	SwitchHost = "chhost"
 }

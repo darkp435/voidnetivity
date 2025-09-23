@@ -59,7 +59,8 @@ FTP_FRAME.Archivable = true
 local function isActivationKey(input: InputObject, gameProcessedEvent: boolean)
 	if gameProcessedEvent then return end
 
-	if input.KeyCode == Enum.KeyCode.Space or
+	if
+		input.KeyCode == Enum.KeyCode.Space or
 		input.KeyCode == Enum.KeyCode.LeftAlt or
 		input.KeyCode == Enum.KeyCode.RightAlt or
 		input.KeyCode == Enum.KeyCode.Return or
