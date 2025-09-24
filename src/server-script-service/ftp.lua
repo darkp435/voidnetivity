@@ -8,9 +8,9 @@ local ServerScriptService = game:GetService("ServerScriptService")
 local FtpEnum = require(ReplicatedStorage:WaitForChild("ftp-status-codes"))
 local Data = require(ServerScriptService.data["shared-data-module"])
 local FileData = require(ServerScriptService.data["file-data"])
+local lsearch = require(ServerScriptService.utils).linearSearch
 local FtpMethod = FtpEnum.Methods
 local FtpStatus = FtpEnum.FtpStatus
-local IS_FTP_RUNNING_ATTRIBUTE = "FtpRunning"
 local BROKEN_PIPE_CHANCE_THRESHOLD = 1
 local UPDATE_TIME_SECONDS = 2
 -- Per UPDATE_TIME_SECONDS
@@ -85,12 +85,26 @@ local function transferFile(player: Player, file: string, host: string)
 	return {Status = FtpStatus.Success}
 end
 
+local function fileExists(userid: string, file: string, host: string)
+	local fileList = Data.getFilesFrom(userid, host)
+	return lsearch(fileList, file) ~= -1
+end
+
 local function getFile(player: Player, file: string)
 	local userid = tostring(player.UserId)
+	if not fileExists(userid, file, FTPState[player.UserId].TargetHost) then
+		return {Status = FtpStatus.NotFound}
+	end
+
 	return transferFile(player, file, Data.getCurrentHost(userid))
 end
 
 local function putFile(player: Player, file: string)
+	local userid = tostring(player.UserId)
+	if not fileExists(userid, file, Data.getCurrentHost(userid)) then
+		return {Status = FtpStatus.NotFound}
+	end
+
 	return transferFile(player, file, FTPState[player.UserId].TargetHost)
 end
 
@@ -147,7 +161,7 @@ function M.ftpEvent(player: Player, method: string, data: string?): {Status: str
 
 	-- Error, FTP is not open
 	if FTPState[player.UserId] == nil then
-		print()
+		warn(`Request ignored: FTP method isn't running and the method isn't "open". (From {player.Name})`)
 	end
 
 	-- Returns that has only one value must still wrap it in curly braces since we return a table, not

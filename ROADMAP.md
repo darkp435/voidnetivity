@@ -48,3 +48,6 @@ shooting bullets because I forgot about it when porting this project to Rojo. Al
 - September 22: continued working on server-side FTP logic but spent time testing to see how TextChatService works and I discovered
 that you can technically implement markdown support for the Roblox chat. However, that is not top priority so it won't be implemented
 and most likely never will be.
+- September 23: implemented the majority of FTP, the only thing really left to do there is to check for if the file actually
+exists.
+- September 24: implemented the logic that checks if a file exists in FTP, which means that the core FTP logic is basically done.
