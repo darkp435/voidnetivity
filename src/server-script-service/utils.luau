@@ -14,7 +14,8 @@ You may obtain a copy of the License at
  limitations under the License.
  ]]
 
--- Generalised algorithmic utilities. They don't use the Roblox API.
+-- Generalised algorithmic utilities. They don't use the Roblox API nor any other
+-- module scripts.
 local module = {}
 
 -- Linear search function. Does **not** work on recursive tables and returns -1 if not found.
@@ -68,6 +69,30 @@ function module.shortestUnweightedPath(graph, source, target)
 	end
 
 	return path
+end
+
+-- Bidirectional map implementation
+module.BiMap = {}
+module.BiMap.__index = module.BiMap
+
+function module.BiMap.new()
+	local self = setmetatable({}, module.BiMap)
+	self.keyToVal = {}
+	self.valToKey = {}
+	return self
+end
+
+function module.BiMap:insert(key, value)
+	self.keyToVal[key] = value
+	self.valToKey[value] = key
+end
+
+function module.BiMap:getByKey(key)
+	return self.keyToVal[key]
+end
+
+function module.BiMap:getByVal(value)
+	return self.valToKey[value]
 end
 
 return module

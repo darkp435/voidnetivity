@@ -51,3 +51,4 @@ and most likely never will be.
 - September 23: implemented the majority of FTP, the only thing really left to do there is to check for if the file actually
 exists.
 - September 24: implemented the logic that checks if a file exists in FTP, which means that the core FTP logic is basically done.
+- September 25: added more files to file-data and started working on compression algorithm

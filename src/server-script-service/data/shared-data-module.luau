@@ -23,6 +23,7 @@ local ServerScriptService = game:GetService("ServerScriptService")
 local utils = require(ServerScriptService["utils"])
 local FileData = require(ServerScriptService["data"]["file-data"])
 local PermEnums = require(ServerScriptService["perm-enums"])
+local BiMap = require(ServerScriptService.utils).BiMap
 
 --[[
 ## Shared Data Module
@@ -44,10 +45,70 @@ local module = {}
 module.Data = {} -- This is where the actual data is
 local playerData = DataStoreService:GetDataStore("playerData") -- DataStore for player data
 
+-- Represented in ASCII to save space, the actual ASCII character doesn't
+-- really matter, which means that (for now) we have 255 symbols, one for
+-- each file, and if we need more than 255 files (which is very unlikely)
+-- then we will use 2 ASCII characters for them where the first one is
+-- ASCII 255.
+--
+-- NOTES:
+-- 1. The file name MUST match an existing one, otherwise it will fail.
+-- 2. Start at ASCII 1 to avoid (unlikely but still may happen) issues
+-- with the null character.
+-- 3. The table is frozen to prevent changes that will break
+-- compression.
+-- 4. The table is stored here instead of file-data because compression is
+-- only used in this file.
+local FILE_COMPRESSION_TABLE = BiMap.new()
+FILE_COMPRESSION_TABLE:insert("brute.exe", "\1")
+FILE_COMPRESSION_TABLE:insert("aurora.exe", "\2")
+FILE_COMPRESSION_TABLE:insert("unban.exe", "\3")
+FILE_COMPRESSION_TABLE:insert("inject.exe", "\4")
+FILE_COMPRESSION_TABLE:insert("compromise.exe", "\5")
+FILE_COMPRESSION_TABLE:insert("cloak.exe", "\6")
+FILE_COMPRESSION_TABLE:insert("hijack.exe", "\7")
+FILE_COMPRESSION_TABLE:insert("mouse.exe", "\8")
+FILE_COMPRESSION_TABLE:insert("root.exe", "\9")
+FILE_COMPRESSION_TABLE:insert("57fe2c78-aae7-4dda-aec4-45474493f910.enc", "\10")
+FILE_COMPRESSION_TABLE:insert("619bf01e-29bb-4f4c-b477-feb6886c3b6a.enc", "\11")
+FILE_COMPRESSION_TABLE:insert("aa4fd3a8-64b9-4477-8859-50837e1630b6.enc", "\12")
+FILE_COMPRESSION_TABLE:insert("79d56f27-596a-431f-9949-da275c37342e.enc", "\13")
+FILE_COMPRESSION_TABLE:insert("65248216-02de-4874-9ea3-6999877463ae.enc", "\14")
+FILE_COMPRESSION_TABLE:insert("ca7f6220-d240-4933-9e76-0720bb0d3240.enc", "\15")
+FILE_COMPRESSION_TABLE:insert("c0d70845-92ba-4989-830d-c6fe29fc813a.enc", "\16")
+FILE_COMPRESSION_TABLE:insert("6262d44c-8f8a-458d-83f4-b52538e92636.enc", "\17")
+FILE_COMPRESSION_TABLE:insert("cf38dcd5-f180-4c49-8668-62fc3acec658.enc", "\18")
+FILE_COMPRESSION_TABLE:insert("5ce17b99-c06d-428b-8526-095396cf221d.enc", "\19")
+FILE_COMPRESSION_TABLE:insert("783c957a-c130-447d-8be8-c6e7e28683e8.enc", "\20")
+FILE_COMPRESSION_TABLE:insert("d4655140-7920-4799-8cfb-da060b527901.enc", "\21")
+FILE_COMPRESSION_TABLE:insert("1138b84a-4129-425b-9ccf-42c2f6379b0b.enc", "\22")
+FILE_COMPRESSION_TABLE:insert("7c8dccd8-5057-4840-b36e-0482ced81abb.enc", "\23")
+FILE_COMPRESSION_TABLE:insert("6efc8e9d-a037-4d1e-acaa-2445503cf589.enc", "\24")
+FILE_COMPRESSION_TABLE:insert("pdebugger.exe", "\25")
+
+table.freeze(FILE_COMPRESSION_TABLE)
+
+local function stringifyFileList(filelist: {string}): string
+	local compressed = ""
+	for file in filelist do
+		compressed = compressed .. FILE_COMPRESSION_TABLE:getByKey(file)
+	end
+
+	return compressed
+end
+
+local function unstringifyFileList(fileString: string)
+	local fileList = {}
+
+	for char in fileString:split("") do
+		table.insert(fileList, FILE_COMPRESSION_TABLE:getByVal(char))
+	end
+
+	return fileList
+end
+
 --- Checks if the user has USER access to a host. If the host doesn't exist, the user does not have access.
 --- NONE privilege is for special hosts that contain core files
-
-
 function module.hasAccessTo(userid: string, hostname: string): boolean
 	-- Host isn't indexed by player data, AKA no permission
 	if module.Data[userid]["hostinfo"][hostname] == nil then
@@ -81,7 +142,6 @@ function module.addFile(userid: string, hostname: string, filename: string)
 end
 
 --- Deletes a file from a host.
---- If it fails, blame John
 function module.deleteFile(userid: string, hostname: string, filename: string)
 	local fileList = module.Data[userid]["hostinfo"][hostname]["files"]
 
@@ -124,6 +184,13 @@ end
 
 --- Saves the player data to the datastore and does clean-up
 function module.savePlayerData(userid: string)
+	-- Compress the files
+	for host in module.Data[userid].hostinfo do
+		local files = module.Data[userid].hostinfo[host].files
+		local compressed = stringifyFileList(files)
+		files = compressed
+	end
+
 	playerData:SetAsync(userid, module.Data[userid])
 	-- Remove the userid index to free the allocated space
 	module.Data[userid] = nil
@@ -138,6 +205,11 @@ end
 function module.loadData(userid: string)
 	local data = playerData:GetAsync(userid)
 	module.Data[userid] = data
+	for host in module.Data[userid].hostinfo do
+		local compFiles = module.Data[userid].hostinfo[host].files
+		local uncompressed = unstringifyFileList(compFiles)
+		compFiles = uncompressed
+	end
 
 	if data == nil then
 		firstTimeInit(userid)
