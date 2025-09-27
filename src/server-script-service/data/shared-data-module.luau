@@ -23,7 +23,7 @@ local ServerScriptService = game:GetService("ServerScriptService")
 local utils = require(ServerScriptService["utils"])
 local FileData = require(ServerScriptService["data"]["file-data"])
 local PermEnums = require(ServerScriptService["perm-enums"])
-local BiMap = require(ServerScriptService.utils).BiMap
+local BiMap = utils.BiMap
 
 --[[
 ## Shared Data Module
@@ -230,15 +230,18 @@ function module.getHostsUserHasAccessTo(userid: string)
 end
 
 --- Returns the current host a player is in
-function module.getCurrentHost(userid: string): string
+function module.getCurrentHost(userid: string | number): string
+	if type(userid) == "number" then
+		userid = tostring(userid)
+	end
 	return module.Data[userid]["currenthost"]
 end
 
 --- Sets the current host a player is in
 function module.setCurrentHost(userid: string, hostname: string)
 	module.Data[userid]["currenthost"] = hostname
-    local player = Players:GetPlayerByUserId(tonumber(userid))
-    player:SetAttribute("CurrentHost", hostname)
+	local player = Players:GetPlayerByUserId(tonumber(userid))
+	player:SetAttribute("CurrentHost", hostname)
 end
 
 --- Gets the total amount of users on a host

@@ -143,7 +143,7 @@ function module.connectTool(tool: Tool)
 		button.Position = UDim2.fromScale(0.5, 0.5)
 		button.Parent = game.Players.LocalPlayer.PlayerGui.ScreenGui
 		button.Text = DIALOGUE_1[ptr]
-		
+
 		button.MouseButton1Click:Connect(function()
 			if ptr < #DIALOGUE_1 then
 				ptr = ptr + 1

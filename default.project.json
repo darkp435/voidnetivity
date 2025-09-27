@@ -88,6 +88,10 @@
         "$className": "RemoteFunction",
         "$ignoreUnknownInstances": true
       },
+      "Equip": {
+        "$className": "RemoteEvent",
+        "$ignoreUnknownInstances": true
+      },
       "$ignoreUnknownInstances": true,
       "$path": "src/repli-storage"
     }

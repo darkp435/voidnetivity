@@ -1,4 +1,3 @@
-local ServerStorage = game:GetService("ServerStorage")
 --[[
  Copyright 2025 darkp435
 
@@ -14,13 +13,23 @@ You may obtain a copy of the License at
  See the License for the specific language governing permissions and
  limitations under the License.
  ]]
-
---! NEEDS A SEPARATE REMOTE EVENT!
+local ServerScriptService = game:GetService("ServerScriptService")
+local ServerStorage = game:GetService("ServerStorage")
 
 local module = {}
+local Data = require(ServerScriptService.data:WaitForChild("shared-data-module"))
+local lsearch = require(ServerScriptService.utils).linearSearch
 
 --- Function to give the player the file. Does NOT validate if they do have access to it.
 function module.equipFile(player: Player, file: string)
+	local userid = tostring(player.UserId)
+	local currHost = Data.getCurrentHost(userid)
+	local fileList = Data.getFilesFrom(userid, currHost)
+	-- Prevent the user from getting the file if they don't have it (early return)
+	if lsearch(file) == -1 then
+		warn(`Note: user requested to get a file, but the file doesn't exist. (From {player.Name})`)
+		return
+	end
 	local clonedFile: Tool
 	clonedFile = ServerStorage:FindFirstChild("file"):Clone()
 	clonedFile.Parent = player.Backpack

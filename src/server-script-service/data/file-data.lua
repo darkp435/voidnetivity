@@ -1,4 +1,3 @@
-local ServerScriptService = game:GetService("ServerScriptService")
 --[[
  Copyright 2025 darkp435
 
@@ -16,55 +15,55 @@ You may obtain a copy of the License at
  ]]
 
 local M = {}
-
+local ServerScriptService = game:GetService("ServerScriptService")
 local Data = require(ServerScriptService["perm-enums"])
 
 -- Table of files and their data
 M.fileTable = {
-    -- Used to gain access to a remote host
+	-- Used to gain access to a remote host
 	["brute.exe"] = {
 		filesize = 153_424_192_628,
 		permlevel = Data.User
 	},
-    -- Used to gain access to a remote host
+	-- Used to gain access to a remote host
 	["aurora.exe"] = {
 		filesize = 192_915_832_392,
 		permlevel = Data.User
 	},
-    -- Used to get unbanned
+	-- Used to get unbanned
 	["unban.exe"] = {
 		filesize = 358_641_932_185,
 		permlevel = Data.User
 	},
-    -- Used to gain access to a remote host
-    -- for security levels 3-4
+	-- Used to gain access to a remote host
+	-- for security levels 3-4
 	["inject.exe"] = {
 		filesize = 302_027_185_193,
 		permlevel = Data.Maintainer
 	},
-    -- Used to gain access to a remote host
-    -- for security levels 3-4
+	-- Used to gain access to a remote host
+	-- for security levels 3-4
 	["compromise.exe"] = {
 		filesize = 314_159_265_359,
 		permlevel = Data.Maintainer
 	},
-    -- Used to add more time to hosts that have
-    -- higher security levels before kicking you
+	-- Used to add more time to hosts that have
+	-- higher security levels before kicking you
 	["cloak.exe"] = {
 		filesize = 262_618_382_192,
 		permlevel = Data.User
 	},
-    -- Used to get processing power from regular hosts
+	-- Used to get processing power from regular hosts
 	["hijack.exe"] = {
 		filesize = 421_017_351_829,
 		permlevel = Data.Root
 	},
-    -- Used to gain access to a remote host
-    -- for security levels 5+
-    ["mouse.exe"] = {
-        filesize = 390_582_951_422,
-        permlevel = Data.Developer
-    },
+	-- Used to gain access to a remote host
+	-- for security levels 5+
+	["mouse.exe"] = {
+		filesize = 390_582_951_422,
+		permlevel = Data.Developer
+	},
 	-- Used to gain root access
 	["root.exe"] = {
 		filesize = 812_132_591_320,

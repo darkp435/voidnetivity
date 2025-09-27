@@ -38,6 +38,7 @@ local GetFilesEvent: RemoteFunction = ReplicatedStorage:WaitForChild("GetFilesEv
 local fileData = require(ServerScriptService["data"]["file-data"])
 local Ftp = require(ServerScriptService.ftp)
 local TransferFileEvent = ReplicatedStorage:WaitForChild("TransferFile")
+local EquipEvent = ReplicatedStorage:WaitForChild("Equip")
 
 TeleportEvent.OnServerEvent:Connect(function(player: Player, fileName: string, targetHostname: string)
 	TeleportToBox.teleportEvent(player, fileName, targetHostname)
@@ -65,15 +66,15 @@ end
 -- TODO: modularise this later
 FTPEvent.OnServerEvent:Connect(function(player: Player)
 	-- It's a toggle, so we do the opposite
-    local character = player.Character
-    if character == nil then return end
-    local humanoid: Humanoid = character:FindFirstChildWhichIsA("Humanoid")
+	local character = player.Character
+	if character == nil then return end
+	local humanoid: Humanoid = character:FindFirstChildWhichIsA("Humanoid")
 
 	-- Note: this only applies to the GUI and is not actual FTP logic!
 	if
-        player:GetAttribute("InFTP") and
-        character:FindFirstChild("Humanoid") ~= nil
-    then
+		player:GetAttribute("InFTP") and
+		character:FindFirstChild("Humanoid") ~= nil
+	then
 		player:SetAttribute("InFTP", false)
 
 		character:FindFirstChild("Humanoid").WalkSpeed = 20 -- Revert back to normal
@@ -99,3 +100,7 @@ GetFilesEvent.OnServerInvoke = function(player: Player, host: string)
 end
 
 TransferFileEvent.OnServerInvoke = Ftp.ftpEvent
+
+EquipEvent.OnServerEvent:Connect(function(player, toolname: string)
+	GetFile.equipFile(player, toolname)
+end)
