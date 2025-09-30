@@ -34,12 +34,12 @@ local function calcDistance(origin: Vector3, target: Vector3)
 end
 
 -- Based on distance, not path
-local function findNearestPlayerCoords(origin: Vector3): Vector3
-	local targetList = Data.getUsersOnHost("PLACEHOLDER") -- TODO: implement this!
+local function findNearestPlayerCoords(origin: Vector3, host: string): Vector3
+	local targetList = Data.getUsersOnHost(host)
 	local playerTarget: Player = nil
 	local minDistance = math.huge -- I don't do math but I'm pretty sure this can't be negative
 
-	for potentialTarget: Player in targetList do
+	for _, potentialTarget: Player in targetList do
 		local distance = calcDistance(origin, potentialTarget.Character.HumanoidRootPart.Position)
 
 		if distance < minDistance then
@@ -70,7 +70,6 @@ local function isValid(targetCoords: Vector3, dimensions): boolean
 		return false
 	end
 	-- Outside the host
-	
 	return true
 end
 
@@ -124,7 +123,7 @@ function module.bindNpcAI(npc: Model, host: string)
 	-- TODO: confront my fears of high level mathematics and implement it
 
 	while npc ~= nil do
-		local targetCoords = findNearestPlayerCoords(hrp.Position)
+		local targetCoords = findNearestPlayerCoords(hrp.Position, host)
 		if calcDistance(targetCoords, hrp.Position) <= MAXIMUM_SEEN_DISTANCE then
 			chasePlayer()
 		else

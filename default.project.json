@@ -6,7 +6,7 @@
       "data": {
         "$className": "Folder",
         "$ignoreUnknownInstances": true,
-        "$path": "src/server-script-service/data"
+        "$path": "src/server/data"
       },
       "npcAIEvent": {
         "$className": "BindableEvent",
@@ -14,10 +14,13 @@
       },
       "$className": "ServerScriptService",
       "$ignoreUnknownInstances": true,
-      "$path": "src/server-script-service"
+      "$path": "src/server"
     },
     "ServerStorage": {
       "$className": "ServerStorage",
+      "Bullet": {
+        "$className": "Part"
+      },
       "$ignoreUnknownInstances": true,
       "$path": "src/server-storage"
     },
@@ -41,15 +44,15 @@
         "files": {
           "$className": "Folder",
           "$ignoreUnknownInstances": true,
-          "$path": "src/starter-player/starter-player-scripts/files"
+          "$path": "src/client/starter-player-scripts/files"
         },
         "$ignoreUnknownInstances": true,
-        "$path": "src/starter-player/starter-player-scripts"
+        "$path": "src/client/starter-player-scripts"
       },
       "StarterCharacterScripts": {
         "$className": "StarterCharacterScripts",
         "$ignoreUnknownInstances": true,
-        "$path": "src/starter-player/starter-character-scripts"
+        "$path": "src/client/starter-character-scripts"
       },
       "$ignoreUnknownInstances": true
     },
@@ -93,7 +96,7 @@
         "$ignoreUnknownInstances": true
       },
       "$ignoreUnknownInstances": true,
-      "$path": "src/repli-storage"
+      "$path": "src/shared"
     }
   }
 }

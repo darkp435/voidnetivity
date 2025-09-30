@@ -24,6 +24,7 @@ local utils = require(ServerScriptService["utils"])
 local FileData = require(ServerScriptService["data"]["file-data"])
 local PermEnums = require(ServerScriptService["perm-enums"])
 local BiMap = utils.BiMap
+local lsearch = utils.linearSearch
 
 --[[
 ## Shared Data Module
@@ -85,12 +86,17 @@ FILE_COMPRESSION_TABLE:insert("1138b84a-4129-425b-9ccf-42c2f6379b0b.enc", "\22")
 FILE_COMPRESSION_TABLE:insert("7c8dccd8-5057-4840-b36e-0482ced81abb.enc", "\23")
 FILE_COMPRESSION_TABLE:insert("6efc8e9d-a037-4d1e-acaa-2445503cf589.enc", "\24")
 FILE_COMPRESSION_TABLE:insert("pdebugger.exe", "\25")
+FILE_COMPRESSION_TABLE:insert("lure.exe", "\26")
+FILE_COMPRESSION_TABLE:insert("duplicate.exe", "\27")
+FILE_COMPRESSION_TABLE:insert("maint.exe", "\28")
+FILE_COMPRESSION_TABLE:insert("dev.exe", "\29")
+FILE_COMPRESSION_TABLE:insert("sysadmin.exe", "\30")
 
 table.freeze(FILE_COMPRESSION_TABLE)
 
 local function stringifyFileList(filelist: {string}): string
 	local compressed = ""
-	for file in filelist do
+	for _, file in filelist do
 		compressed = compressed .. FILE_COMPRESSION_TABLE:getByKey(file)
 	end
 
@@ -100,7 +106,7 @@ end
 local function unstringifyFileList(fileString: string)
 	local fileList = {}
 
-	for char in fileString:split("") do
+	for _, char in fileString:split("") do
 		table.insert(fileList, FILE_COMPRESSION_TABLE:getByVal(char))
 	end
 
@@ -136,6 +142,15 @@ function module.getPerms(userid: string, hostname: string)
 	return module.Data[userid]["hostinfo"][hostname]["permission"] or "none"
 end
 
+--- Sets the max permission a player has
+function module.setPerms(userid: string | number, hostname: string, perm: PermEnums.Permission)
+	if type(userid) == "number" then
+		userid = tostring(userid)
+	end
+
+	module.Data[userid]["hostinfo"][hostname]["permission"] = perm
+end
+
 --- Add a file to a host. Mainly used in conjunction with FTP.
 function module.addFile(userid: string, hostname: string, filename: string)
 	table.insert(module.Data[userid]["hostinfo"][hostname]["files"], filename)
@@ -154,6 +169,11 @@ function module.getSysadm(userid: string): boolean
 	return module.Data[userid]["hasSysadm"]
 end
 
+--- Sets SYSADM
+function module.setSysadm(userid: string | number, hasSysadm: boolean)
+	module.Data[userid]["hasSysadm"] = hasSysadm
+end
+
 --- Returns true if it's the user's first time joining and vice versa.
 function module.isFirstTimeJoining(userid: string)
 	return module.Data[userid]["firstTimeJoining"]
@@ -162,6 +182,22 @@ end
 --- Returns a list of daemons the user has on the home host.
 function module.getDaemons(userid: string)
 	return module.Data[userid]["daemons"]
+end
+
+--- Adds a daemon
+function module.addDaemon(userid: string, daemonName: string)
+	table.insert(module.Data[userid].daemons, daemonName)
+end
+
+--- Removes a daemon
+function module.removeDaemon(userid: string, daemonName: string)
+	local daemons = module.Data[userid].daemons
+	local index = lsearch()
+end
+
+--- Returns true if the player has the daemon and vice versa
+function module.hasDaemon(userid: string, daemonName: string)
+
 end
 
 --- Gets the players number of bitcoins.
@@ -185,7 +221,7 @@ end
 --- Saves the player data to the datastore and does clean-up
 function module.savePlayerData(userid: string)
 	-- Compress the files
-	for host in module.Data[userid].hostinfo do
+	for _, host in module.Data[userid].hostinfo do
 		local files = module.Data[userid].hostinfo[host].files
 		local compressed = stringifyFileList(files)
 		files = compressed
@@ -205,7 +241,7 @@ end
 function module.loadData(userid: string)
 	local data = playerData:GetAsync(userid)
 	module.Data[userid] = data
-	for host in module.Data[userid].hostinfo do
+	for _, host in module.Data[userid].hostinfo do
 		local compFiles = module.Data[userid].hostinfo[host].files
 		local uncompressed = unstringifyFileList(compFiles)
 		compFiles = uncompressed
@@ -248,14 +284,13 @@ end
 function module.getUsersOnHost(host: string)
 	local users = {}
 
-	for player: Player in Players:GetPlayers() do
+	for _, player: Player in Players:GetPlayers() do
 		if player:GetAttribute("CurrentHost") == host then
 			table.insert(users, player)
 		end
 	end
 
 	return users
-
 end
 
 return module

@@ -33,8 +33,9 @@ local BULLET_SPEED = 150
 
 -- Shoots a linear bullet from player to the target mouse position
 function module.shootEvent(player: Player, targetPosition)
-	-- TODO: create it in serverstorage
-	local ball: BasePart = game.ServerStorage.Bullet:Clone()
+	local ball: Part = Instance.new("Part")
+	ball.Shape = Enum.PartType.Ball
+	ball.Size = Vector3.new(1, 1, 1)
 	ball.Position = player.Character.HumanoidRootPart.Position
 	ball.Parent = workspace
 

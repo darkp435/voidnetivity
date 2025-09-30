@@ -134,6 +134,32 @@ M.fileTable = {
 	["pdebugger.exe"] = {
 		filesize = 723_352_953_381,
 		permlevel = Data.Admin
+	},
+	-- Used to get access to a remote host
+	["lure.exe"] = {
+		filesize = 620_912_031_329,
+		permlevel = Data.Maintainer
+	},
+	-- Used in conjunction with hacking files to make
+	-- using them easier on following attempts
+	["duplicate.exe"] = {
+		filesize = 419_832_851_954,
+		permlevel = Data.Admin
+	},
+	-- Used for getting maintainer access
+	["maint.exe"] = {
+		filesize = 512_813_914_921,
+		permlevel = Data.User
+	},
+	-- Used for getting developer access
+	["dev.exe"] = {
+		filesize = 632_912_582_192,
+		permlevel = Data.Maintainer
+	},
+	-- Used for getting admin access
+	["sysadmin.exe"] = {
+		filesize = 6_921_924_102,
+		permlevel = Data.Developer
 	}
 }
 

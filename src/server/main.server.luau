@@ -85,7 +85,7 @@ FTPEvent.OnServerEvent:Connect(function(player: Player)
 	end
 end)
 
-ChangeBTC.OnServerEvent:Connect(function(player)
+ChangeBTC.OnServerEvent:Connect(function(player: Player, transactionType: string)
 	-- TODO: implement this later
 end)
 
