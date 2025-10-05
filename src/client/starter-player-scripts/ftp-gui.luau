@@ -18,8 +18,12 @@ You may obtain a copy of the License at
 local ReplicatedStorage: ReplicatedStorage = game:GetService("ReplicatedStorage")
 local UserInputService = game:GetService("UserInputService")
 local FTPEvent: RemoteEvent = ReplicatedStorage:WaitForChild("FTPEvent")
+local FTPFunction: RemoteFunction = ReplicatedStorage:WaitForChild("TransferFile")
 local GetFilesEvent: RemoteFunction = ReplicatedStorage:WaitForChild("GetFilesEvent")
 local CheckPerms: RemoteFunction = ReplicatedStorage:WaitForChild("CheckPerms")
+local FTPEnum = require(ReplicatedStorage:WaitForChild("ftp-status-codes"))
+local StatusCode = FTPEnum.FtpStatus
+local Methods = FTPEnum.Methods
 local PlayerGui: PlayerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 local Promise = require(ReplicatedStorage.Packages.promise)
 local M = {}
@@ -33,6 +37,9 @@ defaultTextLabel.TextSize = 20
 defaultTextLabel.BackgroundTransparency = 1
 defaultTextLabel.TextXAlignment = Enum.TextXAlignment.Left
 defaultTextLabel.Archivable = true
+
+-- Frame name is UUID because it's an identifier and must not collide.
+local FRAME_NAME = "ce2a182f-0a7c-47b8-bbe6-2c88dbc9d781"
 
 local REJECTED_LABEL_TEXT = [[
 Error 401: permission denied
@@ -95,8 +102,29 @@ local function waitForInput(input: TextBox)
 	end)
 end
 
-local function putFile()
+-- TODO: implement UIs for all of these functions
 
+local function putFile()
+	local fileInputBox = Instance.new("TextBox")
+	fileInputBox.Text = ""
+	-- There's no reject function, so the promise can only resolve, therefore the
+	-- first value returned will always be true, so we discard it.
+	local _, inputVal: string = waitForInput(fileInputBox):await()
+	local response: FTPEnum.Response = FTPFunction:InvokeServer(Methods.Put, inputVal)
+	while response.Status == StatusCode.Pending do
+		-- TODO: implement the loading bar
+		response = FTPFunction:InvokeServer(Methods.Put, inputVal)
+	end
+
+	local status = response.Status
+	-- TODO: implement response UI
+	if status == StatusCode.BrokenPipe then
+		print("Broken Pipe")
+	elseif status == StatusCode.TooManyRequests then
+		print("Too many requests")
+	elseif status == StatusCode.Success then
+		print("File transferred")
+	end
 end
 
 local function getFile()
@@ -175,6 +203,7 @@ function M.FTPEVentCallback()
 	-- frame is background
 	-- initialise FTP with hello messages, auth and confirmations
 	local frame = FTP_FRAME:Clone()
+	frame.Name = FRAME_NAME
 	frame.Parent = PlayerGui
 	local title = defaultTextLabel:Clone()
 	title.Text = "FTP"

@@ -30,7 +30,7 @@ local function bruteForceMinigame()
 end
 
 local function scriptMinigame()
-	
+	-- Implementation coming soon
 end
 
 -- TODO: add more minigames later
@@ -57,7 +57,7 @@ end
 function module.teleportEvent(player: Player, fileName: string, targetHostname: string)
 	local coords = CFrame.new(math.random(1, 10000), 1000, math.random(1, 10000))
 	local file = player.Backpack:FindFirstChild(fileName)
-	
+
 	if player and file and file:IsA("Tool") then
 		box.CFrame = coords
 		box.Parent = workspace
@@ -66,7 +66,7 @@ function module.teleportEvent(player: Player, fileName: string, targetHostname: 
 		if humanoid and hrp then
 			hrp.CFrame = coords
 			local success = activateMinigame(fileName)
-			
+
 			if success then
 				if not workspace:FindFirstChild(targetHostname) then
 					createHost(player, targetHostname)

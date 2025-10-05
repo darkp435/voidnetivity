@@ -293,4 +293,20 @@ function module.getUsersOnHost(host: string)
 	return users
 end
 
+function module.getProcPower(userid: string | number)
+	if type(userid) == "number" then
+		userid = tostring(userid)
+	end
+
+	return module.Data[userid].procPower
+end
+
+function module.adjustProcPower(userid: string | number, procPower: number)
+	if type(userid) == "number" then
+		userid = tostring(userid)
+	end
+
+	module.Data[userid] += procPower
+end
+
 return module

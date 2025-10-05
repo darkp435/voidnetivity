@@ -52,3 +52,4 @@ and most likely never will be.
 exists.
 - September 24: implemented the logic that checks if a file exists in FTP, which means that the core FTP logic is basically done.
 - September 25: added more files to file-data and started working on compression algorithm
+- October 4-5: I decided that writing RFCs in markdown would be better for preview, but I didn't want to manually convert it to rich text for Roblox. To solve it, I wrote my own Markdown parser.

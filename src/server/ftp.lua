@@ -154,7 +154,7 @@ end
 ---@param player Player The player who sent the request.
 ---@param method string The FTP request method.
 ---@param data string The file or the host, optional if the request is not get, put or switching hosts.
-function M.ftpEvent(player: Player, method: string, data: string?): {Status: string, FileList: {string}?, Progress: number?}
+function M.ftpEvent(player: Player, method: string, data: string?): FtpEnum.Response
 	if method == FtpMethod.Open then
 		openFTP(player)
 	end

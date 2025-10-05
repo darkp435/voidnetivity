@@ -98,8 +98,15 @@ GetFilesEvent.OnServerInvoke = function(player: Player, host: string)
 	local userid = tostring(player.UserId)
 	return SharedDataModule.getFilesFrom(userid, host)
 end
-
-TransferFileEvent.OnServerInvoke = Ftp.ftpEvent
+--- Remote function. Returns a table with these properties:
+--- `Status`: the status of the request
+--- `FileList?`: when sending a put request, returns the list of files
+---@param player Player The player who sent the request.
+---@param method string The FTP request method.
+---@param data string The file or the host, optional if the request is not get, put or switching hosts.
+TransferFileEvent.OnServerInvoke = function(player: Player, method: string, data: string)
+	return Ftp.ftpEvent(player, method, data)
+end
 
 EquipEvent.OnServerEvent:Connect(function(player, toolname: string)
 	GetFile.equipFile(player, toolname)

@@ -28,4 +28,6 @@ M.Methods = {
 
 table.freeze(M.Methods)
 
+export type Response = {Status: string, FileList: {string}?, Progress: number?}
+
 return M
