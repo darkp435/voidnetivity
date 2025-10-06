@@ -17,6 +17,18 @@ local Players = game:GetService("Players")
 local ServerScriptService = game:GetService("ServerScriptService")
 local utils = require(ServerScriptService["utils"])
 
+local Greediness = {
+	NotGreedy = 0,
+	Slight = 1,
+	Moderate = 2,
+	Greedy = 3,
+	Very = 4,
+	Extreme = 5,
+	Max = 6
+}
+
+table.freeze(Greediness)
+
 --[[
 Module for managing the host system and abstracting it as well as fetching data about the host
 Host system is represented via a graph because it aligns better with what the network looks like

@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 # Converts Markdown into Roblox rich text format for use in text labels.
 import sys
 import time
@@ -24,7 +25,6 @@ def parse_line(line: str) -> str:
     bold_start_index = -1
     heading = 0
     should_skip = False
-    leading_hashes = False
     for i, char in enumerate(line):
         if should_skip:
             should_skip = True
