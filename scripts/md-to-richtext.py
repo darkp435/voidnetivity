@@ -1,5 +1,8 @@
 #!/usr/bin/python3
 # Converts Markdown into Roblox rich text format for use in text labels.
+# Note that it is recommended to compile and use the C++ version as it is
+# ~2-5x faster than this version, the Python version is just for testing 
+# purposes or if you want to avoid compiling the C++ version.
 import sys
 import time
 

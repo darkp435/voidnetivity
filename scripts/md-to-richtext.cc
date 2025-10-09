@@ -1,4 +1,7 @@
 // Markdown to Robox rich text compiler.
+// Note that this is C++, not Luau, which means that we are
+// dealing with an incompetent compiler (MSVC, GCC, LLVM, whatever,
+// they are all equally bad), so do not mess with this.
 #include <iostream>
 #include <chrono>
 #include <fstream>
@@ -7,15 +10,34 @@
 #define ANSI_RED   "\e[0;31m"
 #define ANSI_RESET "\e[0m"
 
+// Yes I'm too lazy to type std::string.
 using std::string;
 using namespace std::chrono;
+typedef unsigned char uchar;
 
+const std::unordered_map<uchar, uchar> HEADING_MAP = {
+    {1, 32},
+    {2, 24},
+    {3, 20},
+    {4, 16},
+    {5, 14},
+    {6, 12}
+};
+
+// There should be concepts to prevent the compiler from
+// throwing template instantiation jargon, but then I
+// realised that nobody is stupid enough to pass random
+// nonsense to the print function... right?
 template <typename T>
 void print(T input)
 {
     std::cout << input << "\n";
 }
 
+// When this function is called, note that it is entirely
+// the user's fault. We are not sorry for what the user has
+// done; it is the user's problem. We are not dealing with
+// whatever ritual the user did to cause the error.
 template <typename T>
 void error(T input)
 {
@@ -74,7 +96,37 @@ string parse_line(string& line)
             bold_start_index = i;
             should_skip = true;
         }
+        else if (ch == '*')
+        {
+            italic_start_index = i;
+        }
+        else
+        {
+            output += ch;
+        }
     }
+
+    if (heading > 0)
+    {
+        output = "<font size=\"" + std::to_string(HEADING_MAP.at(heading)) + "\">"+ output + "</font>";
+    }
+    if (heading < 0)
+    {
+        heading = -heading;
+        string append_hash = "";
+        for (int i = 0; i < heading; i++)
+        {
+            append_hash += "#";
+        }
+        output = append_hash + output;
+    }
+
+    if (is_list)
+    {
+        output = "  • " + output;
+    }
+
+    return output;
 }
 
 int main(int argc, char* argv[])
@@ -98,7 +150,7 @@ int main(int argc, char* argv[])
     string output = "";
     while (std::getline(in_file, line))
     {
-        output += parse_line(line);
+        output += parse_line(line) + "\n";
     }
 
     in_file.close();
@@ -110,8 +162,9 @@ int main(int argc, char* argv[])
     }
 
     out_file << output;
+    out_file.close();
     auto end = high_resolution_clock::now();
     duration<double, std::milli> ms = end - start;
-    print(std::to_string(ms.count()) + "ms");
+    print("Parsing and writing to file complete, took " + std::to_string(ms.count()) + "ms");
     return 0;
 }

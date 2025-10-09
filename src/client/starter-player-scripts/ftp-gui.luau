@@ -17,9 +17,7 @@ You may obtain a copy of the License at
 -- Boilerplate
 local ReplicatedStorage: ReplicatedStorage = game:GetService("ReplicatedStorage")
 local UserInputService = game:GetService("UserInputService")
-local FTPEvent: RemoteEvent = ReplicatedStorage:WaitForChild("FTPEvent")
 local FTPFunction: RemoteFunction = ReplicatedStorage:WaitForChild("TransferFile")
-local GetFilesEvent: RemoteFunction = ReplicatedStorage:WaitForChild("GetFilesEvent")
 local CheckPerms: RemoteFunction = ReplicatedStorage:WaitForChild("CheckPerms")
 local FTPEnum = require(ReplicatedStorage:WaitForChild("ftp-status-codes"))
 local StatusCode = FTPEnum.FtpStatus

@@ -12,3 +12,4 @@ Packages/
 node_modules/
 
 sourcemap.json
+*.exe
