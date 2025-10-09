@@ -24,7 +24,8 @@ local Greediness = {
 	Greedy = 3,
 	Very = 4,
 	Extreme = 5,
-	Max = 6
+	Bourgeoisie = 6,
+	Max = 7
 }
 
 table.freeze(Greediness)

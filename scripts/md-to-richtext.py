@@ -25,10 +25,13 @@ def parse_line(line: str) -> str:
     bold_start_index = -1
     heading = 0
     should_skip = False
+    is_list = False
     for i, char in enumerate(line):
         if should_skip:
-            should_skip = True
+            should_skip = False
             continue
+        if char == "-" and i == 0 and size > 2 and line[i+1] == " ":
+            is_list = True
         if char == "#" and hashes < 6 and (hashes > 0 or i == 0):
             hashes += 1
         elif char == " " and hashes > 0:
@@ -64,6 +67,9 @@ def parse_line(line: str) -> str:
         append_hash = '#' * -heading
         output = append_hash + output
 
+    if is_list:
+        output = "  • " + output
+
     return output
 
 if len(sys.argv) < 3:
@@ -77,19 +83,24 @@ output_file = sys.argv[2]
 output = ""
 
 start = time.perf_counter()
+try:
+    with open(input_file, "r") as file:
+        # Placeholder so that line isn't an empty string, but also isn't empty
+        # so that the while loop isn't skipped.
+        line = "\n"
+        while line != "":
+            line = file.readline()
+            line = line.rstrip("\n")
+            output += parse_line(line)
+            output += "\n"
+except FileNotFoundError:
+    print("Error: input file not found!")
 
-with open(input_file, "r") as file:
-    # Placeholder so that line isn't an empty string, but also isn't empty
-    # so that the while loop isn't skipped.
-    line = "\n"
-    while line != "":
-        line = file.readline()
-        line = line.rstrip("\n")
-        output += parse_line(line)
-        output += "\n"
-
-with open(output_file, "w") as out:
-    out.write(output)
+try:
+    with open(output_file, "w") as out:
+        out.write(output)
+except FileNotFoundError:
+    print("Error: output file not found!")
 
 end = time.perf_counter()
 print(f"Parsing and writing to file complete, took {(end - start) * 1000} ms.")
