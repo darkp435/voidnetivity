@@ -91,8 +91,4 @@ function module.bruteForceMinigame(start: boolean, data: string)
 	end
 end
 
-function module.connectFile()
-	-- TODO: implement this
-end
-
 return module

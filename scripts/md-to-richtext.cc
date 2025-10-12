@@ -131,10 +131,11 @@ string parse_line(string& line)
 
 int main(int argc, char* argv[])
 {
-    if (argc < 3)
+    if (argc < 2)
     {
         print(ANSI_RED "error: " ANSI_RESET "input and/or output file not included.");
-        print("Usage: md-to-richtext <input file> <output file>");
+        print("Usage: md-to-richtext <input file> [output file]");
+        print("If output file is not supplied, the output will instead be printed to standard output.");
         return 1;
     }
 
@@ -154,17 +155,25 @@ int main(int argc, char* argv[])
     }
 
     in_file.close();
-    std::ofstream out_file(argv[2]);
-    if (!out_file.is_open())
+    if (argc == 2)
     {
-        error("error: failed opening output file.");
-        return 1;
+        print(output);
+    }
+    else
+    {
+        std::ofstream out_file(argv[2]);
+        if (!out_file.is_open())
+        {
+            error("error: failed opening output file.");
+            return 1;
+        }
+
+        out_file << output;
+        out_file.close();
     }
 
-    out_file << output;
-    out_file.close();
     auto end = high_resolution_clock::now();
     duration<double, std::milli> ms = end - start;
-    print("Parsing and writing to file complete, took " + std::to_string(ms.count()) + "ms");
+    print("Parsing and writing complete, took " + std::to_string(ms.count()) + "ms");
     return 0;
 }

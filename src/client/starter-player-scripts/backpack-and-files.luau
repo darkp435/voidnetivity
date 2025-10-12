@@ -32,7 +32,9 @@ function module.childAdded(child: Instance)
 	if toolName == "StarterQuest" then
 		StarterQuest.connectTool(tool)
 	elseif toolName == "brute.exe" then
-		bruteFile.connectFile()
+		tool.Activated:Connect(function()
+			bruteFile.bruteForceMinigame(true, "")
+		end)
 	elseif toolName == "GUN" then
 		FireGun.bindGunLogic(tool)
 	end

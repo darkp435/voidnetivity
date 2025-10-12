@@ -1,0 +1,81 @@
+-- SPDX-License-Identifier: Apache-2.0
+-- Copyright (c) 2025 darkp435
+
+-- +---------------------------------------------------------+
+-- | Server side implementation of the brute force minigame. |
+-- | Must be called by teleport-to-server as it assumes that |
+-- | the player is already in the box.                       |
+-- +---------------------------------------------------------+
+local ServerScriptService = game:GetService("ServerScriptService")
+local M = {}
+local state = require(ServerScriptService.files.state)
+local SHAPE_ATTRIB_PREFIX_TEXT = "__SHP_"
+local SHAPES_PER_DIFFICULTY = 3
+local SHAPE_SPACING = 3
+local SHAPE_TYPES = {
+	Enum.PartType.Block,
+	Enum.PartType.CornerWedge,
+	Enum.PartType.Cylinder,
+	Enum.PartType.Wedge
+}
+local SHAPE_COLORS = {
+	Color3.fromRGB(255, 238, 0),
+	Color3.fromRGB(0, 255, 0),
+	Color3.fromRGB(255, 0, 0),
+	Color3.fromRGB(0, 247, 255),
+	Color3.fromRGB(255, 0, 251),
+	Color3.fromRGB(255, 255, 255),
+	Color3.fromRGB(0, 26, 255),
+	Color3.fromRGB(0, 255, 132),
+	Color3.fromRGB(255, 128, 0),
+	Color3.fromRGB(166, 0, 255)
+}
+
+local function incorrect(player: Player, box: Model, difficulty: number)
+
+end
+
+local function correct(player: Player, box: Model, difficulty: number)
+
+end
+
+local function insertPart(part: Part)
+	
+end
+
+local function createShape(name: string): Part
+	local shape = Instance.new("Part")
+	shape.CanCollide = false
+	local shapeType = SHAPE_TYPES[math.random(1, #SHAPE_TYPES)]
+	shape.Shape = shapeType
+	shape.Anchored = true
+	-- Cool glowing effect
+	shape.Material = Enum.Material.Neon
+	shape.Name = name
+	shape.Color = SHAPE_COLORS[math.random(1, #SHAPE_COLORS)]
+	return shape
+end
+
+function M.init(player: Player, box: Model, difficulty: number)
+	-- Multiple instances can't be running for obvious reasons, we
+	-- return to stop another instance from opening up and causing
+	-- issues.
+	local userid = player.UserId
+	if state.isMinigameRunning(userid) then
+		warn(`Minigame for player {player.Name} already running, ignored.`)
+		return
+	end
+
+	state.newMinigame(userid)
+	local shapes = difficulty * SHAPES_PER_DIFFICULTY + math.random(1, difficulty)
+	local shapeList = {}
+	for i = 1, shapes, 1 do
+		local shape = createShape(SHAPE_ATTRIB_PREFIX_TEXT .. i)
+		table.insert(shapeList, shape)
+	end
+	state.setMinigame(userid, "shapes", shapeList)
+	-- Correct shape
+	state.setMinigame(userid, "cshape", SHAPE_ATTRIB_PREFIX_TEXT .. math.random(1, shapes))
+end
+
+return M
