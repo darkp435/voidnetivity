@@ -11,6 +11,7 @@ local M = {}
 local state = require(ServerScriptService.files.state)
 local SHAPE_ATTRIB_PREFIX_TEXT = "__SHP_"
 local SHAPES_PER_DIFFICULTY = 3
+local SHAPES_PER_ROW = 5
 local SHAPE_SPACING = 3
 local SHAPE_TYPES = {
 	Enum.PartType.Block,
@@ -35,12 +36,24 @@ local function incorrect(player: Player, box: Model, difficulty: number)
 
 end
 
-local function correct(player: Player, box: Model, difficulty: number)
+local function correct(player: Player, box: Model)
 
 end
 
-local function insertPart(part: Part)
-	
+-- Function that should be binded to the clickdetector.
+local function insertPart(playerWhoClicked: Player, box: Model, difficulty)
+	local backpack = playerWhoClicked:FindFirstChild("Backpack")
+	local userid = playerWhoClicked.UserId
+	local partToTry: string = state.getMinigame(userid, "eshape")
+	if not partToTry then
+		warn("part to try is nil (from bgame)")
+	end
+
+	if partToTry == state.getMinigame("cshape") then
+		correct(playerWhoClicked, box)
+	else
+		incorrect(playerWhoClicked, box, difficulty)
+	end
 end
 
 local function createShape(name: string): Part
@@ -76,6 +89,13 @@ function M.init(player: Player, box: Model, difficulty: number)
 	state.setMinigame(userid, "shapes", shapeList)
 	-- Correct shape
 	state.setMinigame(userid, "cshape", SHAPE_ATTRIB_PREFIX_TEXT .. math.random(1, shapes))
+
+	-- TODO: evaluate dimensions for shape insertion
+	local insertBox = Instance.new("Part")
+	local clickdetector = Instance.new("ClickDetector")
+	clickdetector.MouseClick:Connect(function(playerWhoClicked)
+		insertPart(playerWhoClicked, box, difficulty)
+	end)
 end
 
 return M
