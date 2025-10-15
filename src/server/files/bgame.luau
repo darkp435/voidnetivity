@@ -69,7 +69,7 @@ local function createShape(name: string): Part
 	return shape
 end
 
-function M.init(player: Player, box: Model, difficulty: number)
+function M.init(player: Player, box: Model, difficulty: number, host: string)
 	-- Multiple instances can't be running for obvious reasons, we
 	-- return to stop another instance from opening up and causing
 	-- issues.
@@ -80,6 +80,7 @@ function M.init(player: Player, box: Model, difficulty: number)
 	end
 
 	state.newMinigame(userid)
+	state.setMinigame(userid, "thost", host)
 	local shapes = difficulty * SHAPES_PER_DIFFICULTY + math.random(1, difficulty)
 	local shapeList = {}
 	for i = 1, shapes, 1 do
