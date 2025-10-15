@@ -29,7 +29,7 @@ local SHAPE_COLORS = {
 	Color3.fromRGB(0, 26, 255),
 	Color3.fromRGB(0, 255, 132),
 	Color3.fromRGB(255, 128, 0),
-	Color3.fromRGB(166, 0, 255)
+	Color3.fromRGB(166, 0, 255),
 }
 
 local function incorrect(player: Player, box: Model, difficulty: number)
