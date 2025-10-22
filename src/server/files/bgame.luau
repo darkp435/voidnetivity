@@ -9,6 +9,8 @@
 local ServerScriptService = game:GetService("ServerScriptService")
 local M = {}
 local state = require(ServerScriptService.files.state)
+local data = require(ServerScriptService.data["shared-data-module"])
+local Perm = require(ServerScriptService["perm-enums"])
 local SHAPE_ATTRIB_PREFIX_TEXT = "__SHP_"
 local SHAPES_PER_DIFFICULTY = 3
 local SHAPES_PER_ROW = 5
@@ -32,12 +34,35 @@ local SHAPE_COLORS = {
 	Color3.fromRGB(166, 0, 255),
 }
 
-local function incorrect(player: Player, box: Model, difficulty: number)
+local PUNISHMENTS = {
+	"SEPARATION",
+	"KILLBRICK",
+	"EXPLODE",
+	"ENEMIES",
+	"LOSETIME"
+}
 
+local function sep()
+	
+end
+
+local function spawnKillbrick()
+	
+end
+
+-- "Perfectly balanced"
+local function explode()
+	
+end
+
+local function incorrect(player: Player, box: Model, difficulty: number)
+	local punishment = PUNISHMENTS[math.random(1, #PUNISHMENTS)]
 end
 
 local function correct(player: Player, box: Model)
-
+	local userid = player.UserId
+	local host = state.getMinigame(userid, "thost")
+	data.setUserAccess(userid, host, Perm.User)
 end
 
 -- Function that should be binded to the clickdetector.

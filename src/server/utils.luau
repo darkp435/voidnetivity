@@ -71,7 +71,26 @@ function module.shortestUnweightedPath(graph, source, target)
 	return path
 end
 
--- Bidirectional map implementation
+-- Given a table of percentage chances adding up to 100 (i.e. loot table),
+-- randomises the item with those chosen probabilities and returns
+-- the index of the chosen item.
+-- Returns -1 if probabilities do not add up to 100.
+function module.cumulative(chances: {number})
+	local cumulative = 0
+	local random = math.random(1, 100)
+
+	for i = 1, #chances, 1 do
+		cumulative += chances[i]
+		if random <= cumulative then
+			return i
+		end
+	end
+
+	warn("utils: probabilities do not add up to 100.")
+	return -1
+end
+
+-- Bidirectional map implementation.
 module.BiMap = {}
 module.BiMap.__index = module.BiMap
 

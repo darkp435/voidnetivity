@@ -16,6 +16,7 @@ You may obtain a copy of the License at
 local Players = game:GetService("Players")
 local ServerScriptService = game:GetService("ServerScriptService")
 local utils = require(ServerScriptService["utils"])
+local maps = require(ServerScriptService.data.maps)
 
 --[[
 Module for managing the host system and abstracting it as well as fetching data about the host
@@ -43,6 +44,13 @@ local function newHost(map: string, x: number, y: number, z: number): HostStruct
 		y = y,
 		z = z
 	}
+end
+
+--- Returns the position of the spawn point of the host.
+function module.getSpawn(host: string): Vector3
+	local map = module.Hosts[host].map
+	local coords = maps.mapData[map].spawnLocation
+	return Vector3.new(coords.x, coords.y, coords.z)
 end
 
 -- hostnames will be represented via an adjacency list, then converted to objects for convenience, pseudocode:
