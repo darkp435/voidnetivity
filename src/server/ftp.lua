@@ -8,6 +8,7 @@ local ServerScriptService = game:GetService("ServerScriptService")
 local FtpEnum = require(ReplicatedStorage:WaitForChild("ftp-status-codes"))
 local Data = require(ServerScriptService.data["shared-data-module"])
 local FileData = require(ServerScriptService.data["file-data"])
+local HostData = require(ServerScriptService.data.hosts)
 local lsearch = require(ServerScriptService.utils).linearSearch
 local FtpMethod = FtpEnum.Methods
 local FtpStatus = FtpEnum.FtpStatus
@@ -148,6 +149,20 @@ local function changeHost(player: Player, host: string)
 	return {Status = FtpStatus.Success}
 end
 
+local function pay(player: Player)
+	local userid = tostring(player.UserId)
+	local targetHost = FTPState[player.UserId].TargetHost
+	-- Don't have to pay if greed is 1 on the target host
+	local amount = HostData.getGreed(targetHost) * 10
+	if Data.getBtc(userid) < amount then
+		return {Status = FtpStatus.CantAfford}
+	end
+
+	local btc = Data.getBtc(userid)
+	Data.setBtc(userid, btc - amount)
+	return {FtpStatus.Success}
+end
+
 --- Remote function. Returns a table with these properties:
 --- `Status`: the status of the request
 --- `FileList?`: when sending a put request, returns the list of files
@@ -168,6 +183,8 @@ function M.ftpEvent(player: Player, method: string, data: string?): FtpEnum.Resp
 	-- a singular value.
 	if method == FtpMethod.Exit then
 		return exitFTP(player)
+	elseif method == FtpMethod.Pay then
+		return pay(player)
 	elseif method == FtpMethod.Get and data == nil then
 		warn(`Request ignored: the FTP method was "get", but a file wasn't provided. (From {player.Name})`)
 		return {Status = FtpStatus.UnknownError}

@@ -15,6 +15,8 @@ local SHAPE_ATTRIB_PREFIX_TEXT = "__SHP_"
 local SHAPES_PER_DIFFICULTY = 3
 local SHAPES_PER_ROW = 5
 local SHAPE_SPACING = 3
+local DEFAULT_TIME_SECONDS = 300
+local TIME_SCALING_PER_DIFFICULTY = 20
 local SHAPE_TYPES = {
 	Enum.PartType.Block,
 	Enum.PartType.CornerWedge,
@@ -43,11 +45,11 @@ local PUNISHMENTS = {
 }
 
 local function sep()
-	
+
 end
 
 local function spawnKillbrick()
-	
+
 end
 
 -- "Perfectly balanced"
@@ -122,6 +124,13 @@ function M.init(player: Player, box: Model, difficulty: number, host: string)
 	clickdetector.MouseClick:Connect(function(playerWhoClicked)
 		insertPart(playerWhoClicked, box, difficulty)
 	end)
+
+	-- End it with the timer as it yields.
+	state.setMinigame(userid, "timer", DEFAULT_TIME_SECONDS - (difficulty * TIME_SCALING_PER_DIFFICULTY))
+	while state.getMinigame("timer") > 0 do
+		task.wait(1)
+		state.setMinigame("timer", state.getMinigame("timer") - 1)
+	end
 end
 
 return M

@@ -16,7 +16,19 @@ You may obtain a copy of the License at
 local Players = game:GetService("Players")
 local ServerScriptService = game:GetService("ServerScriptService")
 local utils = require(ServerScriptService["utils"])
-local maps = require(ServerScriptService.data.maps)
+
+local Greediness = {
+	NotGreedy = 0,
+	Slight = 1,
+	Moderate = 2,
+	Greedy = 3,
+	Very = 4,
+	Extreme = 5,
+	Bourgeoisie = 6,
+	Max = 7
+}
+
+table.freeze(Greediness)
 
 --[[
 Module for managing the host system and abstracting it as well as fetching data about the host
@@ -35,22 +47,17 @@ local HALF_HOST_SIZE = HOST_SIZE / 2
 local module = {}
 module.Hosts = {}
 
-type HostStruct = {map: string, x: number, y: number, z: number}
+type HostStruct = {map: string, x: number, y: number, z: number, greed: number}
 
-local function newHost(map: string, x: number, y: number, z: number): HostStruct
+local function newHost(map: string, x: number, y: number, z: number, greed: number?): HostStruct
+	
 	return {
 		map = map,
 		x = x,
 		y = y,
-		z = z
+		z = z,
+		greed = greed or 1
 	}
-end
-
---- Returns the position of the spawn point of the host.
-function module.getSpawn(host: string): Vector3
-	local map = module.Hosts[host].map
-	local coords = maps.mapData[map].spawnLocation
-	return Vector3.new(coords.x, coords.y, coords.z)
 end
 
 -- hostnames will be represented via an adjacency list, then converted to objects for convenience, pseudocode:
@@ -61,9 +68,6 @@ module {
 	...
 }
 
-]]
-
---[[
 graph is directed and unweighted
 adjacency list (should be able to copy into file seamlessly):
 
@@ -220,12 +224,12 @@ module["Graph"] = {
 
 --- General function to get the host object from the hostname.
 function module.getHostFromName(name: string)
-	return module[name]
+	return module.Hosts[name]
 end
 
 --- Function to get the map name of the host.
 function module.getMap(host: string): string
-	return module[host]:getMap()
+	return module.Hosts[host].map
 end
 
 function module.hostIsNextTo(origin: string, target: string)
@@ -240,6 +244,10 @@ end
 
 function module.pathToHost(origin: string, target: string)
 	return utils.shortestUnweightedPath(module.Hosts, origin, target)
+end
+
+function module.getGreed(host: string)
+	return module.Hosts[host].greed
 end
 
 type DimensionTable = {bottomleft: Vector3, bottomright: Vector3, topleft: Vector3, topright: Vector3}

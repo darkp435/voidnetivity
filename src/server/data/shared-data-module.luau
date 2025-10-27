@@ -265,7 +265,9 @@ function module.getHostsUserHasAccessTo(userid: string)
 	return totalHosts
 end
 
---- Returns the current host a player is in
+--- Returns the current host a player is in. Starts with "USER" followed by
+--- the difficulty level of the user host if the player is currently in a
+--- user host.
 function module.getCurrentHost(userid: string | number): string
 	if type(userid) == "number" then
 		userid = tostring(userid)
@@ -278,6 +280,11 @@ function module.setCurrentHost(userid: string, hostname: string)
 	module.Data[userid]["currenthost"] = hostname
 	local player = Players:GetPlayerByUserId(tonumber(userid))
 	player:SetAttribute("CurrentHost", hostname)
+end
+
+--- User goes back a host ("pops")
+function module.popHost(userid: string)
+	
 end
 
 --- Gets the total amount of users on a host

@@ -1,6 +1,7 @@
 -- SPDX-License-Identifier: Apache-2.0
 -- Copyright (c) 2025 darkp435
 
+-- Enumerations for FTP
 local M = {}
 
 M.FtpStatus = {
@@ -11,7 +12,8 @@ M.FtpStatus = {
 	PermDenied = "pdenied",
 	Pending = "pending",
 	TooManyRequests = "tmr",
-	NotFound = "notfnd"
+	NotFound = "notfnd",
+	CantAfford = "broke"
 }
 
 table.freeze(M.FtpStatus)
@@ -23,7 +25,8 @@ M.Methods = {
 	ListRemote = "listr",
 	Open = "open",
 	Exit = "exit",
-	SwitchHost = "chhost"
+	SwitchHost = "chhost",
+	Pay = "pay"
 }
 
 table.freeze(M.Methods)
