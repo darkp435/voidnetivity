@@ -212,7 +212,10 @@ end
 ---* Do not get the player attribute on the server side
 ---* to get amount of bitcoin, it is used on the client
 ---* only.
-function module.setBtc(userid: string, amount: number)
+function module.setBtc(userid: string | number, amount: number)
+	if type(userid) == "number" then
+		userid = tostring(userid)
+	end
 	module.Data[userid]["btc"] = amount
 	local player = Players:GetPlayerByUserId(tonumber(userid))
 	player:SetAttribute("btc", amount)

@@ -23,10 +23,15 @@ local npcAIEvent: BindableEvent = ServerScriptService.npcAIEvent
 -- Module responsible for spawning NPCs, it does **NOT** manage the AI for it
 local module = {}
 
+local function npcDied()
+	
+end
+
 function module.spawnNPC(NPCType: string, weapon: string, pos: Vector3)
 	local npc = storedNPC:Clone()
 	local humanoid: Humanoid = npc:FindFirstChild("Humanoid")
 	local hrp: BasePart = npc:FindFirstChild("HumanoidRootPart", true)
+	humanoid.Died:Connect(npcDied)
 
 	-- Luau doesn't have switch case, so we have to do if-statements
 	-- I hope they will support it in the future

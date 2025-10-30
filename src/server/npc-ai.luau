@@ -1,18 +1,5 @@
---[[
- Copyright 2025 darkp435
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-	 http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- ]]
+-- SPDX-License-Identifier: Apache-2.0
+-- Copyright (c) 2025 darkp435
 
 local PathfindingService = game:GetService("PathfindingService")
 local Players = game:GetService("Players")
@@ -24,17 +11,18 @@ local Data = require(ServerScriptService["data"]["shared-data-module"])
 local module = {}
 
 local MAXIMUM_SEEN_DISTANCE = 5
+local TARGET_DIST = 10
 local RANDOM_WALK_MAX_DISTANCE = 10
 local RANDOM_FORWARD_WALK_MAX_DISTANCE = 20
 local NPC_CLOSE_TO_WALL_SIZE = Vector3.new(3, 1, 3)
 
 -- Distance is flat because the y-axis is overrated
 local function calcDistance(origin: Vector3, target: Vector3)
-	return math.sqrt(math.pow(origin.X - target.X, 2) + math.pow(origin.Z - target.Z, 2))
+	return math.sqrt(origin.X - target.X ^ 2 + origin.Z - target.Z ^ 2)
 end
 
 -- Based on distance, not path
-local function findNearestPlayerCoords(origin: Vector3, host: string): Vector3
+local function findNearestPlayerCoords(origin: Vector3, host: string): Player
 	local targetList = Data.getUsersOnHost(host)
 	local playerTarget: Player = nil
 	local minDistance = math.huge -- I don't do math but I'm pretty sure this can't be negative
@@ -47,12 +35,29 @@ local function findNearestPlayerCoords(origin: Vector3, host: string): Vector3
 		end
 	end
 
-	return playerTarget.Character.HumanoidRootPart.Position
+	return playerTarget
 end
 
 -- NOTE: the humanoid:MoveTo method is asynchronous!
-local function chasePlayer(player: Player)
-	-- PLACEHOLDER
+local function chasePlayer(player: Player, npc: Model)
+	local humanoid: Humanoid = npc:FindFirstChild("Humanoid")
+	local pos = player.Character.HumanoidRootPart.Position
+	local target = pos - Vector3.new(TARGET_DIST, 0, TARGET_DIST)
+	local path = PathfindingService:CreatePath({
+		AgentRadius = 3,
+		AgentHeight = 5,
+		AgentCanJump = true,
+		WayPointSpacing = 4
+	})
+
+	path:ComputeAsync(npc:FindFirstChild("HumanoidRootPart", true), target)
+	if path.Status ~= Enum.PathStatus.Success then
+		humanoid:MoveTo(target)
+	end
+
+	for _, point in path:GetWaypoints() do
+		humanoid:MoveTo(point)
+	end
 end
 
 --- Returns true if the coordinate is valid for the NPC to walk to.
@@ -123,9 +128,9 @@ function module.bindNpcAI(npc: Model, host: string)
 	-- TODO: confront my fears of high level mathematics and implement it
 
 	while npc ~= nil do
-		local targetCoords = findNearestPlayerCoords(hrp.Position, host)
-		if calcDistance(targetCoords, hrp.Position) <= MAXIMUM_SEEN_DISTANCE then
-			chasePlayer()
+		local targetPlayer = findNearestPlayerCoords(hrp.Position, host)
+		if calcDistance(targetPlayer, hrp.Position) <= MAXIMUM_SEEN_DISTANCE then
+			chasePlayer(targetPlayer, npc)
 		else
 			walkRandomly(npc, host)
 		end

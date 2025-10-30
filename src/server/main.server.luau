@@ -40,6 +40,10 @@ local Ftp = require(ServerScriptService.ftp)
 local TransferFileEvent = ReplicatedStorage:WaitForChild("TransferFile")
 local EquipEvent = ReplicatedStorage:WaitForChild("Equip")
 
+local BTC_UPDATE_DURATION = 30
+local BTC_PER_TICK = 2
+local PROCPOWER_PER_BTC = 50
+
 TeleportEvent.OnServerEvent:Connect(function(player: Player, fileName: string, targetHostname: string)
 	TeleportToBox.teleportEvent(player, fileName, targetHostname)
 end)
@@ -111,3 +115,15 @@ end
 EquipEvent.OnServerEvent:Connect(function(player, toolname: string)
 	GetFile.equipFile(player, toolname)
 end)
+
+while true do
+	for _, player: Player in Players:GetPlayers() do
+		local userid = player.UserId
+		local procPower = SharedDataModule.getProcPower(userid)
+		local btcToAdd = procPower * PROCPOWER_PER_BTC
+
+		SharedDataModule.setBtc(userid, btcToAdd)
+	end
+
+	task.wait(BTC_UPDATE_DURATION)
+end
