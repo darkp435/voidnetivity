@@ -38,6 +38,14 @@ local function findNearestPlayerCoords(origin: Vector3, host: string): Player
 	return playerTarget
 end
 
+-- The math was done by ChatGPT because there was no way
+-- in heaven or hell I was gonna learn how parametric equations
+-- work and do this myself. I've tested it on Desmos and I think
+-- it works.
+local function getTargetCoords(a: Vector3, b: Vector3)
+	
+end
+
 -- NOTE: the humanoid:MoveTo method is asynchronous!
 local function chasePlayer(player: Player, npc: Model)
 	local humanoid: Humanoid = npc:FindFirstChild("Humanoid")
