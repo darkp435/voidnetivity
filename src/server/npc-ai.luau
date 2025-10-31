@@ -43,14 +43,19 @@ end
 -- work and do this myself. I've tested it on Desmos and I think
 -- it works.
 local function getTargetCoords(a: Vector3, b: Vector3)
-	
+	-- Find the slope and y-intercept to form line y=mx+c
+	local x = a.X - b.X
+	local y = a.Z - b.Z
+
+	local m = y / x
 end
 
 -- NOTE: the humanoid:MoveTo method is asynchronous!
 local function chasePlayer(player: Player, npc: Model)
 	local humanoid: Humanoid = npc:FindFirstChild("Humanoid")
+	local hrpPos: Vector3 = npc:FindFirstChild("HumanoidRootPart", true)
 	local pos = player.Character.HumanoidRootPart.Position
-	local target = pos - Vector3.new(TARGET_DIST, 0, TARGET_DIST)
+	local target = getTargetCoords(pos, hrpPos)
 	local path = PathfindingService:CreatePath({
 		AgentRadius = 3,
 		AgentHeight = 5,
