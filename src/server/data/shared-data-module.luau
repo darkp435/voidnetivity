@@ -47,10 +47,10 @@ module.Data = {} -- This is where the actual data is
 local playerData = DataStoreService:GetDataStore("playerData") -- DataStore for player data
 
 -- Represented in ASCII to save space, the actual ASCII character doesn't
--- really matter, which means that (for now) we have 255 symbols, one for
--- each file, and if we need more than 255 files (which is very unlikely)
+-- really matter, which means that (for now) we have 127 symbols, one for
+-- each file, and if we need more than 127 files (which is very unlikely)
 -- then we will use 2 ASCII characters for them where the first one is
--- ASCII 255.
+-- ASCII 127 (ASCII 127 instead of 255 due to UTF-8 encoding).
 --
 -- NOTES:
 -- 1. The file name MUST match an existing one, otherwise it will fail.

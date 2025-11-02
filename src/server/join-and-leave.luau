@@ -19,6 +19,7 @@ local module = {}
 
 local replicatedStorage: ReplicatedStorage = game:WaitForChild("ReplicatedStorage")
 local welcomeEvent: RemoteEvent = replicatedStorage:WaitForChild("WelcomeEvent")
+local MessagingService = game:GetService("MessagingService")
 local Players = game:GetService("Players")
 local ServerScriptService: ServerScriptService = game:GetService("ServerScriptService")
 local datamodule = require(ServerScriptService["data"]["shared-data-module"])
@@ -29,27 +30,29 @@ local function welcome(player: Player)
 	welcomeEvent:FireClient(player)
 end
 
-local function humanoidDied(sadasd: number)
-	-- Give them back the tools in their backpack, and also
-	-- teleport them to the appropriate host.
-	-- TODO: implement this later.
+local function humanoidDied(player: Player)
+	local backpack = player:FindFirstChild("Backpack")
 end
 
 function module.characterAdded(character: Model)
 	local humanoid: Humanoid? = character:FindFirstChildWhichIsA("Humanoid")
+	local player = Players:GetPlayerFromCharacter(character)
+
 	if not humanoid then return end
-	humanoid.Died:Connect(humanoidDied)
+	humanoid.Died:Connect(function()
+		humanoidDied(player)
+	end)
+	player.Character.Humanoid.WalkSpeed = 20
 end
 
 -- when the player joins, sets the attributes and gets the data stored
 function module.playerAdded(player: Player)
-	player.Character.Humanoid.Died:Connect()
 	-- Set default attributes, to be changed later.
 	player:SetAttribute("InFTP", false)
-	player.Character.Humanoid.WalkSpeed = 20
 
 	local btc = datamodule.getBtc(tostring(player.UserId))
 
+	-- TODO: replace this
 	if btc then
 		player:SetAttribute("btc", btc)
 	else

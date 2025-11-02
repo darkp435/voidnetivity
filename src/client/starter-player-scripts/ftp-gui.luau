@@ -219,9 +219,8 @@ function M.FTPEVentCallback()
 	hostInput.Parent = frame
 	hostInput.Text = ""
 	local enteredHost = waitForInput(hostInput):await()
-	-- TODO: refactor this spaghetti code
-	-- NOTE: the above TODO will probably never happen due to the
-	-- developer's habit of procrastination.
+	-- It would be great if this was refactored. However, that may
+	-- never happen...
 	local hasPerms = verifyPerms(hostInput.Text)
 	local statusLabel = defaultTextLabel:Clone()
 	statusLabel.Parent = frame

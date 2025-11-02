@@ -17,6 +17,7 @@ You may obtain a copy of the License at
 -- Script to handle the client side events
 
 local LocalPlayer = game:GetService("Players").LocalPlayer
+local StarterGui = game:GetService("StarterGui")
 local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Backpack: Backpack = LocalPlayer:WaitForChild("Backpack")
@@ -39,5 +40,8 @@ end)
 LocalPlayer:GetAttributeChangedSignal(Attributes.btc):Connect(function()
 	BTCCounter.Text = tostring(LocalPlayer:GetAttribute(Attributes.btc))
 end)
+
+StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Health, false)
+StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.EmotesMenu, false)
 
 WelcomeEvent.OnClientEvent:Connect(WelcomeGui.welcomeEvent)

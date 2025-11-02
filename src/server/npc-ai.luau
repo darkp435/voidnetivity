@@ -42,12 +42,19 @@ end
 -- in heaven or hell I was gonna learn how parametric equations
 -- work and do this myself. I've tested it on Desmos and I think
 -- it works.
+-- `a` is the position of the player and `b` is the npc.
 local function getTargetCoords(a: Vector3, b: Vector3)
 	-- Find the slope and y-intercept to form line y=mx+c
-	local x = a.X - b.X
-	local y = a.Z - b.Z
+	local x = a.X
+	local xx = a.X - b.X
+	local yy = a.Z - b.Z
+	local m = yy / xx
+	local c = yy - m * xx
 
-	local m = y / x
+	-- TODO: evaluate Z value via raycasting
+	local resX = x + TARGET_DIST / math.sqrt(1 + m ^ 2)
+	local resZ = (m * x + c) + m * (TARGET_DIST / math.sqrt(1 + m ^ 2))
+	return Vector3.new(resX, a.Y, resZ)
 end
 
 -- NOTE: the humanoid:MoveTo method is asynchronous!
